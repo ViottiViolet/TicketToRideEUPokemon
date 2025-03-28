@@ -21,9 +21,10 @@ public class StartScreen extends JFrame {
 
     public StartScreen()
     {
-        setTitle("Ticket to Ride Europe: Thomas the Train Edition START");
+        setTitle("Ticket to Ride Europe: Pokemon Express START");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(1300, 800));
+        setMinimumSize(new Dimension(1550, 1080));
+        setResizable(false);
 
         startBtn = new ImageIcon(getClass().getResource("/Images/Start/startButton.png"));
         rulesBtn = new ImageIcon(getClass().getResource("/Images/Start/rulesButton.png"));
@@ -42,12 +43,12 @@ public class StartScreen extends JFrame {
             @Override
             public void mouseEntered(MouseEvent e) {
                 startLabel.setIcon(new ImageIcon(startBtn.getImage().getScaledInstance((int)(buttonWidth/1.4), (int)(buttonHeight/1.4), Image.SCALE_SMOOTH)));
-                startLabel.setBounds(getWidth()-370, 145, (int)(buttonWidth/1.4), (int)(buttonHeight/1.4));
+                startLabel.setBounds(getWidth()-470, 245, (int)(buttonWidth/1.4), (int)(buttonHeight/1.4));
             }
             @Override
             public void mouseExited(MouseEvent e) {
                 startLabel.setIcon(new ImageIcon(startBtn.getImage().getScaledInstance((int)(buttonWidth/1.5), (int)(buttonHeight/1.5), Image.SCALE_SMOOTH)));
-                startLabel.setBounds(getWidth()-360, 150, (int)(buttonWidth/1.5), (int)(buttonHeight/1.5));
+                startLabel.setBounds(getWidth()-460, 250, (int)(buttonWidth/1.5), (int)(buttonHeight/1.5));
             }
         });
         rulesLabel.addMouseListener(new MouseAdapter() {
@@ -59,12 +60,12 @@ public class StartScreen extends JFrame {
             @Override
             public void mouseEntered(MouseEvent e) {
                 rulesLabel.setIcon(new ImageIcon(rulesBtn.getImage().getScaledInstance((int)(buttonWidth/1.4), (int)(buttonHeight/1.4), Image.SCALE_SMOOTH)));
-                rulesLabel.setBounds(getWidth()-370, 245, (int)(buttonWidth/1.4), (int)(buttonHeight/1.4));
+                rulesLabel.setBounds(getWidth()-470, 345, (int)(buttonWidth/1.4), (int)(buttonHeight/1.4));
             }
             @Override
             public void mouseExited(MouseEvent e) {
                 rulesLabel.setIcon(new ImageIcon(rulesBtn.getImage().getScaledInstance((int)(buttonWidth/1.5), (int)(buttonHeight/1.5), Image.SCALE_SMOOTH)));
-                rulesLabel.setBounds(getWidth()-360, 250, (int)(buttonWidth/1.5), (int)(buttonHeight/1.5));
+                rulesLabel.setBounds(getWidth()-460, 350, (int)(buttonWidth/1.5), (int)(buttonHeight/1.5));
             }
 
         });
@@ -79,8 +80,8 @@ public class StartScreen extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
 
-        startLabel.setBounds(getWidth()-360,150,(int)(buttonWidth/1.5),(int)(buttonHeight/1.5));
-        rulesLabel.setBounds(getWidth()-360,250,(int)(buttonWidth/1.5),(int)(buttonHeight/1.5));
+        startLabel.setBounds(getWidth()-460,250,(int)(buttonWidth/1.5),(int)(buttonHeight/1.5));
+        rulesLabel.setBounds(getWidth()-460,350,(int)(buttonWidth/1.5),(int)(buttonHeight/1.5));
     }
 
     static class BackgroundPanel extends JPanel{
@@ -88,7 +89,7 @@ public class StartScreen extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             ImageIcon bg = new ImageIcon(getClass().getResource("/Images/Start/startScreen.png"));
-            g.drawImage(bg.getImage(), 0, 0, getWidth(), getHeight(), this);
+            g.drawImage(bg.getImage(), -30, 0, getWidth() + 35, getHeight(), this);
         }
     }
 
