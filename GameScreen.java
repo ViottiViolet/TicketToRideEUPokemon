@@ -26,10 +26,12 @@ public class GameScreen extends JFrame {
             super.paintComponent(g);
             ImageIcon bg = new ImageIcon(getClass().getResource("/Images/Game/game bg.png"));
             ImageIcon map = new ImageIcon(getClass().getResource("/Images/Game/map.png"));
+            ImageIcon trainer1 = new ImageIcon(getClass().getResource("/Images/Trainers/trainer1.PNG"));
             g.drawImage(bg.getImage(), 0, 0, 1920, 1080, this);
             int mapw = 1678;
             int maph = 1080;
             g.drawImage(map.getImage(), 235, 10, (int)(mapw*0.77), (int)(maph*0.77), this);
+            g.drawImage(trainer1.getImage(), 10, 10, (int)(mapw*.1), (int)(maph*0.1), this);
 
             /*ImageIcon wild = new ImageIcon(getClass().getResource("/Images/Cards/wild.png"));
             ImageIcon white = new ImageIcon(getClass().getResource("/Images/Cards/white.png"));
