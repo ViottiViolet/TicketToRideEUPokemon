@@ -1,7 +1,18 @@
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 public class GameScreen extends JFrame {
+
+    private final JLabel drawLabel;
+    private final JLabel invenLabel;
+    private final JLabel purchLabel;
+    private final ImageIcon drawbtn, drawhover;
+    private final ImageIcon invenbtn, invenhover;
+    private final ImageIcon purchbtn, purchhover;
+
+    private final int buttonHeight, buttonWidth;
 
     public GameScreen() {
 
@@ -9,14 +20,83 @@ public class GameScreen extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(1550, 1080));
         setResizable(false);
+
+        drawbtn = new ImageIcon(getClass().getResource("/Images/Game/draw.png"));
+        drawhover = new ImageIcon(getClass().getResource("/Images/Game/draw hover.png"));
+        invenbtn = new ImageIcon(getClass().getResource("/Images/Game/inventory.png"));
+        invenhover = new ImageIcon(getClass().getResource("/Images/Game/inventory hover.png"));
+        purchbtn = new ImageIcon(getClass().getResource("/Images/Game/purchase.png"));
+        purchhover = new ImageIcon(getClass().getResource("/Images/Game/purchase hover.png"));
+
+        buttonHeight = 46;
+        buttonWidth = 129;
+
+        drawLabel = new JLabel(new ImageIcon(drawbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+        invenLabel = new JLabel(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+        purchLabel = new JLabel(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+
+        drawLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //ih
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                drawLabel.setIcon(new ImageIcon(drawhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                drawLabel.setIcon(new ImageIcon(drawbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+        });
+
+        invenLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //ih
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                invenLabel.setIcon(new ImageIcon(invenhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                invenLabel.setIcon(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+        });
+
+        purchLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //ih
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                purchLabel.setIcon(new ImageIcon(purchhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                purchLabel.setIcon(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+        });
         
         BackgroundPanel panel = new BackgroundPanel();
         panel.setLayout(null);
 
+        add(drawLabel);
+        add(invenLabel);
+        add(purchLabel);
         add(panel);
         pack();
         setVisible(true);
         setLocationRelativeTo(null);
+
+        drawLabel.setBounds(getWidth()-820,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
+        invenLabel.setBounds(getWidth()-300,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
+        purchLabel.setBounds(getWidth()-560,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
 
     }
 
@@ -30,24 +110,6 @@ public class GameScreen extends JFrame {
             int mapw = 1678;
             int maph = 1080;
             g.drawImage(map.getImage(), 235, 10, (int)(mapw*0.77), (int)(maph*0.77), this);
-
-            /*ImageIcon wild = new ImageIcon(getClass().getResource("/Images/Cards/wild.png"));
-            ImageIcon white = new ImageIcon(getClass().getResource("/Images/Cards/white.png"));
-            ImageIcon red = new ImageIcon(getClass().getResource("/Images/Cards/red.png"));
-            ImageIcon orange = new ImageIcon(getClass().getResource("/Images/Cards/orange.png"));
-            ImageIcon black = new ImageIcon(getClass().getResource("/Images/Cards/black.png"));
-            ImageIcon pink = new ImageIcon(getClass().getResource("/Images/Cards/pink.png"));
-            ImageIcon green = new ImageIcon(getClass().getResource("/Images/Cards/green.png"));
-            ImageIcon blue = new ImageIcon(getClass().getResource("/Images/Cards/blue.png"));
-
-            g.drawImage(wild.getImage(), 200, 615, 92, 128, this);
-            g.drawImage(white.getImage(), 310, 615, 92, 128, this);
-            g.drawImage(red.getImage(), 420, 615, 92, 128, this);
-            g.drawImage(orange.getImage(), 530, 615, 92, 128, this);
-            g.drawImage(black.getImage(), 640, 615, 92, 128, this);
-            g.drawImage(pink.getImage(), 750, 615, 92, 128, this);
-            g.drawImage(green.getImage(), 860, 615, 92, 128, this);
-            g.drawImage(blue.getImage(), 970, 615, 92, 128, this);*/
         }
     }
 
