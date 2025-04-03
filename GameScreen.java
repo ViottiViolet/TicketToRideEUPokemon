@@ -9,10 +9,12 @@ public class GameScreen extends JFrame {
     private final JLabel invenLabel;
     private final JLabel purchLabel;
     private final JLabel arenaLabel;
+    //private final JLabel black, blue, green, orange, pink, red, white, yellow, wild;
     private final ImageIcon drawbtn, drawhover;
     private final ImageIcon invenbtn, invenhover;
     private final ImageIcon purchbtn, purchhover;
     private final ImageIcon arena;
+    //private final ImageIcon blackImg, blueImg, greenImg, orangeImg, pinkImg, redImg, whiteImg, yellowImg, wildImg;
 
     private final int buttonHeight, buttonWidth;
 
