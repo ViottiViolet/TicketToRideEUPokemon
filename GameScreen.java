@@ -18,6 +18,8 @@ public class GameScreen extends JFrame {
 
     private final int buttonHeight, buttonWidth;
 
+    TrainerIcon a, b, c;
+
     public GameScreen() {
 
         setTitle("Ticket to Ride Europe: Pokemon Express GAME");
@@ -40,6 +42,10 @@ public class GameScreen extends JFrame {
         invenLabel = new JLabel(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         purchLabel = new JLabel(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         arenaLabel = new JLabel(new ImageIcon(arena.getImage().getScaledInstance((int)(1599*1.1), (int)(940*1.1), Image.SCALE_SMOOTH)));
+
+        a = new TrainerIcon("1", 1);
+        b = new TrainerIcon("2", 2);
+        c = new TrainerIcon("3", 3);
 
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -97,6 +103,10 @@ public class GameScreen extends JFrame {
         add(drawLabel);
         add(invenLabel);
         add(purchLabel);
+
+        add(a.getLabel());
+        add(b.getLabel());
+        add(c.getLabel());
         
         add(panel);
         pack();
