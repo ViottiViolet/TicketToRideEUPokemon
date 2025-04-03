@@ -8,9 +8,11 @@ public class GameScreen extends JFrame {
     private final JLabel drawLabel;
     private final JLabel invenLabel;
     private final JLabel purchLabel;
+    private final JLabel arenaLabel;
     private final ImageIcon drawbtn, drawhover;
     private final ImageIcon invenbtn, invenhover;
     private final ImageIcon purchbtn, purchhover;
+    private final ImageIcon arena;
 
     private final int buttonHeight, buttonWidth;
 
@@ -27,6 +29,7 @@ public class GameScreen extends JFrame {
         invenhover = new ImageIcon(getClass().getResource("/Images/Game/inventory hover.png"));
         purchbtn = new ImageIcon(getClass().getResource("/Images/Game/purchase.png"));
         purchhover = new ImageIcon(getClass().getResource("/Images/Game/purchase hover.png"));
+        arena = new ImageIcon(getClass().getResource("/Images/Game/arena.png"));
 
         buttonHeight = 46;
         buttonWidth = 129;
@@ -34,11 +37,13 @@ public class GameScreen extends JFrame {
         drawLabel = new JLabel(new ImageIcon(drawbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         invenLabel = new JLabel(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         purchLabel = new JLabel(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+        arenaLabel = new JLabel(new ImageIcon(arena.getImage().getScaledInstance((int)(1599*1.1), (int)(940*1.1), Image.SCALE_SMOOTH)));
 
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //ih
+                System.out.println("open draw");
+                openDraw();
             }
 
             @Override
@@ -54,7 +59,7 @@ public class GameScreen extends JFrame {
         invenLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //ih
+                System.out.println("open inventory");
             }
 
             @Override
@@ -70,7 +75,7 @@ public class GameScreen extends JFrame {
         purchLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //ih
+                System.out.println("open purchase");
             }
 
             @Override
@@ -86,9 +91,11 @@ public class GameScreen extends JFrame {
         BackgroundPanel panel = new BackgroundPanel();
         panel.setLayout(null);
 
+        add(arenaLabel);
         add(drawLabel);
         add(invenLabel);
         add(purchLabel);
+        
         add(panel);
         pack();
         setVisible(true);
@@ -97,6 +104,42 @@ public class GameScreen extends JFrame {
         drawLabel.setBounds(getWidth()-820,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
         invenLabel.setBounds(getWidth()-300,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
         purchLabel.setBounds(getWidth()-560,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
+
+        arenaLabel.setBounds(-120,-15,(int)(1599*1.1),(int)(940*1.1));
+        arenaLabel.setVisible(false);
+
+    }
+
+    public void openDraw()
+    {
+
+        arenaLabel.setVisible(true);
+
+        drawLabel.setVisible(false);
+        invenLabel.setVisible(false);
+        purchLabel.setVisible(false);
+
+    }
+
+    public void closeDraw()
+    {
+
+        arenaLabel.setVisible(true);
+
+        drawLabel.setVisible(true);
+        invenLabel.setVisible(true);
+        purchLabel.setVisible(true);
+
+    }
+
+    public void openInven()
+    {
+
+        arenaLabel.setVisible(true);
+
+        drawLabel.setVisible(false);
+        invenLabel.setVisible(false);
+        purchLabel.setVisible(false);
 
     }
 
