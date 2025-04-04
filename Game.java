@@ -16,7 +16,7 @@ public class Game {
             longRoutesReader = new Scanner(new File("long routes.tsv"));
             routesReader = new Scanner(new File("routes.tsv"));
         } catch(IOException e){
-           System.out.println("gamestate reader error");
+           System.out.println("game reader error");
         }
 
         //reading in long routes
@@ -28,9 +28,9 @@ public class Game {
             int worth = Integer.parseInt(cardInfo[2]);
             BufferedImage card = null;
             try{
-               card = ImageIO.read(GameState.class.getResource("/gameImages/cardImages/" + cardInfo[3]));
+               card = ImageIO.read(GameState.class.getResource("/Images/Cards/" + cardInfo[3]));
             } catch(IOException e){
-               System.out.println("gamestate card error");
+               System.out.println("game card error");
             }
             longRoutes.add(new TicketCard(card, cityA, cityB, worth));
         }
@@ -44,9 +44,9 @@ public class Game {
             int worth = Integer.parseInt(cardInfo[2]);
             BufferedImage card = null;
             try{
-               card = ImageIO.read(GameState.class.getResource("/gameImages/cardImages/" + cardInfo[3]));
+               card = ImageIO.read(GameState.class.getResource("/Images/Cards/" + cardInfo[3]));
             } catch(IOException e){
-               System.out.println("gamestate card error");
+               System.out.println("game card error");
             }
             normRoutes.add(new TicketCard(card, cityA, cityB, worth));
         }
