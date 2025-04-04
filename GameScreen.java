@@ -25,7 +25,7 @@ public class GameScreen extends JFrame {
     private final int buttonHeight, buttonWidth;
 
 
-    TrainerIcon a, b, c;
+    TrainerIcon a, b, c, d;
 
     private static boolean purchase = false;
 
@@ -142,6 +142,7 @@ public class GameScreen extends JFrame {
         a = new TrainerIcon("1", 1, panel);
         b = new TrainerIcon("2", 2, panel);
         c = new TrainerIcon("3", 3, panel);
+        d = new TrainerIcon("4", 4, panel);
 
         add(arenaLabel);
         add(drawLabel);
