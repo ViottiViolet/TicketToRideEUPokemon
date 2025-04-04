@@ -12,11 +12,10 @@ public class StartScreen extends JFrame {
     private final ImageIcon rulesBtn;
     private final int buttonHeight, buttonWidth;
     private final ImageIcon rulesScreen;
-    public static boolean rulesVisible;
 
     public void startGame()
     {
-        //tedt
+        //tedt 
         GameScreen.main(new String[0]);
         dispose();
 
@@ -59,15 +58,9 @@ public class StartScreen extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 System.out.println("open rules");
-                if (rulesVisible)
-                    return;
-                rulesVisible = true;
                 rulesScreenLabel.setVisible(true);
                 rulesLabel.setVisible(false);
                 startLabel.setVisible(false);
-
-                
-                
             }
 
             @Override
@@ -88,9 +81,7 @@ public class StartScreen extends JFrame {
                 System.out.println("close rules");
                 rulesScreenLabel.setVisible(false);
                 rulesLabel.setVisible(true);
-                startLabel.setVisible(true);
-
-                
+                startLabel.setVisible(true); 
                 
             }
 
@@ -112,9 +103,6 @@ public class StartScreen extends JFrame {
 
         startLabel.setBounds(getWidth()-460,250,(int)(buttonWidth/1.5),(int)(buttonHeight/1.5));
         rulesLabel.setBounds(getWidth()-460,350,(int)(buttonWidth/1.5),(int)(buttonHeight/1.5));
-
-        
-
     }
 
     static class BackgroundPanel extends JPanel{
@@ -123,8 +111,6 @@ public class StartScreen extends JFrame {
             super.paintComponent(g);
             ImageIcon bg = new ImageIcon(getClass().getResource("/Images/Start/startScreen.png"));
             g.drawImage(bg.getImage(), -30, 0, getWidth() + 35, getHeight(), this);
-            
-            
         }
     }
 

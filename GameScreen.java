@@ -8,11 +8,25 @@ public class GameScreen extends JFrame {
     private final JLabel drawLabel;
     private final JLabel invenLabel;
     private final JLabel purchLabel;
+    private final JLabel arenaLabel;
+    private final JLabel trainLabel;
+    //private final JLabel trainStationLabel;
+
+    //private final JLabel black, blue, green, orange, pink, red, white, yellow, wild;
     private final ImageIcon drawbtn, drawhover;
     private final ImageIcon invenbtn, invenhover;
     private final ImageIcon purchbtn, purchhover;
+    private final ImageIcon arena;
+    private final ImageIcon trainBtn;
+    //private final ImageIcon blackImg, blueImg, greenImg, orangeImg, pinkImg, redImg, whiteImg, yellowImg, wildImg;
 
     private final int buttonHeight, buttonWidth;
+
+
+    TrainerIcon a, b, c;
+
+    private static boolean purchase = false;
+
 
     public GameScreen() {
 
@@ -27,6 +41,8 @@ public class GameScreen extends JFrame {
         invenhover = new ImageIcon(getClass().getResource("/Images/Game/inventory hover.png"));
         purchbtn = new ImageIcon(getClass().getResource("/Images/Game/purchase.png"));
         purchhover = new ImageIcon(getClass().getResource("/Images/Game/purchase hover.png"));
+        arena = new ImageIcon(getClass().getResource("/Images/Game/arena.png"));
+        trainBtn = new ImageIcon(getClass().getResource("/Images/Game/locomotive.png"));
 
         buttonHeight = 46;
         buttonWidth = 129;
@@ -34,11 +50,14 @@ public class GameScreen extends JFrame {
         drawLabel = new JLabel(new ImageIcon(drawbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         invenLabel = new JLabel(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         purchLabel = new JLabel(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+        trainLabel = new JLabel(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
+        arenaLabel = new JLabel(new ImageIcon(arena.getImage().getScaledInstance((int)(1599*1.1), (int)(940*1.1), Image.SCALE_SMOOTH)));
 
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //ih
+                System.out.println("open draw");
+                openDraw();
             }
 
             @Override
@@ -54,7 +73,7 @@ public class GameScreen extends JFrame {
         invenLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //ih
+                System.out.println("open inventory");
             }
 
             @Override
@@ -70,7 +89,8 @@ public class GameScreen extends JFrame {
         purchLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //ih
+                System.out.println("open purchase");
+                purchase = true;
             }
 
             @Override
@@ -82,13 +102,33 @@ public class GameScreen extends JFrame {
                 purchLabel.setIcon(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
             }
         });
+        trainLabel.addMouseListener(new MouseAdapter() {
+            
+           
+            @Override
+               public void mouseClicked(MouseEvent e) {
+                if(purchase){
+                    System.out.println("select train");
+                }
+            }
+            
+        });
         
         BackgroundPanel panel = new BackgroundPanel();
         panel.setLayout(null);
 
+        a = new TrainerIcon("1", 1, panel);
+        b = new TrainerIcon("2", 2, panel);
+        c = new TrainerIcon("3", 3, panel);
+
+        add(arenaLabel);
         add(drawLabel);
         add(invenLabel);
         add(purchLabel);
+
+        add(trainLabel);
+
+        
         add(panel);
         pack();
         setVisible(true);
@@ -98,6 +138,44 @@ public class GameScreen extends JFrame {
         invenLabel.setBounds(getWidth()-300,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
         purchLabel.setBounds(getWidth()-560,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
 
+        arenaLabel.setBounds(-120,-15,(int)(1599*1.1),(int)(940*1.1));
+        arenaLabel.setVisible(false);
+
+        trainLabel.setBounds(getWidth()-1540,getHeight()-250,(int)(251*0.6),(int)(201*0.6));
+
+    }
+
+    public void openDraw()
+    {
+        arenaLabel.setVisible(true);
+
+        drawLabel.setVisible(false);
+        invenLabel.setVisible(false);
+        purchLabel.setVisible(false);
+        trainLabel.setVisible(false);
+    }
+
+    public void closeDraw()
+    {
+
+        arenaLabel.setVisible(true);
+
+        drawLabel.setVisible(true);
+        invenLabel.setVisible(true);
+        purchLabel.setVisible(true);
+        trainLabel.setVisible(true);
+
+    }
+
+    public void openInven()
+    {
+
+        arenaLabel.setVisible(true);
+
+        drawLabel.setVisible(false);
+        invenLabel.setVisible(false);
+        purchLabel.setVisible(false);
+        trainLabel.setVisible(false);
     }
 
     static class BackgroundPanel extends JPanel{
