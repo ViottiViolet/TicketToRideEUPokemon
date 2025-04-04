@@ -1,6 +1,7 @@
 import java.awt.image.*;
 
 public class TicketCard{
+    
     private int worth;
     private BufferedImage card;
     private String cityA;
