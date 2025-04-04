@@ -17,7 +17,7 @@ public class GameScreen extends JFrame {
     private final ImageIcon invenbtn, invenhover;
     private final ImageIcon purchbtn, purchhover;
     private final ImageIcon arena;
-    private final ImageIcon trainBtn;
+    private final ImageIcon trainBtn, trainhighlight;
     //private final ImageIcon blackImg, blueImg, greenImg, orangeImg, pinkImg, redImg, whiteImg, yellowImg, wildImg;
 
     private final int buttonHeight, buttonWidth;
@@ -43,6 +43,7 @@ public class GameScreen extends JFrame {
         purchhover = new ImageIcon(getClass().getResource("/Images/Game/purchase hover.png"));
         arena = new ImageIcon(getClass().getResource("/Images/Game/arena.png"));
         trainBtn = new ImageIcon(getClass().getResource("/Images/Game/locomotiveBtn.png"));
+        trainhighlight = new ImageIcon(getClass().getResource("/Images/Game/locomotive highlight.png"));
 
         buttonHeight = 46;
         buttonWidth = 129;
@@ -113,6 +114,7 @@ public class GameScreen extends JFrame {
                public void mouseClicked(MouseEvent e) {
                 if(purchase){
                     System.out.println("select train");
+                    trainLabel.setIcon(new ImageIcon(trainhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
                 }
             }
             
