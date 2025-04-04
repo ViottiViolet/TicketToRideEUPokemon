@@ -17,6 +17,7 @@ public class TrainCard {
 	public boolean isWild() {
 		return color.equals("wild");
 	}
+    
 	public BufferedImage getImage() {
 		return card;
 	}
