@@ -5,6 +5,8 @@ import javax.swing.*;
 public class TrainerIcon
 {
 
+    private final int h = 300;
+
     private final ImageIcon profile;
     private int rank;
 
@@ -16,7 +18,7 @@ public class TrainerIcon
         rank = r;
 
         profileLabel = new JLabel(new ImageIcon(profile.getImage().getScaledInstance((int)(300/2), (int)(300/2), Image.SCALE_SMOOTH)));
-        otherLabel = new JLabel("lelalaala");
+        otherLabel = new JLabel("Player " + name);
 
         addToPanel(p);
         reposition();
@@ -30,8 +32,8 @@ public class TrainerIcon
 
     public void reposition()
     {
-        profileLabel.setBounds(0, 150*rank, (int)(300/2), (int)(300/2));
-        otherLabel.setBounds(0, 0, 0, 0);
+        profileLabel.setBounds(0, 200*rank, (int)(h/2), (int)(h/2));
+        otherLabel.setBounds(140, 200*rank - 20, (int)(h/2), (int)(h/2));
     }
 
     public JPanel getLabel()
@@ -42,9 +44,6 @@ public class TrainerIcon
     public void addToPanel(JPanel p) {
         p.add(otherLabel);
         p.add(profileLabel);
-        
-
-        otherLabel.setBounds(0, 0, 100, 100);
     }
 
 }

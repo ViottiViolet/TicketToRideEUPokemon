@@ -54,10 +54,6 @@ public class GameScreen extends JFrame {
         trainLabel = new JLabel(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         arenaLabel = new JLabel(new ImageIcon(arena.getImage().getScaledInstance((int)(1599*1.1), (int)(940*1.1), Image.SCALE_SMOOTH)));
 
-        a = new TrainerIcon("1", 1);
-        b = new TrainerIcon("2", 2);
-        c = new TrainerIcon("3", 3);
-
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -123,15 +119,14 @@ public class GameScreen extends JFrame {
         BackgroundPanel panel = new BackgroundPanel();
         panel.setLayout(null);
 
+        a = new TrainerIcon("1", 1, panel);
+        b = new TrainerIcon("2", 2, panel);
+        c = new TrainerIcon("3", 3, panel);
+
         add(arenaLabel);
         add(drawLabel);
         add(invenLabel);
         add(purchLabel);
-
-
-        add(a.getLabel());
-        add(b.getLabel());
-        add(c.getLabel());
 
         add(trainLabel);
 
@@ -154,7 +149,6 @@ public class GameScreen extends JFrame {
 
     public void openDraw()
     {
-
         arenaLabel.setVisible(true);
 
         drawLabel.setVisible(false);
