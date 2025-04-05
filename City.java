@@ -3,23 +3,25 @@ import java.util.List;
 public class City
 {
     public String name;
-    public ArrayList<City> neighbors;
+    public ArrayList<Railroad> edges;
 
-    public Node(String x) {
+    public City (String x) {
        name = x;
-        neighbors = new ArrayList<>();
+        edges = new ArrayList<Railroad>();
     }
 
-    public void addNeighbor(City node) {
-        this.neighbors.add(node);
-    }
+  
 
-    public ArrayList<City> getNeighbors() {
-        return this.neighbors;
+    public ArrayList<Railroad> getEdges() {
+        return this.edges;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void addEdge(City b, int weight) {
+        edges.add(new Railroad(this, b, weight));
     }
 
 }
