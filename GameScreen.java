@@ -119,6 +119,8 @@ public class GameScreen extends JFrame {
                 if(purchase){
                     System.out.println("select train");
                     trainLabel.setIcon(new ImageIcon(trainhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
+                    textLabel.setText("Select the cities on either side of the route you would like to purchase!");
+                    textLabel.setVisible(true);
                 }
             }
             
