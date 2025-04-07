@@ -117,6 +117,17 @@ public class GameScreen extends JFrame {
         BackgroundPanel panel = new BackgroundPanel();
         panel.setLayout(null);
 
+        panel.addMouseListener(new MouseAdapter() {
+            
+           
+            @Override
+               public void mouseClicked(MouseEvent e) {
+                System.out.println(MouseInfo.getPointerInfo().getLocation().x + ", " + MouseInfo.getPointerInfo().getLocation().y);
+                
+            }
+            
+        });
+
         a = new TrainerIcon("1", 1, panel);
         b = new TrainerIcon("2", 2, panel);
         c = new TrainerIcon("3", 3, panel);
