@@ -10,8 +10,6 @@ public class City
         edges = new ArrayList<Railroad>();
     }
 
-  
-
     public ArrayList<Railroad> getEdges() {
         return this.edges;
     }

@@ -12,7 +12,6 @@ public class Player implements Comparable
     private ArrayList completedRoutes;
     private Boolean express; 
     
-
     public Player(int x)
     {
        
@@ -32,27 +31,23 @@ public class Player implements Comparable
        return difference;
        return calculateLongestPath()-((Player)o).calculateLongestPath();
 
-
-
     }
 
     public int calculateLongestPath()//TODO
     {
         return 1;// temporary
-
     }
 
     public int numRoutesComplete()
     {
         return completedRoutes.size();
-
-
     }
 
     public int getScore()
     {
         return score;
     }
+
     public void express()
     {
         express = true; 
