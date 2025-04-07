@@ -28,6 +28,8 @@ public class GameScreen extends JFrame {
     TrainerIcon a, b, c, d;
 
     private static boolean purchase = false;
+    private static boolean trainselect, stationselect = false;
+   
 
 
     public GameScreen() {
@@ -116,8 +118,9 @@ public class GameScreen extends JFrame {
            
             @Override
                public void mouseClicked(MouseEvent e) {
-                if(purchase){
+                if(purchase && stationselect==false){
                     System.out.println("select train");
+                    trainselect = true;
                     trainLabel.setIcon(new ImageIcon(trainhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
                     textLabel.setText("Select the cities on either side of the route you would like to purchase!");
                     textLabel.setVisible(true);
@@ -130,9 +133,12 @@ public class GameScreen extends JFrame {
            
             @Override
                public void mouseClicked(MouseEvent e) {
-                if(purchase){
+                if(purchase && trainselect == false){
                     System.out.println("select station");
+                    stationselect = true;
                     stationLabel.setIcon(new ImageIcon(stationhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
+                    textLabel.setText("Select the city where you would like to place your train station !");
+                    textLabel.setVisible(true);
                 }
             }
             
