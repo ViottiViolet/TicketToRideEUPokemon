@@ -22,9 +22,9 @@ public class TrainerIcon
 
         nameLabel = new JLabel("PLAYER " + name);
         nameLabel.setFont(new Font("Dialog", Font.BOLD + Font.ITALIC, 20));
-        nameLabel.setForeground(Color.WHITE);
+        nameLabel.setForeground(Color.BLACK);
 
-        profileLabel = new JLabel(new ImageIcon(profile.getImage().getScaledInstance((int)(300/2), (int)(300/2), Image.SCALE_SMOOTH)));
+        profileLabel = new JLabel(new ImageIcon(profile.getImage().getScaledInstance((int)(300/3), (int)(300/3), Image.SCALE_SMOOTH)));
 
         bgLabel = new JLabel(new ImageIcon(bg.getImage().getScaledInstance((int)(h - 55), (int)(h/2 + 30), Image.SCALE_SMOOTH)));
 
@@ -43,11 +43,11 @@ public class TrainerIcon
 
     public void reposition()
     {
-        profileLabel.setBounds(10, 190*rank- 150, (int)(h/2), (int)(h/2));
-        nameLabel.setBounds(120, 190*rank - 200, (int)(h/2), (int)(h/2));
+        profileLabel.setBounds(10, 190*rank- 150, (int)(h/3), (int)(h/3));
+        nameLabel.setBounds(120, 190*rank - 210, (int)(h/2), (int)(h/2));
         bgLabel.setBounds(5, 190*rank - 165, (int)(h - 55), (int)(h/2 + 30));
 
-        trainLabel.setBounds(80, 190*rank - 150, (int)(h/2), (int)(h/2));
+        trainLabel.setBounds(-30, 190*rank - 95, (int)(h/2), (int)(h/2));
         stationLabel.setBounds(80, 190*rank - 100, (int)(h/2), (int)(h/2));
     }
 
