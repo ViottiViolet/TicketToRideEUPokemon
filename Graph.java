@@ -26,7 +26,7 @@ public class Graph
 
     }
 
-    public static void depthFirstTraversal( City start, ArrayList<City> visitedVertecies)
+    public void depthFirstTraversal( City start, ArrayList<City> visitedVertecies)
     {
         connectedCityHolder.add(start.getName());
         for (Railroad r: start.getEdges())
@@ -48,8 +48,14 @@ public class Graph
     {
         ArrayList<City> visited = new ArrayList <City>();
         boolean isConnected = false;
-        depthFirstTraversal(City a, visited);
-        
+        depthFirstTraversal(a, visited);
+        for (String str : connectedCityHolder)
+        {
+            if ( str.equals(b.getName()))
+            isConnected = true;
+        }
+        connectedCityHolder = new ArrayList<String>();
+        return isConnected;
 
     }
 
