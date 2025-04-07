@@ -1,17 +1,6 @@
 public class Railroad
 {
 
-    City getEnd() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    City getEnd() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    City getEnd() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
     private String color;
     private int length;
     private boolean isTunnel;
