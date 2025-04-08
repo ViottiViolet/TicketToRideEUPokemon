@@ -28,6 +28,7 @@ public class GameScreen extends JFrame {
 
 
     TrainerIcon a, b, c, d;
+    CityButtons cityButtons;
 
     private static boolean purchase = false;
     private static boolean trainselect, stationselect = false;
@@ -170,6 +171,8 @@ public class GameScreen extends JFrame {
         c = new TrainerIcon("3", 3, panel);
         d = new TrainerIcon("4", 4, panel);
 
+        cityButtons = new CityButtons(panel);
+
         add(arenaLabel);
         add(drawLabel);
         add(invenLabel);
@@ -196,8 +199,8 @@ public class GameScreen extends JFrame {
         arenaLabel.setBounds(-120,-15,(int)(1599*1.1),(int)(940*1.1));
         arenaLabel.setVisible(false);
 
-        trainLabel.setBounds(getWidth()-1540,getHeight()-250,(int)(251*0.6),(int)(201*0.6));
-        stationLabel.setBounds(getWidth()-1400,getHeight()-230,(int)(251*0.4),(int)(201*0.40));
+        trainLabel.setBounds(getWidth()-1540,getHeight()-220,(int)(251*0.6),(int)(201*0.6));
+        stationLabel.setBounds(getWidth()-1430,getHeight()-230,(int)(251*0.6),(int)(201*0.6));
 
     }
 
