@@ -10,17 +10,18 @@ public class Player implements Comparable
     private ArrayList trainCards;
     private ArrayList routeCards;
     private ArrayList completedRoutes;
-    private Boolean express; 
+    private boolean express; 
+    private int numTrains;
     
     public Player(int x)
     {
        
-         image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
-         score = 0;
+        image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
+        score = 0;
         trainCards = new ArrayList();
         routeCards = new ArrayList();
-         completedRoutes = new ArrayList();
-         express = false;
+        completedRoutes = new ArrayList();
+        express = false;
     }
     public int compareTo(Object o) {
        int difference = score-((Player)o).getScore();
@@ -51,6 +52,11 @@ public class Player implements Comparable
     public void express()
     {
         express = true; 
+    }
+
+    public int getNumTrains()
+    {
+        return numTrains;
     }
 
 }
