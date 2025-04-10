@@ -3,23 +3,25 @@ import java.util.*;
 public class GameState {
     
     public static Player[] players;
+    private Game game;
+    private int playerLastTurnIndex;
+    private int currentPlayer;
     public static int turn;
     public static int gamestate; 
-    public static final int BEGINNINGTURN = 0, DRAWINGCARDS = 1, BUYROUTE = 2, PLACESTATION = 3;
-    public static int gameEndCounter;
-    public static BufferedImage cardBack;
+    private boolean lastTurn;
+    private static int[]score;
     
     public GameState() {
         players = new Player[]{new Player(1), new Player(2), new Player(3), new Player(4)};
-        turn = 0;
-        gamestate = BEGINNINGTURN;
-        gameEndCounter = -1;
+        lastTurn = false;
+        currentPlayer = 0;
     }
 
     public boolean checkGameEnd() {
         for(Player x : players) {
             if(x.getNumTrains() <=2) {
-                gameEndCounter = 0;
+                lastTurn = true;
+                playerLastTurnIndex = currentPlayer;
                 return true;
             }
         }
@@ -27,7 +29,22 @@ public class GameState {
     }
 
     public void nextTurn() {
-
+        if(lastTurn == false) {
+            checkGameEnd();
+        }
+        
+        currentPlayer = (currentPlayer + 1) % 4;
+        
+        if(lastTurn && (currentPlayer == playerLastTurnIndex)) {
+            gameEnd();
+        }
     }
     
+    public void gameEnd() {
+        for (int i = 0; i < 4; i++) {
+            score[i] = players[i].getScore();
+        }
+        //set screen to endscreen
+    }
+
 }
