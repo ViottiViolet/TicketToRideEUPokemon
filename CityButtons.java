@@ -13,54 +13,56 @@ public class CityButtons {
     {
 
         cityList = new ArrayList<CityButton>();
+        int x = 320;
+        int y = 55;
 
-        cityList.add(new CityButton(715-320, 88-50, p));
-        cityList.add(new CityButton(1263-320, 62-50, p));
-        cityList.add(new CityButton(1652-320, 94-50, p));
-        cityList.add(new CityButton(814-320, 281-50, p));
-        cityList.add(new CityButton(936-320, 286-50, p));
-        cityList.add(new CityButton(1140-320, 161-50, p));
-        cityList.add(new CityButton(1433-320, 99-50, p));
-        cityList.add(new CityButton(1323-320, 214-50, p));
-        cityList.add(new CityButton(1778-320, 248-50, p));
-        cityList.add(new CityButton(910-320, 346-50, p));
-        cityList.add(new CityButton(1044-320, 295-50, p)); // essen
-        cityList.add(new CityButton(1174-320, 312-50, p));
-        cityList.add(new CityButton(1385-320, 301-50, p)); // warsaw
-        cityList.add(new CityButton(1532-320, 276-50, p));
-        cityList.add(new CityButton(1663-320, 276-50, p));
-        cityList.add(new CityButton(680-320, 430-50, p)); // brest
-        cityList.add(new CityButton(797-320, 394-50, p)); // dieppe
-        cityList.add(new CityButton(1018-320, 383-50, p)); // frankfurt
-        cityList.add(new CityButton(1582-320, 370-50, p)); // kviv
-        cityList.add(new CityButton(1757-320, 438-50, p));
-        cityList.add(new CityButton(860-320, 448-50, p));
-        cityList.add(new CityButton(1099-320, 441-50, p));
-        cityList.add(new CityButton(1247-320, 460-50, p));
-        cityList.add(new CityButton(1309-320, 493-50, p));
-        cityList.add(new CityButton(1810-320, 506-50, p));
-        cityList.add(new CityButton(1010-320, 522-50, p));
-        cityList.add(new CityButton(1119-320, 562-50, p));
-        cityList.add(new CityButton(1228-320, 578-50, p));
-        cityList.add(new CityButton(1508-320, 583-50, p));
-        cityList.add(new CityButton(1685-320, 601-50, p));
-        cityList.add(new CityButton(1802-320, 620-50, p));
-        cityList.add(new CityButton(778-320, 645-50, p));
-        cityList.add(new CityButton(648-320, 749-50, p));
-        cityList.add(new CityButton(560-320, 780-50, p)); // lisboa
-        cityList.add(new CityButton(647-320, 846-50, p));
-        cityList.add(new CityButton(794-320, 766-50, p));
-        cityList.add(new CityButton(975-320, 644-50, p));
-        cityList.add(new CityButton(1130-320, 677-50, p));
-        cityList.add(new CityButton(1179-320, 845-50, p));
-        cityList.add(new CityButton(1341-320, 653-50, p));
-        cityList.add(new CityButton(1242-320, 711-50, p));
-        cityList.add(new CityButton(1427-320, 664-50, p));
-        cityList.add(new CityButton(1403-320, 808-50, p));
-        cityList.add(new CityButton(1575-320, 743-50, p));
-        cityList.add(new CityButton(1674-320, 810-50, p));
-        cityList.add(new CityButton(1778-320, 780-50, p));
-        cityList.add(new CityButton(1515-320, 842-50, p));
+        cityList.add(new CityButton(715-x, 88-y, p));
+        cityList.add(new CityButton(1263-x, 62-y, p));
+        cityList.add(new CityButton(1652-x, 94-y, p));
+        cityList.add(new CityButton(814-x, 281-y, p));
+        cityList.add(new CityButton(936-x, 286-y, p));
+        cityList.add(new CityButton(1140-x, 161-y, p));
+        cityList.add(new CityButton(1433-x, 99-y, p));
+        cityList.add(new CityButton(1323-x, 214-y, p));
+        cityList.add(new CityButton(1778-x, 248-y, p));
+        cityList.add(new CityButton(910-x, 346-y, p));
+        cityList.add(new CityButton(1044-x, 295-y, p)); // essen
+        cityList.add(new CityButton(1174-x, 312-y, p));
+        cityList.add(new CityButton(1385-x, 301-y, p)); // warsaw
+        cityList.add(new CityButton(1532-x, 276-y, p));
+        cityList.add(new CityButton(1663-x, 276-y, p));
+        cityList.add(new CityButton(680-x, 430-y, p)); // brest
+        cityList.add(new CityButton(797-x, 394-y, p)); // dieppe
+        cityList.add(new CityButton(1018-x, 383-y, p)); // frankfurt
+        cityList.add(new CityButton(1582-x, 370-y, p)); // kviv
+        cityList.add(new CityButton(1757-x, 438-y, p));
+        cityList.add(new CityButton(860-x, 448-y, p));
+        cityList.add(new CityButton(1099-x, 441-y, p));
+        cityList.add(new CityButton(1247-x, 460-y, p));
+        cityList.add(new CityButton(1309-x, 493-y, p));
+        cityList.add(new CityButton(1810-x, 506-y, p));
+        cityList.add(new CityButton(1010-x, 522-y, p));
+        cityList.add(new CityButton(1119-x, 562-y, p));
+        cityList.add(new CityButton(1228-x, 578-y, p));
+        cityList.add(new CityButton(1508-x, 583-y, p));
+        cityList.add(new CityButton(1685-x, 601-y, p));
+        cityList.add(new CityButton(1802-x, 620-y, p));
+        cityList.add(new CityButton(778-x, 645-y, p));
+        cityList.add(new CityButton(648-x, 749-y, p));
+        cityList.add(new CityButton(560-x, 780-y, p)); // lisboa
+        cityList.add(new CityButton(647-x, 846-y, p));
+        cityList.add(new CityButton(794-x, 766-y, p));
+        cityList.add(new CityButton(975-x, 644-y, p));
+        cityList.add(new CityButton(1130-x, 677-y, p));
+        cityList.add(new CityButton(1179-x, 845-y, p));
+        cityList.add(new CityButton(1341-x, 653-y, p));
+        cityList.add(new CityButton(1242-x, 711-y, p));
+        cityList.add(new CityButton(1427-x, 664-y, p));
+        cityList.add(new CityButton(1403-x, 808-y, p));
+        cityList.add(new CityButton(1575-x, 743-y, p));
+        cityList.add(new CityButton(1674-x, 810-y, p));
+        cityList.add(new CityButton(1778-x, 780-y, p));
+        cityList.add(new CityButton(1515-x, 842-y, p));
         
     }
 
@@ -92,7 +94,7 @@ class CityButton {
         //glowLabel.setVisible(false);
         glowLabel.setIcon(null);
 
-        glowLabel.setBounds(x,y,(int)(120/3), (int)(120/3));
+        glowLabel.setBounds(x,y,(int)(130/3), (int)(130/3));
     }
 
     
