@@ -42,9 +42,12 @@ public class Railroad
         return engineCount;
     }
 
-    public City getEnd ()
+    public City getCityA()
+    {
+        return a;
+    }
+    public City getCityB()
     {
         return b;
     }
-
 }
