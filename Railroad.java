@@ -8,7 +8,7 @@ public class Railroad
     private City a;
     private City b; 
     
-    public Railroad (String color, int length, boolean istunnel, int engineCount, City a, City b)
+    public Railroad(String color, int length, boolean istunnel, int engineCount, City a, City b)
     {
         this.color = color;
         this.length = length;
@@ -45,7 +45,12 @@ public class Railroad
         return engineCount;
     }
 
-    public City getEnd ()
+    public City getCityA()
+    {
+        return a;
+    }
+
+    public City getCityB()
     {
         return b;
     }
