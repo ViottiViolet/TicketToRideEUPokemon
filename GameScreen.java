@@ -135,6 +135,7 @@ public class GameScreen extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 System.out.println("open purchase");
+                
                 purchase = true;
                 textLabel.setVisible(true);
             }
@@ -175,7 +176,7 @@ public class GameScreen extends JFrame {
                     trainLabel.setIcon(new ImageIcon(trainhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
                     textLabel.setText("Select the cities on either side of the route you would like to purchase!");
                     textLabel.setVisible(true);
-                    textBoxLabel.setVisible(true);
+                    
                 }
             }
             
@@ -191,7 +192,7 @@ public class GameScreen extends JFrame {
                     stationLabel.setIcon(new ImageIcon(stationhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
                     textLabel.setText("Select the city where you would like to place your train station !");
                     textLabel.setVisible(true);
-                    textBoxLabel.setVisible(true);
+                   
                 }
             }
             
