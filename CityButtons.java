@@ -13,8 +13,8 @@ public class CityButtons {
     {
 
         cityList = new ArrayList<CityButton>();
-        int x = 320;
-        int y = 55;
+        int x = 322;
+        int y = 54;
 
         cityList.add(new CityButton(715-x, 88-y, p));
         cityList.add(new CityButton(1263-x, 62-y, p));
