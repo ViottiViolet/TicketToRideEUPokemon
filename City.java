@@ -6,11 +6,9 @@ public class City
     public ArrayList<Railroad> edges;
 
     public City (String x) {
-       name = x;
+        name = x;
         edges = new ArrayList<Railroad>();
     }
-
-  
 
     public ArrayList<Railroad> getEdges() {
         return this.edges;

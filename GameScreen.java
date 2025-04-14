@@ -86,16 +86,16 @@ public class GameScreen extends JFrame {
         arenaLabel = new JLabel(new ImageIcon(arena.getImage().getScaledInstance((int)(1599*1.1), (int)(940*1.1), Image.SCALE_SMOOTH)));
         textBoxLabel = new JLabel(new ImageIcon(textBox.getImage().getScaledInstance((int)(1490/3.2), (int)(460/3.2), Image.SCALE_SMOOTH)));
 
-        black = new JLabel(new ImageIcon(blackImg.getImage().getScaledInstance((int)(cardWidth/5), (int)(cardHeight/5), Image.SCALE_SMOOTH)));
-        blue = new JLabel(new ImageIcon(blueImg.getImage().getScaledInstance((int)(cardWidth/5), (int)(cardHeight/5), Image.SCALE_SMOOTH)));
-        green = new JLabel(new ImageIcon(greenImg.getImage().getScaledInstance((int)(cardWidth/5), (int)(cardHeight/5), Image.SCALE_SMOOTH)));
-        orange = new JLabel(new ImageIcon(orangeImg.getImage().getScaledInstance((int)(cardWidth/5), (int)(cardHeight/5), Image.SCALE_SMOOTH)));
-        pink = new JLabel(new ImageIcon(pinkImg.getImage().getScaledInstance((int)(cardWidth/5), (int)(cardHeight/5), Image.SCALE_SMOOTH)));
-        red = new JLabel(new ImageIcon(redImg.getImage().getScaledInstance((int)(cardWidth/5), (int)(cardHeight/5), Image.SCALE_SMOOTH)));
-        white = new JLabel(new ImageIcon(whiteImg.getImage().getScaledInstance((int)(cardWidth/5), (int)(cardHeight/5), Image.SCALE_SMOOTH)));
-        wild = new JLabel(new ImageIcon(wildImg.getImage().getScaledInstance((int)(cardWidth/5), (int)(cardHeight/5), Image.SCALE_SMOOTH)));
-        yellow = new JLabel(new ImageIcon(yellowImg.getImage().getScaledInstance((int)(cardWidth/5), (int)(cardHeight/5), Image.SCALE_SMOOTH)));
-        back = new JLabel(new ImageIcon(backImg.getImage().getScaledInstance((int)(cardWidth/5), (int)(cardHeight/5), Image.SCALE_SMOOTH)));
+        black = new JLabel(new ImageIcon(blackImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        blue = new JLabel(new ImageIcon(blueImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        green = new JLabel(new ImageIcon(greenImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        orange = new JLabel(new ImageIcon(orangeImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        pink = new JLabel(new ImageIcon(pinkImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        red = new JLabel(new ImageIcon(redImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        white = new JLabel(new ImageIcon(whiteImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        wild = new JLabel(new ImageIcon(wildImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        yellow = new JLabel(new ImageIcon(yellowImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        back = new JLabel(new ImageIcon(backImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
 
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -229,6 +229,7 @@ public class GameScreen extends JFrame {
         add(green);
         add(orange);
         add(pink);
+        add(red);
         add(white);
         add(wild);
         add(yellow);
@@ -265,17 +266,27 @@ public class GameScreen extends JFrame {
         trainLabel.setBounds(getWidth()-1540,getHeight()-220,(int)(251*0.6),(int)(201*0.6));
         stationLabel.setBounds(getWidth()-1430,getHeight()-230,(int)(251*0.6),(int)(201*0.6));
 
-        back.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/5),(int)(cardHeight/5));
+        back.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/6),(int)(cardHeight/6));
+        back.setVisible(false);
 
-        black.setBounds(getWidth()-600,150,(int)(cardWidth/5),(int)(cardHeight/5));
-        blue.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/5),(int)(cardHeight/5));
-        green.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/5),(int)(cardHeight/5));
-        orange.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/5),(int)(cardHeight/5));
-        pink.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/5),(int)(cardHeight/5));
-        red.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/5),(int)(cardHeight/5));
-        white.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/5),(int)(cardHeight/5));
-        yellow.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/5),(int)(cardHeight/5));
-        wild.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/5),(int)(cardHeight/5));
+        black.setBounds(40,150,(int)(cardWidth/6),(int)(cardHeight/6));
+        blue.setBounds(200,150,(int)(cardWidth/6),(int)(cardHeight/6));
+        green.setBounds(360,150,(int)(cardWidth/6),(int)(cardHeight/6));
+        orange.setBounds(520,150,(int)(cardWidth/6),(int)(cardHeight/6));
+        pink.setBounds(680,150,(int)(cardWidth/6),(int)(cardHeight/6));
+        red.setBounds(840,150,(int)(cardWidth/6),(int)(cardHeight/6));
+        white.setBounds(1000,150,(int)(cardWidth/6),(int)(cardHeight/6));
+        yellow.setBounds(1160,150,(int)(cardWidth/6),(int)(cardHeight/6));
+        wild.setBounds(1320,150,(int)(cardWidth/6),(int)(cardHeight/6));
+        black.setVisible(false);
+        blue.setVisible(false);
+        green.setVisible(false);
+        orange.setVisible(false);
+        pink.setVisible(false);
+        red.setVisible(false);
+        white.setVisible(false);
+        yellow.setVisible(false);
+        wild.setVisible(false);
 
     }
 
@@ -290,11 +301,19 @@ public class GameScreen extends JFrame {
 
         if (draw)
         {
-            //draw exclusive ui
+             back.setVisible(true);
         }
         else if (inven)
         {
-            //inven exclusive ui
+            black.setVisible(true);
+            blue.setVisible(true);
+            green.setVisible(true);
+            orange.setVisible(true);
+            pink.setVisible(true);
+            red.setVisible(true);
+            white.setVisible(true);
+            yellow.setVisible(true);
+            wild.setVisible(true);
         }
 
     }
@@ -311,12 +330,20 @@ public class GameScreen extends JFrame {
 
         if (draw)
         {
-            //draw exclusive ui
+            back.setVisible(false);
             draw = false;
         }
         else if (inven)
         {
-            //inven exclusive ui
+            black.setVisible(false);
+            blue.setVisible(false);
+            green.setVisible(false);
+            orange.setVisible(false);
+            pink.setVisible(false);
+            red.setVisible(false);
+            white.setVisible(false);
+            yellow.setVisible(false);
+            wild.setVisible(false);
             inven = false;
         }
 

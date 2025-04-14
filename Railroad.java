@@ -7,6 +7,8 @@ public class Railroad
     private int engineCount;
     private City a;
     private City b; 
+    private boolean isOwned;
+
     public Railroad (String color, int length, boolean istunnel, int engineCount, City a, City b)
     {
         this.color = color;
@@ -15,15 +17,17 @@ public class Railroad
         this.engineCount = engineCount;
         this.a = a;
         this.b = b;
-
-        
+        isOwned = false;
     }
+
     public Railroad(City a, City b, int weight)
     {
         this.a = a; 
         this.b = b;
         length = weight;
+        isOwned = false;
     }
+
     public String getColor()
     {
         return color;
@@ -33,18 +37,34 @@ public class Railroad
     {
         return length;
     }
+
     public boolean isTunnel()
     {
         return isTunnel;
     }
+
     public int getEngineCount()
     {
         return engineCount;
     }
 
-    public City getEnd ()
+    public City getCityA()
+    {
+        return a;
+    }
+
+    public City getCityB()
     {
         return b;
     }
 
+    public boolean getIsOwned()
+    {
+        return isOwned;
+    }
+
+    public void setIsOwned()
+    {
+        isOwned = true;
+    }
 }
