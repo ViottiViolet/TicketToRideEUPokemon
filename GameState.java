@@ -20,7 +20,7 @@ public class GameState {
 
     public boolean checkGameEnd() {
         for(Player x : players) {
-            if(x.getNumTrains() <=2) {
+            if(x.getNumTrains() <= 2) {
                 lastTurn = true;
                 playerLastTurnIndex = currentPlayer;
                 return true;
@@ -32,16 +32,16 @@ public class GameState {
     public void nextTurn() {
         boolean isRoutePurchased = false;
         Railroad routePurchased = null;
-        
+        //HashMap<TrainCard,Integer> playerCards; 
+
         for(Railroad r : game.getRailroads()) { //check each route
             if(!isRoutePurchased) {
-                //add player method that gets player's cards
-                TrainCard[] playerCards = currentPlayer.getTrainCards(); 
+                TrainCard[] playerCards = currentPlayer.getTrainCards(); //need to add getTrainCards() method that gets player's cards
                 boolean canAfford = true;
-                HashMap<TrainCard, Integer> routeCost = r.getLength();
+                //HashMap<TrainCard, Integer> routeCost;
 
                 for(TrainCard t : routeCost.keySet()) {
-                    if(players[currentPlayer].getNumTrains() < routeCost.get(t) || routeCost.get(t) > playerCards.get(t).size()) { //idk if this is right ill check back later
+                    if(players[currentPlayer].getNumTrains() < routeCost.get(t) || routeCost.get(t) > playerCards.get(t)) { 
                         canAfford = false;
                     }
                 }
@@ -53,13 +53,11 @@ public class GameState {
                 } else {
                     System.out.println("route " + r + " can't afford");
                 }
-                
             }
-
         }
 
         if(routePuchased != null) {
-            //need method that checks and sets whether or not a route is already taken or not
+            //need method that checks and sets whether or not a route is already taken
             //add route to player's inventory
         }
 

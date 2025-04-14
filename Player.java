@@ -7,30 +7,35 @@ public class Player implements Comparable
 {
     private ImageIcon image;
     private int score;
-    private ArrayList trainCards;
-    private ArrayList routeCards;
+    private ArrayList<TrainCard> trainCards;
+    private ArrayList<TicketCard> routeCards;
     private ArrayList completedRoutes;
     private boolean express; 
     private int numTrains;
+    private int playerNum;
+
     
     public Player(int x)
     {
        
         image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
         score = 0;
-        trainCards = new ArrayList();
-        routeCards = new ArrayList();
+        trainCards = new ArrayList<>();
+        routeCards = new ArrayList<>();
         completedRoutes = new ArrayList();
         express = false;
+        numTrains = 45;
+        playerNum = x;
     }
+
     public int compareTo(Object o) {
-       int difference = score-((Player)o).getScore();
-       if ( difference !=0)
-       return difference;
-       difference = completedRoutes.size()-((Player)o).numRoutesComplete();
-       if ( difference !=0)
-       return difference;
-       return calculateLongestPath()-((Player)o).calculateLongestPath();
+        int difference = score-((Player)o).getScore();
+        if ( difference !=0)
+            return difference;
+        difference = completedRoutes.size()-((Player)o).numRoutesComplete();
+        if ( difference !=0)
+            return difference;
+        return calculateLongestPath()-((Player)o).calculateLongestPath();
 
     }
 
