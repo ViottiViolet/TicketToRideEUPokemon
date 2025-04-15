@@ -36,9 +36,10 @@ public class GameState {
 
         for(Railroad r : game.getRailroads()) { //check each route
             if(!isRoutePurchased) {
-                TrainCard[] playerCards = currentPlayer.getTrainCards(); //need to add getTrainCards() method that gets player's cards
+                TrainCard[] playerCards = players[currentPlayer].getTrainCards(); //need to add getTrainCards() method that gets player's cards
                 boolean canAfford = true;
                 //HashMap<TrainCard, Integer> routeCost;
+                //int routeCost = r.length();
 
                 for(TrainCard t : routeCost.keySet()) {
                     if(players[currentPlayer].getNumTrains() < routeCost.get(t) || routeCost.get(t) > playerCards.get(t)) { 
@@ -57,8 +58,8 @@ public class GameState {
         }
 
         if(routePuchased != null) {
-            //need method that checks and sets whether or not a route is already taken
-            //add route to player's inventory
+            if(!routePurchased.getIsOwned())
+                //add route to player's inventory
         }
 
         if(lastTurn == false) 
