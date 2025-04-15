@@ -15,7 +15,7 @@ public class StartScreen extends JFrame {
 
     public void startGame()
     {
-        //tedt 
+        //test 
         GameScreen.main(new String[0]);
         dispose();
 
