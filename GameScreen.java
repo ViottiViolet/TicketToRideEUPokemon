@@ -100,6 +100,7 @@ public class GameScreen extends JFrame {
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (purchase) return;
                 System.out.println("open draw");
                 draw = true;
                 open();
@@ -177,6 +178,7 @@ public class GameScreen extends JFrame {
                     textLabel.setText("Select the cities on either side of the route you would like to purchase!");
                     textLabel.setVisible(true);
                     
+                    cityButtons.enableAll(2);
                 }
             }
             
@@ -193,6 +195,7 @@ public class GameScreen extends JFrame {
                     textLabel.setText("Select the city where you would like to place your train station !");
                     textLabel.setVisible(true);
                    
+                    cityButtons.enableAll(1);
                 }
             }
             
@@ -218,6 +221,7 @@ public class GameScreen extends JFrame {
         d = new TrainerIcon("4", 4, panel);
 
         cityButtons = new CityButtons(panel);
+        cityButtons.disableAll();
 
         draw = false;
         inven = false;
