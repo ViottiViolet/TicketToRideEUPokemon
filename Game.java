@@ -4,6 +4,7 @@ import java.util.*;
 import javax.imageio.ImageIO;
 
 public class Game {
+    private Stack <TrainCard> deck;
     public static ArrayList<TicketCard> longRoutes = new ArrayList<>();
     public static ArrayList<TicketCard> normRoutes = new ArrayList<>();
 
@@ -18,7 +19,7 @@ public class Game {
         } catch(IOException e){
            System.out.println("game reader error");
         }
-
+//dddd
         //reading in long routes
         longRoutesReader.nextLine();
         while(longRoutesReader.hasNextLine()){
@@ -33,6 +34,23 @@ public class Game {
                System.out.println("game card error");
             }
             longRoutes.add(new TicketCard(card, cityA, cityB, worth));
+
+            for (int i = 0; i <14; i++)
+            {
+                if (i<12)
+                {
+                deck.push(new TrainCard("blue"));
+                deck.push(new TrainCard("black"));
+                deck.push(new TrainCard("green"));
+                deck.push(new TrainCard("orange"));
+                deck.push(new TrainCard("pink"));
+                deck.push(new TrainCard("red"));
+                deck.push(new TrainCard("white"));
+                deck.push(new TrainCard("yellow"));
+                }
+                deck.push(new TrainCard("yellow"));
+
+            }
         }
 
         //reading in normal routes
