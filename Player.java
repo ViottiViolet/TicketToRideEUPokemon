@@ -1,7 +1,5 @@
-
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-
 
 public class Player implements Comparable
 {
@@ -9,20 +7,18 @@ public class Player implements Comparable
     private int score;
     private ArrayList<TrainCard> trainCards;
     private ArrayList<TicketCard> routeCards;
-    private ArrayList completedRoutes;
-    private boolean express; 
+    private ArrayList<Railroad> completedRoutes;
+    private boolean express;
     private int numTrains;
     private int playerNum;
-
-    
+   
     public Player(int x)
     {
-       
         image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
         score = 0;
         trainCards = new ArrayList<>();
         routeCards = new ArrayList<>();
-        completedRoutes = new ArrayList();
+        completedRoutes = new ArrayList<>();
         express = false;
         numTrains = 45;
         playerNum = x;
@@ -36,7 +32,6 @@ public class Player implements Comparable
         if ( difference !=0)
             return difference;
         return calculateLongestPath()-((Player)o).calculateLongestPath();
-
     }
 
     public int calculateLongestPath()//TODO
@@ -56,7 +51,7 @@ public class Player implements Comparable
 
     public void express()
     {
-        express = true; 
+        express = true;
     }
 
     public int getNumTrains()
@@ -64,4 +59,28 @@ public class Player implements Comparable
         return numTrains;
     }
 
+    public ArrayList<TrainCard> getTrainCards() {
+        return trainCards;
+    }
+
+    public void addCompletedRoute(Railroad route) {
+        completedRoutes.add(route);
+    }
+
+    public void addScore(int length) {
+        if (length == 1 || length == 2)
+            score += length;
+        else if (length == 3)
+            score += 4;
+        else if (length == 4)
+            score += 7;
+        else if (length == 6)
+            score += 15;
+        else if (length == 8)
+            score += 21;
+    }
+
+    public void removeTrains(int count) {
+        numTrains -= count;
+    }
 }
