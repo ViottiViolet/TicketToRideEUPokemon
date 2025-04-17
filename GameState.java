@@ -34,7 +34,7 @@ public class GameState {
         boolean isRoutePurchased = false;
         Railroad routePurchased = null;
 
-        // check if player can purchase any routes
+        //check if player can purchase any routes
         for(City city : game.getGameGraph().getVertices()) {
             for(Railroad r : city.getEdges()) {
                 if(!isRoutePurchased && !r.getIsOwned()) {
@@ -43,11 +43,11 @@ public class GameState {
                     int routeLength = r.getLength();
                     String routeColor = r.getColor();
 
-                    // check if player has enough trains
+                    //check if player has enough trains
                     if(players[currentPlayer].getNumTrains() < routeLength) {
                         canAfford = false;
                     } else {
-                        // count matching cards player has of route color
+                        //count matching cards player has of route color
                         int matchingCards = 0;
                         for(TrainCard card : playerCards) {
                             if(card.getColor().equals(routeColor) || card.isWild()) {
@@ -58,7 +58,6 @@ public class GameState {
                             canAfford = false;
                         }
                     }
-
 
                     if(canAfford) {
                         System.out.println("route " + r + " can afford");
