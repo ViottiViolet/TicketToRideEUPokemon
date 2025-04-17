@@ -2,6 +2,7 @@ import java.awt.image.*;
 
 public class TrainCard {
 	
+	public static final String WILD = "wild";
 	private String color;
 	private BufferedImage card;
 	

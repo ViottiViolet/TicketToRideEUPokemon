@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
@@ -9,7 +8,7 @@ public class Player implements Comparable
     private int score;
     private ArrayList<TrainCard> trainCards;
     private ArrayList<TicketCard> routeCards;
-    private ArrayList completedRoutes;
+    private ArrayList<Railroad> completedRoutes;
     private boolean express; 
     private int numTrains;
     private int playerNum;
@@ -22,7 +21,7 @@ public class Player implements Comparable
         score = 0;
         trainCards = new ArrayList<>();
         routeCards = new ArrayList<>();
-        completedRoutes = new ArrayList();
+        completedRoutes = new ArrayList<>();
         express = false;
         numTrains = 45;
         playerNum = x;
@@ -64,4 +63,19 @@ public class Player implements Comparable
         return numTrains;
     }
 
+    public ArrayList<TrainCard> getTrainCards() {
+        return trainCards;
+    }
+
+    public void addCompletedRoute(Railroad route) {
+        completedRoutes.add(route);
+    }
+
+    public void addScore(int points) {
+        score += points;
+    }
+
+    public void removeTrains(int count) {
+        numTrains -= count;
+    }
 }

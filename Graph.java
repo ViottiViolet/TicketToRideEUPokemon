@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public class Graph 
@@ -58,6 +57,10 @@ public class Graph
         connectedCityHolder = new ArrayList<String>();
         return isConnected;
 
+    }
+
+    public ArrayList<City> getVertices() {
+        return verticies;
     }
 
 }

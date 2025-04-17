@@ -16,6 +16,7 @@ public class GameState {
         lastTurn = false;
         currentPlayer = 0;
         game = g;
+        score = new int[4];
     }
 
     public boolean checkGameEnd() {
@@ -32,52 +33,66 @@ public class GameState {
     public void nextTurn() {
         boolean isRoutePurchased = false;
         Railroad routePurchased = null;
-        //HashMap<TrainCard,Integer> playerCards; 
 
-        for(Railroad r : game.getRailroads()) { //check each route
-            if(!isRoutePurchased) {
-                TrainCard[] playerCards = players[currentPlayer].getTrainCards(); //need to add getTrainCards() method that gets player's cards
-                boolean canAfford = true;
-                //HashMap<TrainCard, Integer> routeCost;
-                //int routeCost = r.length();
+        // Check if player can purchase any routes
+        for(City city : game.getGameGraph().getVertices()) {
+            for(Railroad r : city.getEdges()) {
+                if(!isRoutePurchased && !r.getIsOwned()) {
+                    ArrayList<TrainCard> playerCards = players[currentPlayer].getTrainCards();
+                    boolean canAfford = true;
+                    int routeLength = r.getLength();
+                    String routeColor = r.getColor();
 
-                for(TrainCard t : routeCost.keySet()) {
-                    if(players[currentPlayer].getNumTrains() < routeCost.get(t) || routeCost.get(t) > playerCards.get(t)) { 
+                    // Check if player has enough trains
+                    if(players[currentPlayer].getNumTrains() < routeLength) {
                         canAfford = false;
+                    } else {
+                        // Count matching cards player has of route color
+                        int matchingCards = 0;
+                        for(TrainCard card : playerCards) {
+                            if(card.getColor().equals(routeColor) || card.isWild()) {
+                                matchingCards++;
+                            }
+                        }
+                        if(matchingCards < routeLength) {
+                            canAfford = false;
+                        }
                     }
-                }
 
-                if(canAfford) {
-                    System.out.println("route " + r + " can afford");
-                    isRoutePurchased = true;
-                    routePurchased = r;
-                } else {
-                    System.out.println("route " + r + " can't afford");
+                    if(canAfford) {
+                        System.out.println("route " + r + " can afford");
+                        isRoutePurchased = true;
+                        routePurchased = r;
+                    } else {
+                        System.out.println("route " + r + " can't afford");
+                    }
                 }
             }
         }
 
-        if(routePuchased != null) {
-            if(!routePurchased.getIsOwned())
-                //add route to player's inventory
+        if(routePurchased != null) {
+            routePurchased.setIsOwned();
+            // Add route to player's completed routes
+            players[currentPlayer].addCompletedRoute(routePurchased);
+            // Update player's score
+            players[currentPlayer].addScore(routePurchased.getLength());
+            // Remove used trains
+            players[currentPlayer].removeTrains(routePurchased.getLength());
         }
 
-        if(lastTurn == false) 
-        {
+        if(!lastTurn) {
             checkGameEnd();
-        }
-        
-        currentPlayer = (currentPlayer + 1) % 4;
-        
-        if(lastTurn && (currentPlayer == playerLastTurnIndex)) 
-        {
-            gameEnd();
+        } else {
+            currentPlayer = (currentPlayer + 1) % 4;
+            
+            if(lastTurn && (currentPlayer == playerLastTurnIndex)) {
+                gameEnd();
+            }
         }
     }
     
     public void gameEnd() {
-        for (int i = 0; i < 4; i++) 
-        {
+        for (int i = 0; i < 4; i++) {
             score[i] = players[i].getScore();
         }
         //set screen to endscreen
