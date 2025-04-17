@@ -1,5 +1,6 @@
- import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
+
 public class City
 {
     public String name;

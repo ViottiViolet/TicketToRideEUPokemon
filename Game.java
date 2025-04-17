@@ -29,7 +29,7 @@ public class Game {
             int worth = Integer.parseInt(cardInfo[2]);
             BufferedImage card = null;
             try{
-               card = ImageIO.read(GameState.class.getResource("/Images/Cards/" + cardInfo[3]));
+               card = ImageIO.read(GameState.class.getResource("/Images/Long Routes/" + cityA + "- " + cityB + ".png"));
             } catch(IOException e){
                System.out.println("game card error");
             }
@@ -62,7 +62,7 @@ public class Game {
             int worth = Integer.parseInt(cardInfo[2]);
             BufferedImage card = null;
             try{
-               card = ImageIO.read(GameState.class.getResource("/Images/Cards/" + cardInfo[3]));
+               card = ImageIO.read(GameState.class.getResource("/Images/Routes/" + cityA + "- " + cityB + ".png"));
             } catch(IOException e){
                System.out.println("game card error");
             }
