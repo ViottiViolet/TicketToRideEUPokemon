@@ -4,10 +4,10 @@ public class TicketCard{
     
     private int worth;
     private BufferedImage card;
-    private String cityA;
-    private String cityB;
+    private City cityA;
+    private City cityB;
 
-    public TicketCard(BufferedImage i, String a, String b, int w) {
+    public TicketCard(BufferedImage i, City a, City b, int w) {
         card = i;
         cityA = a;
         cityB = b;
@@ -18,11 +18,11 @@ public class TicketCard{
         return card;
     }
 
-    public String getCityA() {
+    public City getCityA() {
         return cityA;
     }
 
-    public String getCityB() {
+    public City getCityB() {
         return cityB;
     }
 

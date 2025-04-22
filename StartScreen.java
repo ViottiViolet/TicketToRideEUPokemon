@@ -12,7 +12,7 @@ public class StartScreen extends JFrame {
     private final ImageIcon rulesBtn;
     private final int buttonHeight, buttonWidth;
     private final ImageIcon rulesScreen;
-
+//sdjfhsfhsfhs
     public void startGame()
     {
         //test 

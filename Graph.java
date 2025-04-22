@@ -4,40 +4,40 @@ import java.util.ArrayList;
 public class Graph 
 {
     private static ArrayList<String> connectedCityHolder;
-    private ArrayList<City> vertecies;
+    private ArrayList<City> verticies;
 
     public Graph ()
     {
-        vertecies = new ArrayList<City>();
+        verticies = new ArrayList<City>();
     }
 
     public City addVertex (String name)
     {
         City newVertex = new City (name);
-        this.vertecies.add(newVertex);
+        this.verticies.add(newVertex);
         return newVertex;
 
     }
 
     public void addEdge (City a, City b, int weight)
     {
-       a.addEdge(b, weight);
+        a.addEdge(b, weight);
         b.addEdge(a, weight);
 
     }
     //hello
 
-    public void depthFirstTraversal( City start, ArrayList<City> visitedVertecies)
+    public void depthFirstTraversal( City start, ArrayList<City> visitedVerticies)
     {
         connectedCityHolder.add(start.getName());
         for (Railroad r: start.getEdges())
         {
-          City neighbor =  r.getEnd();
+          City neighbor =  r.getCityB();
 
-          if(!visitedVertecies.contains(neighbor))
+          if(!visitedVerticies.contains(neighbor))
           {
-            visitedVertecies.add(neighbor);
-            depthFirstTraversal(neighbor, visitedVertecies);
+            visitedVerticies.add(neighbor);
+            depthFirstTraversal(neighbor, visitedVerticies);
 
           }
         }
