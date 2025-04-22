@@ -277,7 +277,7 @@ public class GameScreen extends JFrame {
 
         back.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/6),(int)(cardHeight/6));
         back.setVisible(false);
-        routeback.setBounds(getWidth()-1200,getHeight()-700,(int)(433*1.6),(int)(577*1.2));
+        routeback.setBounds(getWidth()-1370,getHeight()-700,(int)(433*1.6),(int)(577*1.2));
         routeback.setVisible(false);
 
         black.setBounds(40,150,(int)(cardWidth/6),(int)(cardHeight/6));
