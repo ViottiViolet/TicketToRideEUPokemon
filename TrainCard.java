@@ -1,13 +1,14 @@
-import java.awt.image.*;
+import javax.swing.ImageIcon;
 
 public class TrainCard {
 	
 	private String color;
-	private BufferedImage card;
+	private ImageIcon card;
 	
-	public TrainCard(String c, BufferedImage i) {
+	public TrainCard(String c) {
 		color = c;
-		card = i;
+		
+		card = new ImageIcon(getClass().getResource("/Images/Cards/"+"color"+".png"));
 	}
 	
 	public String getColor() {
@@ -18,7 +19,7 @@ public class TrainCard {
 		return color.equals("wild");
 	}
     
-	public BufferedImage getImage() {
+	public ImageIcon getImage() {
 		return card;
 	}
 
