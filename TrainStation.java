@@ -5,11 +5,11 @@ public class TrainStation
     private Railroad assimilated;
  
     private int playerNum;
-    public TrainStation( int x)
+    public TrainStation(int x, City l)
     {
        
         playerNum = x;
-        
+        location = l;
 
     }
 
