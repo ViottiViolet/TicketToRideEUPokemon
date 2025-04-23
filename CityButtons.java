@@ -61,8 +61,8 @@ public class CityButtons {
         cityList.add(new CityButton(1403-x, 808-y, p, "Athina"));
         cityList.add(new CityButton(1575-x, 743-y, p, "Constantinople"));
         cityList.add(new CityButton(1674-x, 810-y, p, "Angora"));
-        cityList.add(new CityButton(1778-x, 780-y, p, "Bruzurum"));
-        cityList.add(new CityButton(1515-x, 842-y, p, "Smyma"));
+        cityList.add(new CityButton(1778-x, 780-y, p, "Erzurum"));
+        cityList.add(new CityButton(1515-x, 842-y, p, "Smyrna"));
         
     }
 
@@ -88,6 +88,7 @@ public class CityButtons {
 class CityButton {
 
     private final ImageIcon glow;
+    private ImageIcon station;
 
     private final JLabel glowLabel;
 
@@ -102,6 +103,7 @@ class CityButton {
     public CityButton(int x, int y, JPanel p, String n)
     {
         glow = new ImageIcon(getClass().getResource("/Images/Game/city glow.png"));
+        station = null;
         glowLabel = new JLabel(new ImageIcon(glow.getImage().getScaledInstance((int)(120/3), (int)(120/3), Image.SCALE_SMOOTH)));
 
         citiesSelected = new ArrayList<CityButton>();
@@ -149,6 +151,13 @@ class CityButton {
                         {
                             citiesToSelect++;
                             citiesSelected.get(0).getLabel().setIcon(null);
+                        }
+                        else
+                        {
+                            // TO CODE: based on player turn, append different int from 1 to 4
+                            station = new ImageIcon(getClass().getResource("/Images/Stations/" + 1 + ".png"));
+                            citiesSelected.get(0).getLabel().setIcon(new ImageIcon(station.getImage().getScaledInstance((int)(1720/25), (int)(2300/25), Image.SCALE_SMOOTH)));
+                            citiesSelected.get(0).getLabel().setBounds(x,y+5,(int)(1720/25), (int)(2300/25));
                         }
                     }
                     citiesSelected.clear();

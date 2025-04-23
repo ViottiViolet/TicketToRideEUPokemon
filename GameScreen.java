@@ -16,6 +16,7 @@ public class GameScreen extends JFrame {
     private final JLabel textBoxLabel;
 
     private final JLabel black, blue, green, orange, pink, red, white, yellow, wild, back;
+    private final JLabel routeback;
 
     private final ImageIcon drawbtn, drawhover;
     private final ImageIcon invenbtn, invenhover;
@@ -26,6 +27,7 @@ public class GameScreen extends JFrame {
     private final ImageIcon stationBtn, stationhighlight;
     private final ImageIcon textBox;
     private final ImageIcon blackImg, blueImg, greenImg, orangeImg, pinkImg, redImg, whiteImg, yellowImg, wildImg, backImg;
+    private final ImageIcon routebackImg;
 
     private final int buttonHeight, buttonWidth;
     private final int cardHeight, cardWidth;
@@ -69,6 +71,7 @@ public class GameScreen extends JFrame {
         wildImg = new ImageIcon(getClass().getResource("/Images/Cards/wild.png"));
         yellowImg = new ImageIcon(getClass().getResource("/Images/Cards/yellow.png"));
         backImg = new ImageIcon(getClass().getResource("/Images/Cards/back.png"));
+        routebackImg =  new ImageIcon(getClass().getResource("/Images/Game/RouteCardBack.png"));
 
         buttonHeight = 46;
         buttonWidth = 129;
@@ -96,6 +99,7 @@ public class GameScreen extends JFrame {
         wild = new JLabel(new ImageIcon(wildImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         yellow = new JLabel(new ImageIcon(yellowImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         back = new JLabel(new ImageIcon(backImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        routeback = new JLabel(new ImageIcon(routebackImg.getImage().getScaledInstance((int)(433), (int)(577), Image.SCALE_SMOOTH)));
 
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -227,6 +231,7 @@ public class GameScreen extends JFrame {
         inven = false;
 
         add(back);
+        add(routeback);
 
         add(black);
         add(blue);
@@ -272,6 +277,8 @@ public class GameScreen extends JFrame {
 
         back.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/6),(int)(cardHeight/6));
         back.setVisible(false);
+        routeback.setBounds(getWidth()-1370,getHeight()-700,(int)(433*1.6),(int)(577*1.2));
+        routeback.setVisible(false);
 
         black.setBounds(40,150,(int)(cardWidth/6),(int)(cardHeight/6));
         blue.setBounds(200,150,(int)(cardWidth/6),(int)(cardHeight/6));
@@ -306,6 +313,7 @@ public class GameScreen extends JFrame {
         if (draw)
         {
              back.setVisible(true);
+             routeback.setVisible(true);
         }
         else if (inven)
         {
@@ -335,6 +343,8 @@ public class GameScreen extends JFrame {
         if (draw)
         {
             back.setVisible(false);
+            routeback.setVisible(false);
+
             draw = false;
         }
         else if (inven)
