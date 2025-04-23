@@ -33,8 +33,8 @@ public class Game {
         longRoutesReader.nextLine();
         while(longRoutesReader.hasNextLine()){
             String[] cardInfo = longRoutesReader.nextLine().split("\t");
-            String cityA = cardInfo[0];
-            String cityB = cardInfo[1];
+            City cityA = new City(cardInfo[0]);
+            City cityB = new City(cardInfo[1]);
             int worth = Integer.parseInt(cardInfo[2]);
             BufferedImage card = null;
             try{
@@ -66,8 +66,8 @@ public class Game {
         routesReader.nextLine();
         while(routesReader.hasNextLine()){
             String[] cardInfo = routesReader.nextLine().split("\t");
-            String cityA = cardInfo[0];
-            String cityB = cardInfo[1];
+            City cityA = new City(cardInfo[0]);
+            City cityB = new City(cardInfo[1]);
             int worth = Integer.parseInt(cardInfo[2]);
             BufferedImage card = null;
             try{
@@ -87,9 +87,9 @@ public class Game {
                 try {
                     cardImage = ImageIO.read(getClass().getResource("/Images/Cards/" + color + ".png"));
                 } catch (IOException e) {
-                    System.out.println("Error loading train card image: " + color);
+                    System.out.println("error loading train card image: " + color);
                 }
-                trainDeck.add(new TrainCard(color, cardImage));
+                trainDeck.add(new TrainCard(color));
             }
         }
        
@@ -99,9 +99,9 @@ public class Game {
             try {
                 cardImage = ImageIO.read(getClass().getResource("/Images/Cards/wild.png"));
             } catch (IOException e) {
-                System.out.println("Error loading wild card image");
+                System.out.println("error loading wild card image");
             }
-            trainDeck.add(new TrainCard("wild", cardImage));
+            trainDeck.add(new TrainCard("wild"));
         }
        
         //shuffle deck
