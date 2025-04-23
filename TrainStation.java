@@ -5,6 +5,7 @@ public class TrainStation
     private Railroad assimilated;
  
     private int playerNum;
+
     public TrainStation (int x)
     {
         playerNum =x;
@@ -17,6 +18,13 @@ public class TrainStation
     playerNum = x;
      location = a;
         
+
+    public TrainStation(int x, City l)
+    {
+       
+        playerNum = x;
+        location = l;
+ 
 
     }
 

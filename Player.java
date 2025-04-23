@@ -12,7 +12,7 @@ public class Player implements Comparable
     private int score;
     private HashMap<String, Stack<TrainCard>> trainCards;
     private ArrayList <TicketCard> routeCards;
-    private ArrayList completedRoutes;
+    private ArrayList<Railroad> completedRoutes;
     private Boolean express; 
     private Graph graph;
     private int playerNum;
@@ -185,5 +185,29 @@ public class Player implements Comparable
             return trains.size();
         }
 
+    public void addCompletedRoute(Railroad r) 
+    {
+        completedRoutes.add(r);
+    }
+
+    public void addScore(int length) 
+    {
+        if(length == 1 || length == 2)
+            score += length;
+        if (length == 3)
+            score += 4;
+        if (length == 4)
+            score += 7;
+        if (length== 6)
+            score += 15;
+        if (length == 8)
+            score += 21;
+    }
+
+    public void removeTrains(int length) 
+    {
+        for (int i = 0; i < length; i++)
+            trains.pop();
+    }
 
 }
