@@ -61,8 +61,8 @@ public class CityButtons {
         cityList.add(new CityButton(1403-x, 808-y, p, "Athina"));
         cityList.add(new CityButton(1575-x, 743-y, p, "Constantinople"));
         cityList.add(new CityButton(1674-x, 810-y, p, "Angora"));
-        cityList.add(new CityButton(1778-x, 780-y, p, "Bruzurum"));
-        cityList.add(new CityButton(1515-x, 842-y, p, "Smyma"));
+        cityList.add(new CityButton(1778-x, 780-y, p, "Erzurum"));
+        cityList.add(new CityButton(1515-x, 842-y, p, "Smyrna"));
         
     }
 
