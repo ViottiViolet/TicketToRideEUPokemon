@@ -7,9 +7,48 @@ public class Game {
     private Stack <TrainCard> deck;
     public static ArrayList<TicketCard> longRoutes = new ArrayList<>();
     public static ArrayList<TicketCard> normRoutes = new ArrayList<>();
+    public static Graph boardGraph = new Graph();
+
 
     public Game() {
     
+    boardGraph.addVertex("Lisboa");
+    boardGraph.addVertex("Cadiz");
+    boardGraph.addVertex("Madrid");
+    boardGraph.addVertex("Barcelona");
+    boardGraph.addVertex("Pamplona");
+    boardGraph.addVertex("Marseille");
+    boardGraph.addVertex("Paris");
+    boardGraph.addVertex("Brest");
+    boardGraph.addVertex("Zurich");
+    boardGraph.addVertex("Dieppe");
+    boardGraph.addVertex("London");
+    boardGraph.addVertex("Bruxelles");
+    boardGraph.addVertex("Amsterdam");
+    boardGraph.addVertex("Essen");
+    boardGraph.addVertex("Frankfurt");
+    boardGraph.addVertex("Monchen");
+    boardGraph.addVertex("Venezela");
+    boardGraph.addVertex("Roma");
+    boardGraph.addVertex("Palermo");
+    boardGraph.addVertex("Brindist");
+    boardGraph.addVertex("Berlin");
+    boardGraph.addVertex("Zagrab");
+    boardGraph.addVertex("Sarajevo");
+    boardGraph.addVertex("Wein");
+    boardGraph.addVertex("Kobenhavn");
+    boardGraph.addVertex("Budapest");
+    boardGraph.addVertex("Danzig");
+    boardGraph.addVertex("Athina");
+    boardGraph.addVertex("Warszawa");
+    boardGraph.addVertex("Bucuresti");
+    boardGraph.addVertex("Sevastopol");
+    boardGraph.addVertex("Constantinople");
+    boardGraph.addVertex("Angora");
+    boardGraph.addVertex("Smyma");
+
+
+
         //scanners
         Scanner longRoutesReader = null;
         Scanner routesReader = null;
