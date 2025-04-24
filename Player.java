@@ -45,10 +45,12 @@ public class Player implements Comparable
          usedStations = new ArrayList <TrainStation>();
 
     }
+
     public int numRoutesComplete()
     {
         return completedRoutes.size();
     }
+    
     public int compareTo(Object o) {
        int difference = score-((Player)o).getScore();
        if ( difference !=0)
