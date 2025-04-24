@@ -1,21 +1,23 @@
-import java.util.*;
-
 public class GameState {
     
     public static Player[] players;
     private Game game;
     private int playerLastTurnIndex;
-    private int currentPlayer;
+    public static int currentPlayer = 1;
     public static int turn;
     public static int gamestate; 
     private boolean lastTurn;
     public static int[] score;
     
     public GameState(Game g) {
-        players = new Player[]{new Player(1), new Player(2), new Player(3), new Player(4)};
+        //players = new Player[]{new Player(1), new Player(2), new Player(3), new Player(4)};
         lastTurn = false;
-        currentPlayer = 0;
         game = g;
+    }
+
+    public static void makePlayers()
+    {
+        players = new Player[]{new Player(1), new Player(2), new Player(3), new Player(4)};
     }
 
     public boolean checkGameEnd() {
@@ -29,12 +31,12 @@ public class GameState {
         return false;
     }
 
-    public void nextTurn() {
+    public static void nextTurn() {
         boolean isRoutePurchased = false;
         Railroad routePurchased = null;
         //HashMap<TrainCard,Integer> playerCards; 
 
-        for(Railroad r : game.getRailroads()) { //check each route
+        /*for(Railroad r : game.getRailroads()) { //check each route
             if(!isRoutePurchased) {
                 TrainCard[] playerCards = players[currentPlayer].getTrainCards(); //need to add getTrainCards() method that gets player's cards
                 boolean canAfford = true;
@@ -55,24 +57,25 @@ public class GameState {
                     System.out.println("route " + r + " can't afford");
                 }
             }
-        }
+        }*/
 
-        if(routePuchased != null) {
-            if(!routePurchased.getIsOwned())
+        if(routePurchased != null) {
+            if(!routePurchased.getIsOwned()) {}
                 //add route to player's inventory
         }
 
-        if(lastTurn == false) 
+        /*if(lastTurn == false) 
         {
             checkGameEnd();
-        }
+        }*/
         
         currentPlayer = (currentPlayer + 1) % 4;
+        if (currentPlayer == 0) currentPlayer = 4;
         
-        if(lastTurn && (currentPlayer == playerLastTurnIndex)) 
+        /*if(lastTurn && (currentPlayer == playerLastTurnIndex)) 
         {
             gameEnd();
-        }
+        }*/
     }
     
     public void gameEnd() {
@@ -81,6 +84,11 @@ public class GameState {
             score[i] = players[i].getScore();
         }
         //set screen to endscreen
+    }
+
+    public static int getTurn()
+    {
+        return currentPlayer;
     }
 
 }

@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class CityButtons {
 
-    private ArrayList<CityButton> cityList;
+    private static ArrayList<CityButton> cityList;
     
     public CityButtons(JPanel p)
     {
@@ -75,11 +75,11 @@ public class CityButtons {
         CityButton.setCities(x);
     }
 
-    public void disableAll()
+    public static void disableAll()
     {
         for (CityButton c : cityList)
         {
-            c.getLabel().setVisible(false);
+            if (!c.getPurchased()) c.getLabel().setVisible(false);
         }
     }
 
@@ -93,12 +93,14 @@ class CityButton {
     private final JLabel glowLabel;
 
     private final String name;
+    private boolean isPurchased;
 
     static private int citiesToSelect;
     static private ArrayList<CityButton> citiesSelected;
     static private boolean chooseRoute;
 
     private int choice;
+    private static int turn;
 
     public CityButton(int x, int y, JPanel p, String n)
     {
@@ -108,6 +110,7 @@ class CityButton {
 
         citiesSelected = new ArrayList<CityButton>();
         choice = 1;
+        turn = 1;
 
         glowLabel.addMouseListener(new MouseAdapter() {
            
@@ -155,13 +158,17 @@ class CityButton {
                         else
                         {
                             // TO CODE: based on player turn, append different int from 1 to 4
-                            station = new ImageIcon(getClass().getResource("/Images/Stations/" + 1 + ".png"));
+                            station = new ImageIcon(getClass().getResource("/Images/Stations/" + (GameState.getTurn()) + ".png"));
                             citiesSelected.get(0).getLabel().setIcon(new ImageIcon(station.getImage().getScaledInstance((int)(1720/25), (int)(2300/25), Image.SCALE_SMOOTH)));
                             citiesSelected.get(0).getLabel().setBounds(x,y+5,(int)(1720/25), (int)(2300/25));
+                            isPurchased = true;
+                            CityButtons.disableAll();
+                            GameState.players[GameState.getTurn()-1].placeTrainStation(new City("ih"));
+                            GameScreen.nextTurn();
+                            GameState.nextTurn();
                         }
                     }
                     citiesSelected.clear();
-                    
                 }
             
         });
@@ -173,6 +180,7 @@ class CityButton {
         glowLabel.setBounds(x,y,(int)(130/3), (int)(130/3));
 
         name = n;
+        isPurchased = false;
     }
 
     public CityButton getCity()
@@ -195,6 +203,10 @@ class CityButton {
         citiesToSelect = x;
         if (x == 2) chooseRoute = true;
         else chooseRoute = false;
+    }
+
+    public boolean getPurchased() {
+        return isPurchased;
     }
 
 }

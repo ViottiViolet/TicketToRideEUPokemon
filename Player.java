@@ -19,27 +19,26 @@ public class Player implements Comparable
     private Stack <TrainStation> trainStations; 
     private ArrayList <TrainStation> usedStations; 
     private Stack <Train> trains;
-    
-    
 
     public Player(int x)
     { 
         playerNum = x;
-        trainStations = new Stack <TrainStation>();
-        for(int i = 0; i<3; i++)
+        trainStations = new Stack<TrainStation>();
+        trains = new Stack<Train>();
+        for(int i = 0; i<4; i++)
         {
             trainStations.push(new TrainStation(playerNum));
         }
         for(int i = 0; i<45; i++)
         {
-            trains.push(new Train (playerNum));
+            trains.push(new Train(playerNum));
         }
         
        playerNum = x;
          image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
          score = 0;
         trainCards = new HashMap<String, Stack<TrainCard>>();
-        routeCards = new ArrayList();
+        routeCards = new ArrayList<TicketCard>();
          completedRoutes = new ArrayList();
          express = false;
          usedStations = new ArrayList <TrainStation>();
@@ -65,14 +64,11 @@ public class Player implements Comparable
     public void placeTrainStation(City a)
     {
         TrainStation station = trainStations.pop();
-        station = new TrainStation(playerNum,a);
+        station = new TrainStation(playerNum);
+        station.setCity(a);
        
         usedStations.add(station);
-
-    
-
-
-
+        //System.out.println(playerNum + " has " + (4 - usedStations.size()));
     }
 
     public int calculateLongestPath()//TODO
@@ -86,9 +82,9 @@ public class Player implements Comparable
         ArrayList <TicketCard> complete = new ArrayList <TicketCard>();
         for(int i =0; i<routeCards.size(); i++)
         {
-            TicketCard card = routeCards.get(i);
+            /*TicketCard card = routeCards.get(i);
             if(graph.isConnected(card.getCityA(), card.getCityB()))
-            complete.add(card);
+            complete.add(card);*/
          
         }
 
@@ -114,7 +110,7 @@ public class Player implements Comparable
 
     public ArrayList<TrainCard> buy(Railroad r, int numWilds)
     {
-        ArrayList usedCards = new ArrayList<TrainCard>();
+        ArrayList<TrainCard> usedCards = new ArrayList<TrainCard>();
         String color = r.getColor();
         int price = r.getLength();
         ArrayList <TrainCard> list;
@@ -134,9 +130,6 @@ public class Player implements Comparable
         }
 
         return usedCards;
-
-
-
     }
 
     public boolean canAfford(Railroad r)
@@ -181,9 +174,13 @@ public class Player implements Comparable
     }
     
     public int getNumTrains()
-        {
-            return trains.size();
-        }
+    {
+        return trains.size();
+    }
 
+    public int getNumStations()
+    {
+        return 4 - usedStations.size();
+    }
 
 }
