@@ -5,20 +5,22 @@ import javax.swing.*;
 public class TrainerIcon
 {
 
-    private final int h = 280;
+    private static int h = 280;
 
-    private final ImageIcon profile, bg, train, station;
+    private ImageIcon profile, bg, train, station;
     private int rank;
 
-    private final JLabel bgLabel, profileLabel, nameLabel, trainLabel, stationLabel;
+    private JLabel bgLabel, profileLabel, nameLabel, trainLabel, stationLabel, stationNumLabel;
+    private Player player;
 
-    public TrainerIcon(String name, int r, JPanel p)
+    public TrainerIcon(String name, int r, JPanel p, Player play)
     {
         profile = new ImageIcon(getClass().getResource("/Images/Trainers/" + name + ".png"));
         bg = new ImageIcon(getClass().getResource("/Images/Trainers/" + name + "bg.png"));
         train = new ImageIcon(getClass().getResource("/Images/Game/locomotive highlight.png"));
         station = new ImageIcon(getClass().getResource("/Images/Game/station highlight.png"));
         rank = r;
+        player = play;
 
         nameLabel = new JLabel("PLAYER " + name);
         nameLabel.setFont(new Font("Dialog", Font.BOLD + Font.ITALIC, 20));
@@ -29,7 +31,11 @@ public class TrainerIcon
         bgLabel = new JLabel(new ImageIcon(bg.getImage().getScaledInstance((int)(h - 55), (int)(h/2 + 30), Image.SCALE_SMOOTH)));
 
         trainLabel = new JLabel(new ImageIcon(train.getImage().getScaledInstance((int)(251/4), (int)(201/4), Image.SCALE_SMOOTH)));
+
         stationLabel = new JLabel(new ImageIcon(station.getImage().getScaledInstance((int)(251/4), (int)(201/4), Image.SCALE_SMOOTH)));
+        stationNumLabel = new JLabel(player.getNumStations() + "");
+        stationNumLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+        stationNumLabel.setForeground(Color.BLACK);
 
         addToPanel(p);
         reposition();
@@ -49,12 +55,15 @@ public class TrainerIcon
 
         trainLabel.setBounds(-30, 190*rank - 95, (int)(h/2), (int)(h/2));
         stationLabel.setBounds(80, 190*rank - 100, (int)(h/2), (int)(h/2));
+        stationNumLabel.setText(player.getNumStations() + ""); 
+        stationNumLabel.setBounds(175, 190*rank - 95, (int)(h/2), (int)(h/2));
     }
 
     public void addToPanel(JPanel p) {
         p.add(nameLabel);
         p.add(trainLabel);
         p.add(stationLabel);
+        p.add(stationNumLabel);
         p.add(profileLabel);
         p.add(bgLabel);
     }

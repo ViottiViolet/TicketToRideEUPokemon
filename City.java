@@ -19,7 +19,7 @@ public class City
         return name;
     }
 
-    public void addEdge(City b, int weight) {
+    public void addEdgee(City b, int weight) {
         edges.add(new Railroad(this, b, weight));
     }
 

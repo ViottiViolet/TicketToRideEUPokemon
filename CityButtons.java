@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class CityButtons {
 
-    private ArrayList<CityButton> cityList;
+    private static ArrayList<CityButton> cityList;
     
     public CityButtons(JPanel p)
     {
@@ -61,8 +61,8 @@ public class CityButtons {
         cityList.add(new CityButton(1403-x, 808-y, p, "Athina"));
         cityList.add(new CityButton(1575-x, 743-y, p, "Constantinople"));
         cityList.add(new CityButton(1674-x, 810-y, p, "Angora"));
-        cityList.add(new CityButton(1778-x, 780-y, p, "Bruzurum"));
-        cityList.add(new CityButton(1515-x, 842-y, p, "Smyma"));
+        cityList.add(new CityButton(1778-x, 780-y, p, "Erzurum"));
+        cityList.add(new CityButton(1515-x, 842-y, p, "Smyrna"));
         
     }
 
@@ -75,11 +75,11 @@ public class CityButtons {
         CityButton.setCities(x);
     }
 
-    public void disableAll()
+    public static void disableAll()
     {
         for (CityButton c : cityList)
         {
-            c.getLabel().setVisible(false);
+            if (!c.getPurchased()) c.getLabel().setVisible(false);
         }
     }
 
@@ -93,12 +93,15 @@ class CityButton {
     private final JLabel glowLabel;
 
     private final String name;
+    private boolean isPurchased;
 
     static private int citiesToSelect;
     static private ArrayList<CityButton> citiesSelected;
     static private boolean chooseRoute;
 
     private int choice;
+    private City city;
+    private boolean isBought;
 
     public CityButton(int x, int y, JPanel p, String n)
     {
@@ -108,15 +111,19 @@ class CityButton {
 
         citiesSelected = new ArrayList<CityButton>();
         choice = 1;
+        isPurchased = false;
+        city = new City(n);
 
         glowLabel.addMouseListener(new MouseAdapter() {
            
             @Override
                public void mouseClicked(MouseEvent e) {
                     //glowLabel.setVisible(true);
-                    glowLabel.setIcon(new ImageIcon(glow.getImage().getScaledInstance((int)(120/3), (int)(120/3), Image.SCALE_SMOOTH)));
-
-                    citiesSelected.add(getCity());
+                    if(!isPurchased) 
+                    {
+                        glowLabel.setIcon(new ImageIcon(glow.getImage().getScaledInstance((int)(120/3), (int)(120/3), Image.SCALE_SMOOTH)));
+                        citiesSelected.add(getCity());
+                    }
                     if (--citiesToSelect != 0)
                     {
                         return;
@@ -124,22 +131,36 @@ class CityButton {
 
                     if (chooseRoute)
                     {
-                        String[] options = {"Confirm", "Cancel"};
-                        choice = JOptionPane.showOptionDialog(p,
+                        if (!Graph.isConnected(citiesSelected.get(0).city(), citiesSelected.get(1).city()))
+                        {
+                            System.out.println("ah");
+                            JOptionPane.showMessageDialog(p,
+                                "You've selected two cities which aren't connected to each other. Please try again.",
+                                "Nonadjacent Cities",
+                                JOptionPane.WARNING_MESSAGE);
+                                choice = 1;
+                        }
+                        else 
+                        {
+                            String[] options = {"Confirm", "Cancel"};
+                            choice = JOptionPane.showOptionDialog(p,
                                     "Do you want to purchase the route between " + citiesSelected.get(0).getName() + " and " + citiesSelected.get(1).getName() + "?",
                                     "Route Selected",
                                     JOptionPane.DEFAULT_OPTION,
                                     JOptionPane.WARNING_MESSAGE,
                                     null, options, null);
+                        }
                         if (choice == 1)
                         {
                             citiesToSelect+=2;
                             citiesSelected.get(0).getLabel().setIcon(null);
                             citiesSelected.get(1).getLabel().setIcon(null);
                         }
+                        citiesSelected.clear();
                     }
                     else
                     {
+                        if (isPurchased) return;
                         String[] options = {"Confirm", "Cancel"};
                         choice = JOptionPane.showOptionDialog(p,
                                     "Do you want to place a station on " + citiesSelected.get(0).getName() + "?",
@@ -155,13 +176,17 @@ class CityButton {
                         else
                         {
                             // TO CODE: based on player turn, append different int from 1 to 4
-                            station = new ImageIcon(getClass().getResource("/Images/Stations/" + 1 + ".png"));
+                            station = new ImageIcon(getClass().getResource("/Images/Stations/" + (GameState.getTurn()) + ".png"));
                             citiesSelected.get(0).getLabel().setIcon(new ImageIcon(station.getImage().getScaledInstance((int)(1720/25), (int)(2300/25), Image.SCALE_SMOOTH)));
                             citiesSelected.get(0).getLabel().setBounds(x,y+5,(int)(1720/25), (int)(2300/25));
+                            isPurchased = true;
+                            CityButtons.disableAll();
+                            GameState.players[GameState.getTurn()-1].placeTrainStation(new City("ih"));
+                            GameScreen.nextTurn();
+                            GameState.nextTurn();
                         }
+                        citiesSelected.clear();
                     }
-                    citiesSelected.clear();
-                    
                 }
             
         });
@@ -173,11 +198,17 @@ class CityButton {
         glowLabel.setBounds(x,y,(int)(130/3), (int)(130/3));
 
         name = n;
+        isPurchased = false;
     }
 
     public CityButton getCity()
     {
         return this;
+    }
+
+    public City city()
+    {
+        return city;
     }
     
     public JLabel getLabel()
@@ -197,4 +228,10 @@ class CityButton {
         else chooseRoute = false;
     }
 
+
+    public boolean getPurchased() {
+        return isPurchased;
+    }
+
 }
+
