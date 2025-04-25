@@ -2,6 +2,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class GameScreen extends JFrame {
 
@@ -38,6 +41,8 @@ public class GameScreen extends JFrame {
 
     private static boolean purchase = false;
     private static boolean trainselect, stationselect = false;
+
+    private static int choice=0;
 
     public GameScreen() {
 
@@ -396,6 +401,39 @@ public class GameScreen extends JFrame {
 
     public static void main(String[] args) {
         new GameScreen();
-    }
+        List<String> optionList = new ArrayList<String>();
+        optionList.add("discard 1");
+        optionList.add("discard 2");
+        optionList.add("discard 3");
+        optionList.add("discard 4");
+        Object[] options =  optionList.toArray();
+         JList<Object> list = new JList<>(options);
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+        JScrollPane scrollPane = new JScrollPane(list);
+                
+                                    choice = JOptionPane.showOptionDialog(null, scrollPane,
+                                    "Destination cards",
+                                    JOptionPane.OK_CANCEL_OPTION,
+                                    JOptionPane.PLAIN_MESSAGE,
+                                    null, null, null);
+                                    choice++;
+                                    
+                                    if (choice == 1 ) {
+                                        Object selected = list.getSelectedValue();
+                                       optionList.remove(optionList.indexOf(selected));
+                                       options =  optionList.toArray();
+                                       list = new JList<>(options);
+                                       list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+                                        scrollPane = new JScrollPane(list);
+                                         JOptionPane.showOptionDialog(null, scrollPane,
+                                                    "Destination Cards",
+                                                    JOptionPane.OK_CANCEL_OPTION,
+                                                    JOptionPane.PLAIN_MESSAGE,
+                                                    null, null, null);
+                
+                                    }
+
+}
 }
