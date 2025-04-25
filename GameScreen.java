@@ -32,7 +32,7 @@ public class GameScreen extends JFrame {
     private static int buttonHeight, buttonWidth;
     private static int cardHeight, cardWidth;
 
-    static TrainerIcon a, b, c, d;
+    private static TrainerIcon a, b, c, d;
     CityButtons cityButtons;
     boolean draw, inven;
 
@@ -142,6 +142,9 @@ public class GameScreen extends JFrame {
                 //System.out.println("open purchase");
                 
                 purchase = true;
+                stationselect = false;
+                trainselect = false;
+                textLabel.setText("Click the train to purchase a route or the station to place a train station!");
                 textLabel.setVisible(true);
             }
 

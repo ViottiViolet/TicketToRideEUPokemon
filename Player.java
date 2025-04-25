@@ -25,7 +25,7 @@ public class Player implements Comparable
         playerNum = x;
         trainStations = new Stack<TrainStation>();
         trains = new Stack<Train>();
-        for(int i = 0; i<4; i++)
+        for(int i = 0; i<3; i++)
         {
             trainStations.push(new TrainStation(playerNum));
         }
@@ -39,7 +39,7 @@ public class Player implements Comparable
          score = 0;
         trainCards = new HashMap<String, Stack<TrainCard>>();
         routeCards = new ArrayList<TicketCard>();
-         completedRoutes = new ArrayList();
+         completedRoutes = new ArrayList<>();
          express = false;
          usedStations = new ArrayList <TrainStation>();
 
@@ -181,7 +181,7 @@ public class Player implements Comparable
 
     public int getNumStations()
     {
-        return 4 - usedStations.size();
+        return 3 - usedStations.size();
     }
 
     public void addCompletedRoute(Railroad r) 

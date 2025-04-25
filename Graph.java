@@ -2,12 +2,13 @@ import java.util.ArrayList;
 
 public class Graph
 {
-    private static ArrayList<String> connectedCityHolder;
-    private ArrayList<City> vertices;
+    private static ArrayList<String> connectedCityHolder = new ArrayList<String>();
+    private ArrayList<City> vertices = new ArrayList<City>();
 
     public Graph ()
     {
-        vertices = new ArrayList<>();
+        connectedCityHolder = new ArrayList<String>();
+        vertices = new ArrayList<City>();
     }
 
     public City addVertex (String name)
@@ -25,7 +26,7 @@ public class Graph
     }
     //hello
 
-    public void depthFirstTraversal(City start, ArrayList<City> visitedVertices)
+    public static void depthFirstTraversal(City start, ArrayList<City> visitedVertices)
     {
         connectedCityHolder.add(start.getName());
         for (Railroad r: start.getEdges())
@@ -40,7 +41,7 @@ public class Graph
         }
     }
 
-    public boolean isConnected(City a, City b)
+    public static boolean isConnected(City a, City b)
     {
         ArrayList<City> visited = new ArrayList<City>();
         boolean isConnected = false;

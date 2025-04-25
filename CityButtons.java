@@ -100,7 +100,8 @@ class CityButton {
     static private boolean chooseRoute;
 
     private int choice;
-    private static int turn;
+    private City city;
+    private boolean isBought;
 
     public CityButton(int x, int y, JPanel p, String n)
     {
@@ -110,16 +111,19 @@ class CityButton {
 
         citiesSelected = new ArrayList<CityButton>();
         choice = 1;
-        turn = 1;
+        isPurchased = false;
+        city = new City(n);
 
         glowLabel.addMouseListener(new MouseAdapter() {
            
             @Override
                public void mouseClicked(MouseEvent e) {
                     //glowLabel.setVisible(true);
-                    glowLabel.setIcon(new ImageIcon(glow.getImage().getScaledInstance((int)(120/3), (int)(120/3), Image.SCALE_SMOOTH)));
-
-                    citiesSelected.add(getCity());
+                    if(!isPurchased) 
+                    {
+                        glowLabel.setIcon(new ImageIcon(glow.getImage().getScaledInstance((int)(120/3), (int)(120/3), Image.SCALE_SMOOTH)));
+                        citiesSelected.add(getCity());
+                    }
                     if (--citiesToSelect != 0)
                     {
                         return;
@@ -127,22 +131,36 @@ class CityButton {
 
                     if (chooseRoute)
                     {
-                        String[] options = {"Confirm", "Cancel"};
-                        choice = JOptionPane.showOptionDialog(p,
+                        if (!Graph.isConnected(citiesSelected.get(0).city(), citiesSelected.get(1).city()))
+                        {
+                            System.out.println("ah");
+                            JOptionPane.showMessageDialog(p,
+                                "You've selected two cities which aren't connected to each other. Please try again.",
+                                "Nonadjacent Cities",
+                                JOptionPane.WARNING_MESSAGE);
+                                choice = 1;
+                        }
+                        else 
+                        {
+                            String[] options = {"Confirm", "Cancel"};
+                            choice = JOptionPane.showOptionDialog(p,
                                     "Do you want to purchase the route between " + citiesSelected.get(0).getName() + " and " + citiesSelected.get(1).getName() + "?",
                                     "Route Selected",
                                     JOptionPane.DEFAULT_OPTION,
                                     JOptionPane.WARNING_MESSAGE,
                                     null, options, null);
+                        }
                         if (choice == 1)
                         {
                             citiesToSelect+=2;
                             citiesSelected.get(0).getLabel().setIcon(null);
                             citiesSelected.get(1).getLabel().setIcon(null);
                         }
+                        citiesSelected.clear();
                     }
                     else
                     {
+                        if (isPurchased) return;
                         String[] options = {"Confirm", "Cancel"};
                         choice = JOptionPane.showOptionDialog(p,
                                     "Do you want to place a station on " + citiesSelected.get(0).getName() + "?",
@@ -167,8 +185,8 @@ class CityButton {
                             GameScreen.nextTurn();
                             GameState.nextTurn();
                         }
+                        citiesSelected.clear();
                     }
-                    citiesSelected.clear();
                 }
             
         });
@@ -186,6 +204,11 @@ class CityButton {
     public CityButton getCity()
     {
         return this;
+    }
+
+    public City city()
+    {
+        return city;
     }
     
     public JLabel getLabel()
