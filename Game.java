@@ -156,14 +156,14 @@ public class Game {
             City cityA = new City(cardInfo[0]);
             City cityB = new City(cardInfo[1]);
             int worth = Integer.parseInt(cardInfo[2]);
-            System.out.println(cityA.getName()+cityB.getName());
+            
             BufferedImage card = null;
             try{
                card = ImageIO.read(GameState.class.getResource("/Images/Routes/" + cityA.getName() + "- " + cityB.getName() + ".png"));
             } catch(IOException e){
                System.out.println("game card error");
             }
-             System.out.println("yoyo");
+             
             normRoutes.add(new TicketCard(card, cityA, cityB, worth));
         }
     }
