@@ -1,13 +1,13 @@
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.*;
 
 
 public class GameScreen extends JFrame {
-
+private final Game game;
     private static JLabel drawLabel;
     private static JLabel invenLabel;
     private static JLabel purchLabel;
@@ -41,10 +41,15 @@ public class GameScreen extends JFrame {
 
     private static boolean purchase = false;
     private static boolean trainselect, stationselect = false;
+    private GameState gameState;
+    private static int choice = 1; 
 
-    private static int choice=0;
+   
 
     public GameScreen() {
+        game = new Game();
+       
+
 
         setTitle("Ticket to Ride Europe: Pokemon Express GAME");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -400,6 +405,9 @@ public class GameScreen extends JFrame {
     }
 
     public static void main(String[] args) {
+       
+    
+
         new GameScreen();
         List<String> optionList = new ArrayList<String>();
         optionList.add("discard 1");
@@ -434,6 +442,7 @@ public class GameScreen extends JFrame {
                                                     null, null, null);
                 
                                     }
+
 
 }
 }
