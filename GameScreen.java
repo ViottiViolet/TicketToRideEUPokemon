@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 
 public class GameScreen extends JFrame {
-private Game game;
+private final Game game;
     private static JLabel drawLabel;
     private static JLabel invenLabel;
     private static JLabel purchLabel;
@@ -41,11 +41,18 @@ private Game game;
 
     private static boolean purchase = false;
     private static boolean trainselect, stationselect = false;
+    private GameState gameState;
+
+    public GameScreen(Game game, GameState gameState) {
+    this.game = game;
+    this.gameState = gameState;
+
 
     private static int choice=0;
 
     public GameScreen() {
         game = new Game();
+
 
         setTitle("Ticket to Ride Europe: Pokemon Express GAME");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -401,6 +408,7 @@ private Game game;
     }
 
     public static void main(String[] args) {
+
         new GameScreen();
         List<String> optionList = new ArrayList<String>();
         optionList.add("discard 1");
@@ -435,6 +443,7 @@ private Game game;
                                                     null, null, null);
                 
                                     }
+
 
 }
 }

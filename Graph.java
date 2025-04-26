@@ -39,8 +39,17 @@ public class Graph
     //public Railroad (String color, int length, boolean istunnel, int engineCount, City a, City b)
     public void addEdge(String color, int length, boolean isTunnel, int engineCount, City a, City b)
     {
-        int x = verticies.indexOf(a);
-        int y = verticies.indexOf(b);
+        int x =-1;
+        int y=-1;
+        for(int i = 0; i<verticies.size();i++)
+        {
+            if(verticies.get(i).getName().equals(a.getName()))
+            x=i;
+            if(verticies.get(i).getName().equals(b.getName()))
+            y=i;
+
+        }
+        
         City city1 = verticies.get(x);
         City city2 = verticies.get(y);
         city1.addTrack(new Railroad(color, length, isTunnel, engineCount, city1, b));

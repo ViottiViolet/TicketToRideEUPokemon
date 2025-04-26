@@ -37,7 +37,7 @@ public class Game {
     boardGraph.addVertex("Venezela");
     boardGraph.addVertex("Roma");
     boardGraph.addVertex("Palermo");
-    boardGraph.addVertex("Brindist");
+    boardGraph.addVertex("Brindisi");
     boardGraph.addVertex("Berlin");
     boardGraph.addVertex("Zagrab");
     boardGraph.addVertex("Sarajevo");
@@ -51,12 +51,26 @@ public class Game {
     boardGraph.addVertex("Sevastopol");
     boardGraph.addVertex("Constantinople");
     boardGraph.addVertex("Angora");
-    boardGraph.addVertex("Smyma");
+    boardGraph.addVertex("Smyrna");
+    boardGraph.addVertex("Edinburgh");
+    boardGraph.addVertex("Stockholm");
+    boardGraph.addVertex("Sofia");
+    boardGraph.addVertex("Kyiv");
+    boardGraph.addVertex("Wilno");
+    boardGraph.addVertex("Riga");
+    boardGraph.addVertex("Petrograd");
+     boardGraph.addVertex("Smolensk");
+      boardGraph.addVertex("Kharkov");
+      boardGraph.addVertex("Moskva");
+    boardGraph.addVertex("Rostov");
+    boardGraph.addVertex("Sochi");
+    boardGraph.addVertex("Erzurum");
+    boardGraph.addVertex("Snyrna");
     System.out.println("helloo");
 
 
 
-        boardGraph = new Graph();
+      //  boardGraph = new Graph();
         trainDeck = new Stack<>();
         faceUpCards = new ArrayList<>();
         initializeTrainDeck();
@@ -76,31 +90,31 @@ public class Game {
            System.out.println("game reader error");
         }
        
-      railroadReader.nextLine();
+      //railroadReader.nextLine();
         while(railroadReader.hasNextLine())
         {
             String str = railroadReader.nextLine();
-            System.out.println(str);
-            String []info1 = str.split("    ");
-            for(String rts: info1)
-            {
-                System.out.println(rts+"hello");
-            }
+            //System.out.println(str);
+            String []info1 = str.split("\t");
+           
             String color = info1[0];
             
             int length = Integer.parseInt(info1[1]);
-            System.out.println(length);
-            System.out.println("HHHHSJKDNKJDJSJ");
+            //
+           
+            //
             boolean isTunnel = info1[2].equals("yes");
             int engineCount = Integer.parseInt(info1[3]);
-            City a = new City (info1[5]);
-            City b = new City(info1[6]);
+            City a = new City (info1[4]);
+            City b = new City(info1[5]);
             boardGraph.addEdge(color, length, isTunnel, engineCount, a, b);
 
         }    
-            longRoutesReader.nextLine();
+           // longRoutesReader.nextLine();
         while(longRoutesReader.hasNextLine()){
+            
             String[] cardInfo = longRoutesReader.nextLine().split("\t");
+            System.out.println("yolo");
             City cityA = new City(cardInfo[0]);
             City cityB = new City(cardInfo[1]);
             int worth = Integer.parseInt(cardInfo[2]);
@@ -131,7 +145,7 @@ public class Game {
         }
 
         //reading in normal routes
-        routesReader.nextLine();
+       // routesReader.nextLine();
         while(routesReader.hasNextLine()){
             String[] cardInfo = routesReader.nextLine().split("\t");
             City cityA = new City(cardInfo[0]);
