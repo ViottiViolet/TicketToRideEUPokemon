@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 public class GameScreen extends JFrame {
-private Game game;
+private final Game game;
     private static JLabel drawLabel;
     private static JLabel invenLabel;
     private static JLabel purchLabel;
@@ -38,9 +38,12 @@ private Game game;
 
     private static boolean purchase = false;
     private static boolean trainselect, stationselect = false;
+    private GameState gameState;
 
-    public GameScreen() {
-        game = new Game();
+    public GameScreen(Game game, GameState gameState) {
+    this.game = game;
+    this.gameState = gameState;
+
 
         setTitle("Ticket to Ride Europe: Pokemon Express GAME");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -396,7 +399,9 @@ private Game game;
     }
 
     public static void main(String[] args) {
-        new GameScreen();
+        Game game = new Game();
+        new GameScreen(game,new GameState(game));
+
     }
 
 }
