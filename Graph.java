@@ -53,7 +53,7 @@ public class Graph
         City city1 = verticies.get(x);
         City city2 = verticies.get(y);
         city1.addTrack(new Railroad(color, length, isTunnel, engineCount, city1, b));
-        city1.addTrack(new Railroad(color, length, isTunnel, engineCount, city2, a));
+        city2.addTrack(new Railroad(color, length, isTunnel, engineCount, city2, a));
 
 
 
@@ -91,16 +91,22 @@ public class Graph
     public static boolean isConnected (City a, City b)
     {
         boolean connected = false;
-         int i = verticies.indexOf(a);
+         int i=0;
+         for(City x : verticies)
+         {
+            if(x.getName().equals(a.getName()))
+            break;
+            i++;
+         }
+
+         
          City A = verticies.get(i);
+         
         ArrayList <Railroad> ACity = A.getEdges();
+      
         for(Railroad r: ACity)
         {
-            System.out.println(r);
-        }
-        for(Railroad r: ACity)
-        {
-            if(r.getCityA().equals(b)|| r.getCityB().equals(b))
+            if(r.getCityA().getName().equals(b.getName())|| r.getCityB().getName().equals(b.getName()))
             connected = true;
 
         }
