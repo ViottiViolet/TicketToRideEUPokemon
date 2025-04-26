@@ -17,7 +17,8 @@ public class Game {
 
 
     public Game() {
-     boardGraph = new Graph();
+    deck = new Stack<>();
+    boardGraph = new Graph();
     boardGraph.addVertex("Lisboa");
     boardGraph.addVertex("Cadiz");
     boardGraph.addVertex("Madrid");
@@ -114,19 +115,24 @@ public class Game {
         while(longRoutesReader.hasNextLine()){
             
             String[] cardInfo = longRoutesReader.nextLine().split("\t");
-            System.out.println("yolo");
+            System.out.println("long Routes read");//yolo
             City cityA = new City(cardInfo[0]);
             City cityB = new City(cardInfo[1]);
             int worth = Integer.parseInt(cardInfo[2]);
             BufferedImage card = null;
+            
             try{
-               card = ImageIO.read(GameState.class.getResource("/Images/Long Routes/" + cityA + "- " + cityB + ".png"));
+               card = ImageIO.read(GameState.class.getResource("/Images/Long Routes/" + cityA.getName()+ "- " + cityB.getName() + ".png"));
             } catch(IOException e){
                System.out.println("game card error");
             }
+            
             longRoutes.add(new TicketCard(card, cityA, cityB, worth));
+           
 
-            for (int i = 0; i <14; i++)
+            
+        }
+        for (int i = 0; i <14; i++)
             {
                 if (i<12)
                 {
@@ -142,7 +148,6 @@ public class Game {
                 deck.push(new TrainCard("yellow"));
 
             }
-        }
 
         //reading in normal routes
        // routesReader.nextLine();
@@ -151,12 +156,14 @@ public class Game {
             City cityA = new City(cardInfo[0]);
             City cityB = new City(cardInfo[1]);
             int worth = Integer.parseInt(cardInfo[2]);
+            System.out.println(cityA.getName()+cityB.getName());
             BufferedImage card = null;
             try{
-               card = ImageIO.read(GameState.class.getResource("/Images/Routes/" + cityA + "- " + cityB + ".png"));
+               card = ImageIO.read(GameState.class.getResource("/Images/Routes/" + cityA.getName() + "- " + cityB.getName() + ".png"));
             } catch(IOException e){
                System.out.println("game card error");
             }
+             System.out.println("yoyo");
             normRoutes.add(new TicketCard(card, cityA, cityB, worth));
         }
     }
