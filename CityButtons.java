@@ -101,7 +101,6 @@ class CityButton {
 
     private int choice;
     private City city;
-    private boolean isBought;
 
     public CityButton(int x, int y, JPanel p, String n)
     {
@@ -119,11 +118,15 @@ class CityButton {
             @Override
                public void mouseClicked(MouseEvent e) {
                     //glowLabel.setVisible(true);
-                    if(!isPurchased) 
+                    
+                    if (!isPurchased)
                     {
                         glowLabel.setIcon(new ImageIcon(glow.getImage().getScaledInstance((int)(120/3), (int)(120/3), Image.SCALE_SMOOTH)));
                         citiesSelected.add(getCity());
                     }
+                    else if (isPurchased && chooseRoute) citiesSelected.add(getCity());
+                    else return;
+                    
                     if (--citiesToSelect != 0)
                     {
                         return;
@@ -234,4 +237,3 @@ class CityButton {
     }
 
 }
-

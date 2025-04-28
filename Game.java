@@ -7,21 +7,14 @@ public class Game {
     private Stack <TrainCard> deck;
     public static ArrayList<TicketCard> longRoutes = new ArrayList<>();
     public static ArrayList<TicketCard> normRoutes = new ArrayList<>();
-     private Stack <TrainCard> trainDeck = new Stack<>();
+    private Stack <TrainCard> trainDeck = new Stack<>();
     private ArrayList<TrainCard> faceUpCards = new ArrayList<>();
     private static final String[] CARD_COLORS = {"black", "blue", "green", "orange", "pink", "red", "white", "yellow", };
     private static Graph boardGraph;
 
-
-    
-
-<<<<<<< HEAD
-    private ArrayList<TrainCard> faceUpCards = new ArrayList<>();
-    private static final String[] CARD_COLORS = {"black", "blue", "green", "orange", "pink", "red", "white", "yellow"};
-    private Graph gameGraph;
-
     public Game() {
-    
+        deck = new Stack<>();
+        boardGraph = new Graph();
         boardGraph.addVertex("Lisboa");
         boardGraph.addVertex("Cadiz");
         boardGraph.addVertex("Madrid");
@@ -41,7 +34,7 @@ public class Game {
         boardGraph.addVertex("Venezela");
         boardGraph.addVertex("Roma");
         boardGraph.addVertex("Palermo");
-        boardGraph.addVertex("Brindist");
+        boardGraph.addVertex("Brindisi");
         boardGraph.addVertex("Berlin");
         boardGraph.addVertex("Zagrab");
         boardGraph.addVertex("Sarajevo");
@@ -55,80 +48,35 @@ public class Game {
         boardGraph.addVertex("Sevastopol");
         boardGraph.addVertex("Constantinople");
         boardGraph.addVertex("Angora");
-        boardGraph.addVertex("Smyma");
-
-        gameGraph = new Graph();
-=======
-
-    public Game() {
-    deck = new Stack<>();
-    boardGraph = new Graph();
-    boardGraph.addVertex("Lisboa");
-    boardGraph.addVertex("Cadiz");
-    boardGraph.addVertex("Madrid");
-    boardGraph.addVertex("Barcelona");
-    boardGraph.addVertex("Pamplona");
-    boardGraph.addVertex("Marseille");
-    boardGraph.addVertex("Paris");
-    boardGraph.addVertex("Brest");
-    boardGraph.addVertex("Zurich");
-    boardGraph.addVertex("Dieppe");
-    boardGraph.addVertex("London");
-    boardGraph.addVertex("Bruxelles");
-    boardGraph.addVertex("Amsterdam");
-    boardGraph.addVertex("Essen");
-    boardGraph.addVertex("Frankfurt");
-    boardGraph.addVertex("Monchen");
-    boardGraph.addVertex("Venezela");
-    boardGraph.addVertex("Roma");
-    boardGraph.addVertex("Palermo");
-    boardGraph.addVertex("Brindisi");
-    boardGraph.addVertex("Berlin");
-    boardGraph.addVertex("Zagrab");
-    boardGraph.addVertex("Sarajevo");
-    boardGraph.addVertex("Wein");
-    boardGraph.addVertex("Kobenhavn");
-    boardGraph.addVertex("Budapest");
-    boardGraph.addVertex("Danzig");
-    boardGraph.addVertex("Athina");
-    boardGraph.addVertex("Warszawa");
-    boardGraph.addVertex("Bucuresti");
-    boardGraph.addVertex("Sevastopol");
-    boardGraph.addVertex("Constantinople");
-    boardGraph.addVertex("Angora");
-    boardGraph.addVertex("Smyrna");
-    boardGraph.addVertex("Edinburgh");
-    boardGraph.addVertex("Stockholm");
-    boardGraph.addVertex("Sofia");
-    boardGraph.addVertex("Kyiv");
-    boardGraph.addVertex("Wilno");
-    boardGraph.addVertex("Riga");
-    boardGraph.addVertex("Petrograd");
-     boardGraph.addVertex("Smolensk");
-      boardGraph.addVertex("Kharkov");
-      boardGraph.addVertex("Moskva");
-    boardGraph.addVertex("Rostov");
-    boardGraph.addVertex("Sochi");
-    boardGraph.addVertex("Erzurum");
-    boardGraph.addVertex("Snyrna");
-    System.out.println("helloo");
-
-
+        boardGraph.addVertex("Smyrna");
+        boardGraph.addVertex("Edinburgh");
+        boardGraph.addVertex("Stockholm");
+        boardGraph.addVertex("Sofia");
+        boardGraph.addVertex("Kyiv");
+        boardGraph.addVertex("Wilno");
+        boardGraph.addVertex("Riga");
+        boardGraph.addVertex("Petrograd");
+        boardGraph.addVertex("Smolensk");
+        boardGraph.addVertex("Kharkov");
+        boardGraph.addVertex("Moskva");
+        boardGraph.addVertex("Rostov");
+        boardGraph.addVertex("Sochi");
+        boardGraph.addVertex("Erzurum");
+        boardGraph.addVertex("Snyrna");
+        System.out.println("helloo");
 
       //  boardGraph = new Graph();
         trainDeck = new Stack<>();
->>>>>>> e55e9c7eefc7234810f2dc5f3314c30673e2b612
         faceUpCards = new ArrayList<>();
         initializeTrainDeck();
         drawFaceUpCards();
-       
 
         //scanners
         Scanner longRoutesReader = null;
         Scanner routesReader = null;
         Scanner railroadReader = null;
+        
         try {
-
             railroadReader = new Scanner (new File("railroads.tsv"));
             longRoutesReader = new Scanner(new File("long routes.tsv"));
             routesReader = new Scanner(new File("routes.tsv"));
@@ -136,7 +84,7 @@ public class Game {
            System.out.println("game reader error");
         }
        
-      //railroadReader.nextLine();
+        //railroadReader.nextLine();
         while(railroadReader.hasNextLine())
         {
             String str = railroadReader.nextLine();
@@ -156,7 +104,7 @@ public class Game {
             boardGraph.addEdge(color, length, isTunnel, engineCount, a, b);
 
         }    
-           // longRoutesReader.nextLine();
+        // longRoutesReader.nextLine();
         while(longRoutesReader.hasNextLine()){
             
             String[] cardInfo = longRoutesReader.nextLine().split("\t");
@@ -171,15 +119,9 @@ public class Game {
             } catch(IOException e){
                System.out.println("game card error");
             }
-            
             longRoutes.add(new TicketCard(card, cityA, cityB, worth));
-<<<<<<< HEAD
         }
-=======
-           
 
-            
-        }
         for (int i = 0; i <14; i++)
             {
                 if (i<12)
@@ -196,7 +138,6 @@ public class Game {
                 deck.push(new TrainCard("yellow"));
 
             }
->>>>>>> e55e9c7eefc7234810f2dc5f3314c30673e2b612
 
         //reading in normal routes
        // routesReader.nextLine();
@@ -227,7 +168,7 @@ public class Game {
                 } catch (IOException e) {
                     System.out.println("error loading train card image: " + color);
                 }
-                deck.push(new TrainCard(color));
+                trainDeck.add(new TrainCard(color));
             }
         }
        
@@ -239,17 +180,17 @@ public class Game {
             } catch (IOException e) {
                 System.out.println("error loading wild card image");
             }
-            deck.push(new TrainCard("wild"));
+            trainDeck.add(new TrainCard("wild"));
         }
        
         //shuffle deck
-        Collections.shuffle(deck);
+        Collections.shuffle(trainDeck);
     }
 
     private void drawFaceUpCards() {
         for (int i = 0; i < 5; i++) {
-            if (!deck.isEmpty()) {
-                faceUpCards.add(deck.pop());
+            if (!trainDeck.isEmpty()) {
+                faceUpCards.add(trainDeck.remove(0));
             }
         }
     }
@@ -259,22 +200,20 @@ public class Game {
     }
 
     public TrainCard drawFromDeck() {
-        if (deck.isEmpty()) {
+        if (trainDeck.isEmpty()) {
             return null;
         }
-        return deck.pop();
+        return trainDeck.remove(0);
     }
 
     public void replaceFaceUpCard(int index) {
-        if (!deck.isEmpty()) {
-            faceUpCards.set(index, deck.pop());
+        if (!trainDeck.isEmpty()) {
+            faceUpCards.set(index, trainDeck.remove(0));
         }
     }
 
     public static Graph getBoardGraph() 
- 
- {
+    {
     return boardGraph;
-    
- }
+    }
 }
