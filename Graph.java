@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Graph
 {
     private static ArrayList<String> connectedCityHolder = new ArrayList<String>();
-    private ArrayList<City> vertices = new ArrayList<City>();
+    private static ArrayList<City> vertices = new ArrayList<City>();
 
     public Graph ()
     {
@@ -41,18 +41,19 @@ public class Graph
         }
     }
 
-    public static boolean isConnected(City a, City b)
+    public static boolean isConnected (City a, City b)
     {
-        ArrayList<City> visited = new ArrayList<City>();
-        boolean isConnected = false;
-        depthFirstTraversal(a, visited);
-        for (String str : connectedCityHolder)
+        boolean connected = false;
+        int i = vertices.indexOf(a);
+        City A = vertices.get(i);
+        ArrayList <Railroad> ACity = A.getEdges();
+        for(Railroad r: ACity)
         {
-            if (str.equals(b.getName()))
-                isConnected = true;
+            if(r.getCityA().equals(b)|| r.getCityB().equals(b))
+            connected = true;
+
         }
-        connectedCityHolder = new ArrayList<String>();
-        return isConnected;
+        return connected;
     }
 
     public ArrayList<City> getVertices() {
