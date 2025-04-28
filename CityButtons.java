@@ -134,7 +134,7 @@ class CityButton {
 
                     if (chooseRoute)
                     {
-                        if (!Graph.isConnected(citiesSelected.get(0).city(), citiesSelected.get(1).city()))
+                        if (!Game.getBoardGraph().isConnected(citiesSelected.get(0).city(), citiesSelected.get(1).city()))
                         {
                             System.out.println("ah");
                             JOptionPane.showMessageDialog(p,
