@@ -216,9 +216,22 @@ private final Game game;
             }
             
         });
-        
+
         BackgroundPanel panel = new BackgroundPanel();
         panel.setLayout(null);
+
+        back.addMouseListener(new MouseAdapter() {
+          
+            @Override
+               public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(panel,
+                                "pluh",
+                                "pluh",
+                                JOptionPane.WARNING_MESSAGE);
+            }
+            
+        });
+        
 
         /*panel.addMouseListener(new MouseAdapter() {
             

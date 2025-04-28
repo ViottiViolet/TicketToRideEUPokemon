@@ -8,7 +8,7 @@ public class TrainCard {
 	public TrainCard(String c) {
 		color = c;
 		
-		card = new ImageIcon(getClass().getResource("/Images/Cards/"+color+".png"));
+		card = new ImageIcon(getClass().getResource("/Images/Cards/"+ color +".png"));
 	}
 	
 	public String getColor() {
