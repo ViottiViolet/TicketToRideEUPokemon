@@ -1,10 +1,13 @@
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
-public class GameScreen extends JFrame {
 
+public class GameScreen extends JFrame {
+private final Game game;
     private static JLabel drawLabel;
     private static JLabel invenLabel;
     private static JLabel purchLabel;
@@ -32,14 +35,21 @@ public class GameScreen extends JFrame {
     private static int buttonHeight, buttonWidth;
     private static int cardHeight, cardWidth;
 
-    static TrainerIcon a, b, c, d;
+    private static TrainerIcon a, b, c, d;
     CityButtons cityButtons;
     boolean draw, inven;
 
     private static boolean purchase = false;
     private static boolean trainselect, stationselect = false;
+    private GameState gameState;
+    private static int choice = 1; 
+
+   
 
     public GameScreen() {
+        game = new Game();
+       
+
 
         setTitle("Ticket to Ride Europe: Pokemon Express GAME");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -142,6 +152,9 @@ public class GameScreen extends JFrame {
                 //System.out.println("open purchase");
                 
                 purchase = true;
+                stationselect = false;
+                trainselect = false;
+                textLabel.setText("Click the train to purchase a route or the station to place a train station!");
                 textLabel.setVisible(true);
             }
 
@@ -392,7 +405,44 @@ public class GameScreen extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GameScreen();
-    }
+       
+    
 
+        new GameScreen();
+        List<String> optionList = new ArrayList<String>();
+        optionList.add("discard 1");
+        optionList.add("discard 2");
+        optionList.add("discard 3");
+        optionList.add("discard 4");
+        Object[] options =  optionList.toArray();
+         JList<Object> list = new JList<>(options);
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        JScrollPane scrollPane = new JScrollPane(list);
+                
+                                    choice = JOptionPane.showOptionDialog(null, scrollPane,
+                                    "Destination cards",
+                                    JOptionPane.OK_CANCEL_OPTION,
+                                    JOptionPane.PLAIN_MESSAGE,
+                                    null, null, null);
+                                    choice++;
+                                    
+                                    if (choice == 1 ) {
+                                        Object selected = list.getSelectedValue();
+                                       optionList.remove(optionList.indexOf(selected));
+                                       options =  optionList.toArray();
+                                       list = new JList<>(options);
+                                       list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+                                        scrollPane = new JScrollPane(list);
+                                         JOptionPane.showOptionDialog(null, scrollPane,
+                                                    "Destination Cards",
+                                                    JOptionPane.OK_CANCEL_OPTION,
+                                                    JOptionPane.PLAIN_MESSAGE,
+                                                    null, null, null);
+                
+                                    }
+
+
+}
 }
