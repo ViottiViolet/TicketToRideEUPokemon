@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GameScreen",
+            "request": "launch",
+            "mainClass": "GameScreen",
+            "projectName": "TicketToRide_f054e979"
+        },
+        {
+            "type": "java",
             "name": "StartScreen",
             "request": "launch",
             "mainClass": "StartScreen",

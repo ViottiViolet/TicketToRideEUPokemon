@@ -421,7 +421,7 @@ private final Game game;
         JScrollPane scrollPane = new JScrollPane(list);
                 
                                     choice = JOptionPane.showOptionDialog(null, scrollPane,
-                                    "Destination cards",
+                                    "Pick a card to discard",
                                     JOptionPane.OK_CANCEL_OPTION,
                                     JOptionPane.PLAIN_MESSAGE,
                                     null, null, null);
@@ -436,7 +436,7 @@ private final Game game;
 
                                         scrollPane = new JScrollPane(list);
                                          JOptionPane.showOptionDialog(null, scrollPane,
-                                                    "Destination Cards",
+                                                    "Pick a card to discard",
                                                     JOptionPane.OK_CANCEL_OPTION,
                                                     JOptionPane.PLAIN_MESSAGE,
                                                     null, null, null);
