@@ -47,6 +47,7 @@ public class Player implements Comparable
          usedStations = new ArrayList <TrainStation>();
 
     }
+    
   
 
     public int compareTo(Object o) {
@@ -61,10 +62,29 @@ public class Player implements Comparable
 
 
     }
+     public void buyStation(String color)
+     {
+        Stack stack = trainCards.get(color);
+     
+        int cardsNeeded = 3-trainStations.size()+1;
+        for(int i = 0; i<cardsNeeded; i++)
+        {
+            stack.pop();
+        }
+
+    }
+
+    public boolean canAfforStation(String color)
+    {
+        int cardsNeeded = 3-trainStations.size()+1;
+        if(trainCards.get(color).size()>=cardsNeeded)
+        return true;
+        return false;
+    }
 
     public void placeTrainStation(City a)
     {
-        TrainStation station = trainStations.pop();
+        TrainStation station;
         station = new TrainStation(playerNum);
         station.setCity(a);
        
@@ -224,6 +244,7 @@ public class Player implements Comparable
 
         
     }
+   
     
     public int getNumTrains()
     {

@@ -110,6 +110,7 @@ private final Game game;
         yellow = new JLabel(new ImageIcon(yellowImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         back = new JLabel(new ImageIcon(backImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         routeback = new JLabel(new ImageIcon(routebackImg.getImage().getScaledInstance((int)(433), (int)(577), Image.SCALE_SMOOTH)));
+        
 
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -232,6 +233,7 @@ private final Game game;
             
         });
         
+        
 
         /*panel.addMouseListener(new MouseAdapter() {
             
@@ -324,6 +326,39 @@ private final Game game;
         white.setVisible(false);
         yellow.setVisible(false);
         wild.setVisible(false);
+         List<String> optionList = new ArrayList<String>();
+        optionList.add("discard 1");
+        optionList.add("discard 2");
+        optionList.add("discard 3");
+        optionList.add("discard 4");
+        Object[] options =  optionList.toArray();
+         JList<Object> list = new JList<>(options);
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        JScrollPane scrollPane = new JScrollPane(list);
+                
+                                    choice = JOptionPane.showOptionDialog(null, scrollPane,
+                                    "Destination cards",
+                                    JOptionPane.OK_CANCEL_OPTION,
+                                    JOptionPane.PLAIN_MESSAGE,
+                                    null, null, null);
+                                    choice++;
+                                    
+                                    if (choice == 1 ) {
+                                        Object selected = list.getSelectedValue();
+                                       optionList.remove(optionList.indexOf(selected));
+                                       options =  optionList.toArray();
+                                       list = new JList<>(options);
+                                       list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+                                        scrollPane = new JScrollPane(list);
+                                         JOptionPane.showOptionDialog(null, scrollPane,
+                                                    "Destination Cards",
+                                                    JOptionPane.OK_CANCEL_OPTION,
+                                                    JOptionPane.PLAIN_MESSAGE,
+                                                    null, null, null);
+                
+                                    }
 
     }
 
@@ -422,39 +457,7 @@ private final Game game;
     
 
         new GameScreen();
-        List<String> optionList = new ArrayList<String>();
-        optionList.add("discard 1");
-        optionList.add("discard 2");
-        optionList.add("discard 3");
-        optionList.add("discard 4");
-        Object[] options =  optionList.toArray();
-         JList<Object> list = new JList<>(options);
-        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-        JScrollPane scrollPane = new JScrollPane(list);
-                
-                                    choice = JOptionPane.showOptionDialog(null, scrollPane,
-                                    "Destination cards",
-                                    JOptionPane.OK_CANCEL_OPTION,
-                                    JOptionPane.PLAIN_MESSAGE,
-                                    null, null, null);
-                                    choice++;
-                                    
-                                    if (choice == 1 ) {
-                                        Object selected = list.getSelectedValue();
-                                       optionList.remove(optionList.indexOf(selected));
-                                       options =  optionList.toArray();
-                                       list = new JList<>(options);
-                                       list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-                                        scrollPane = new JScrollPane(list);
-                                         JOptionPane.showOptionDialog(null, scrollPane,
-                                                    "Destination Cards",
-                                                    JOptionPane.OK_CANCEL_OPTION,
-                                                    JOptionPane.PLAIN_MESSAGE,
-                                                    null, null, null);
-                
-                                    }
+       
 
 
 }
