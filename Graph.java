@@ -141,8 +141,10 @@ public class Graph
          
         ArrayList <Railroad> ACity = A.getEdges();
       
+      
         for(Railroad r: ACity)
         {
+            if(r.getCityA().getName().equals(b.getName())|| r.getCityB().getName().equals(b.getName()))
             if(r.getCityA().getName().equals(b.getName())|| r.getCityB().getName().equals(b.getName()))
             connected = true;
 
