@@ -17,8 +17,8 @@ public class StartScreen extends JFrame {
     {
         
         //test 
-        GameScreen.main(new String[0]);
-        dispose();
+    ng[0]);
+   .main(new Stri;g[0]);  dispose();
 
     }
 

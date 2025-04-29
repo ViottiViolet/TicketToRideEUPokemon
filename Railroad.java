@@ -63,6 +63,11 @@ public class Railroad
         return isOwned;
     }
 
+    public void setIsOwned(boolean x)
+    {
+        isOwned = x;
+    }
+
     public void claim()
     {
         isOwned = true;
