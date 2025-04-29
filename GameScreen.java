@@ -9,7 +9,8 @@ import javax.swing.*;
 
 
 public class GameScreen extends JFrame {
-private final Game game;
+
+    private final Game game;
     private static JLabel drawLabel;
     private static JLabel invenLabel;
     private static JLabel purchLabel;
