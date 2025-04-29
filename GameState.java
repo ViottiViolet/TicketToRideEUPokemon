@@ -3,7 +3,7 @@ public class GameState {
     public static Player[] players;
     private Game game;
     private int playerLastTurnIndex;
-    public static int currentPlayer = 0;
+    public static int currentPlayer = 1;
     public static int turn;
     public static int gamestate;
     private boolean lastTurn;

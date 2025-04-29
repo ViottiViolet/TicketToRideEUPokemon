@@ -106,7 +106,7 @@ class CityButton {
     public CityButton(int x, int y, JPanel p, String n)
     {
         glow = new ImageIcon(getClass().getResource("/Images/Game/city glow.png"));
-        station = null;
+        station = new ImageIcon(getClass().getResource("/Images/Stations/1.png"));
         glowLabel = new JLabel(new ImageIcon(glow.getImage().getScaledInstance((int)(120/3), (int)(120/3), Image.SCALE_SMOOTH)));
 
         citiesSelected = new ArrayList<CityButton>();
@@ -133,9 +133,17 @@ class CityButton {
                         return;
                     }
 
-                    railroads = Graph.getRailroad(citiesSelected.get(0).getName(), citiesSelected.get(1).getName());
+                    
                     if (chooseRoute)
                     {
+                        
+                        if (citiesSelected.get(0).equals(citiesSelected.get(1))) 
+                        {
+                            citiesSelected.remove(1);
+                            citiesToSelect++;
+                            return;
+                        }
+                        railroads = Graph.getRailroad(citiesSelected.get(0).getName(), citiesSelected.get(1).getName());
                         if (!Game.getBoardGraph().isConnected(citiesSelected.get(0).city(), citiesSelected.get(1).city()))
                         {
                             JOptionPane.showMessageDialog(p,
@@ -164,28 +172,32 @@ class CityButton {
                         if (choice == 0)
                         {
                             citiesToSelect+=2;
-                            citiesSelected.get(0).getLabel().setIcon(null);
-                            citiesSelected.get(1).getLabel().setIcon(null);
+                            
+                            if (!citiesSelected.get(0).getPurchased()) citiesSelected.get(0).getLabel().setIcon(null);
+                            if (!citiesSelected.get(1).getPurchased()) citiesSelected.get(1).getLabel().setIcon(null);
+                            
                         }
                         else
                         {
-                            if (!railroads.isEmpty() && railroads.get(choice-1).getIsOwned() == true)
+                            if (!railroads.isEmpty() && (railroads.get(choice-1).getIsOwned() == true || Graph.getRailroad(railroads.get(choice-1).getCityB().getName(), railroads.get(choice-1).getCityA().getName()).get(choice-1).getIsOwned() == true))
                             {
                                 JOptionPane.showMessageDialog(p,
                                 "You cannot buy a route which has already been purchased. Please try again.",
                                 "Invalid Route Purchase",
                                 JOptionPane.WARNING_MESSAGE);
                                 citiesToSelect+=2;
-                                citiesSelected.get(0).getLabel().setIcon(null);
-                                citiesSelected.get(1).getLabel().setIcon(null);
+
+                                if (!citiesSelected.get(0).getPurchased()) citiesSelected.get(0).getLabel().setIcon(null);
+                                if (!citiesSelected.get(1).getPurchased()) citiesSelected.get(1).getLabel().setIcon(null);
+                                
                                 citiesSelected.clear();
                                 railroads.clear();
                                 return;
                             }
                             System.out.println("route purchased");
-                            citiesSelected.get(0).getLabel().setIcon(null);
-                            citiesSelected.get(1).getLabel().setIcon(null);
-                            if (!railroads.isEmpty()) railroads.get(choice-1).setIsOwned(true);
+                            if (!citiesSelected.get(0).getPurchased()) citiesSelected.get(0).getLabel().setIcon(null);
+                            if (!citiesSelected.get(1).getPurchased()) citiesSelected.get(1).getLabel().setIcon(null);
+                            if (!railroads.isEmpty()) railroads.get(choice-1).claim();
                             CityButtons.disableAll();
                             GameScreen.nextTurn();
                             GameState.nextTurn();

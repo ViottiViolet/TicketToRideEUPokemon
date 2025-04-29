@@ -420,7 +420,7 @@ private final Game game;
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args, JFrame p) {
        
     
 
@@ -434,10 +434,12 @@ private final Game game;
          JList<Object> list = new JList<>(options);
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+        p.dispose();
+
         JScrollPane scrollPane = new JScrollPane(list);
                 
                                     choice = JOptionPane.showOptionDialog(null, scrollPane,
-                                    "Destination cards",
+                                    "Pick a card to discard",
                                     JOptionPane.OK_CANCEL_OPTION,
                                     JOptionPane.PLAIN_MESSAGE,
                                     null, null, null);
@@ -452,7 +454,7 @@ private final Game game;
 
                                         scrollPane = new JScrollPane(list);
                                          JOptionPane.showOptionDialog(null, scrollPane,
-                                                    "Destination Cards",
+                                                    "Pick a card to discard",
                                                     JOptionPane.OK_CANCEL_OPTION,
                                                     JOptionPane.PLAIN_MESSAGE,
                                                     null, null, null);
