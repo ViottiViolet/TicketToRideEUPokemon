@@ -451,6 +451,13 @@ private final Game game;
             g.drawImage(map.getImage(), 235, 10, (int)(mapw*0.77), (int)(maph*0.77), this);
         }
     }
+public static void main(String[]args)
+{
+    System.out.println(""+GameScreen.class.getResource("/Images/Game/draw.png")+"HHHOO");
+    new GameScreen();
+    //SwingUtilities.invokeLater(() -> new GameScreen());
+    
 
+}
     
 }

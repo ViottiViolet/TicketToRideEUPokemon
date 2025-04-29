@@ -1,4 +1,8 @@
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -6,12 +10,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Stack;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 
 public class Player implements Comparable
 {
-    private ImageIcon image;
+    private BufferedImage image;
     private int score;
     private HashMap<String, Stack<TrainCard>> trainCards;
     private ArrayList <TicketCard> Tickets;
@@ -38,7 +44,20 @@ public class Player implements Comparable
         }
         
        playerNum = x;
-         image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
+       System.out.println(x);
+       System.out.println("HELLO");
+       // Using ClassLoader (safe and works in JARs)
+  
+        try {
+            InputStream is = Player.class.getResourceAsStream("/Images/Trainers/"+x+".png");
+            if(is == null)
+            System.out.println("FAILED");
+            image = ImageIO.read(is);
+        } catch (IOException e) {
+            System.out.println("Fail2.0");
+            e.printStackTrace();
+        }
+        // image = new ImageIcon(getClass().getResource.getFile("/Images/Trainers/"+x+".png"));
          score = 0;
         trainCards = new HashMap<String, Stack<TrainCard>>();
         Tickets = new ArrayList<TicketCard>();

@@ -15,8 +15,9 @@ public class StartScreen extends JFrame {
 //sdjfhsfhsfhs
     public void startGame()
     {
+        
         //test 
-        GameScreen screen2 = new GameScreen();
+        GameScreen.main(new String[0]);
         dispose();
 
     }
@@ -112,6 +113,12 @@ public class StartScreen extends JFrame {
             ImageIcon bg = new ImageIcon(getClass().getResource("/Images/Start/startScreen.png"));
             g.drawImage(bg.getImage(), -30, 0, getWidth() + 35, getHeight(), this);
         }
+    }
+
+    public static void main(String[]args)
+    {
+        new StartScreen();
+
     }
 
    

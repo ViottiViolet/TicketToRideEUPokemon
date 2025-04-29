@@ -102,6 +102,7 @@ public class Game {
         } else {
             routesReader = new Scanner(three);
         }
+
         
        
       //railroadReader.nextLine();
@@ -162,6 +163,8 @@ public class Game {
 
             }
 
+           // System.out.println("line 166");
+
         //reading in normal routes
        // routesReader.nextLine();
         while(routesReader.hasNextLine()){
@@ -179,9 +182,12 @@ public class Game {
              
             normRoutes.add(new TicketCard(card, cityA, cityB, worth));
         }
+        System.out.println("185");
     }
+   
 
     private void initializeTrainDeck() {
+        System.out.println("190");
         //add colored cards
         for (String color : CARD_COLORS) {
             for (int i = 0; i < 12; i++) {
@@ -205,7 +211,7 @@ public class Game {
             }
             trainDeck.add(new TrainCard("wild"));
         }
-       
+        System.out.println("214");
         //shuffle deck
         Collections.shuffle(trainDeck);
     }
@@ -217,6 +223,7 @@ public class Game {
             }
         }
     }
+    
 
     public ArrayList<TrainCard> getFaceUpCards() {
         return faceUpCards;
