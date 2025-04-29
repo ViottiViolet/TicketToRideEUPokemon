@@ -82,14 +82,27 @@ public class Game {
         Scanner longRoutesReader = null;
         Scanner routesReader = null;
         Scanner railroadReader = null;
-        try {
-
-            railroadReader = new Scanner (new File("railroads.tsv"));
-            longRoutesReader = new Scanner(new File("long routes.tsv"));
-            routesReader = new Scanner(new File("routes.tsv"));
-        } catch(IOException e){
-           System.out.println("game reader error");
+        InputStream one = getClass().getResourceAsStream("/railroads.tsv");
+        if (one == null) {
+            System.out.println("Could not load railroads.tsv");
+        } else {
+            railroadReader = new Scanner(one);
         }
+        
+        InputStream two = getClass().getResourceAsStream("/long routes.tsv");
+        if (two == null) {
+            System.out.println("Could not load long routes.tsv");
+        } else {
+            longRoutesReader = new Scanner(two);
+        }
+        
+        InputStream three = getClass().getResourceAsStream("/routes.tsv");
+        if (three == null) {
+            System.out.println("Could not load routes.tsv");
+        } else {
+            routesReader = new Scanner(three);
+        }
+        
        
       //railroadReader.nextLine();
         while(railroadReader.hasNextLine())

@@ -16,7 +16,7 @@ public class StartScreen extends JFrame {
     public void startGame()
     {
         //test 
-        GameScreen.main(new String[0]);
+        GameScreen screen2 = new GameScreen();
         dispose();
 
     }
@@ -114,8 +114,6 @@ public class StartScreen extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        new StartScreen();
-    }
+   
 
 }

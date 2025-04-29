@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Runner1",
+            "request": "launch",
+            "mainClass": "Runner1",
+            "projectName": "TicketToRideEUPokemon_d783098f"
+        },
+        {
+            "type": "java",
             "name": "StartScreen",
             "request": "launch",
             "mainClass": "StartScreen",

@@ -452,13 +452,5 @@ private final Game game;
         }
     }
 
-    public static void main(String[] args) {
-       
     
-
-        new GameScreen();
-       
-
-
-}
 }

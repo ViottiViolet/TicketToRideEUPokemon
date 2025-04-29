@@ -30,8 +30,6 @@ public class EndScreen extends JFrame
         }
     }
 
-    public static void main(String[] args) {
-        new EndScreen();
-    }
+    
 
 }
