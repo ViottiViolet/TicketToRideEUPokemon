@@ -151,6 +151,8 @@ private final Game game;
             public void mouseClicked(MouseEvent e) {
                 //System.out.println("open purchase");
                 
+                if (purchase) return;
+
                 purchase = true;
                 stationselect = false;
                 trainselect = false;
@@ -396,6 +398,7 @@ private final Game game;
         trainLabel.setIcon(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         stationLabel.setIcon(new ImageIcon(stationBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         textLabel.setVisible(false);
+        purchase = false;
 
         a.reposition();
         b.reposition();

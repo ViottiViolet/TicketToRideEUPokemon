@@ -3,18 +3,19 @@ import java.util.ArrayList;
 public class Graph
 {
     private static ArrayList<String> connectedCityHolder = new ArrayList<String>();
-    private static ArrayList<City> verticies = new ArrayList<City>();
+    private static ArrayList<City> vertices = new ArrayList<City>();
+    private static ArrayList<City> visitedVertices = new ArrayList<City>();
 
     public Graph ()
     {
-        verticies = new ArrayList<>();
+        vertices = new ArrayList<>();
     }
 
     // returns the railroad(s) between 2 cities, takes in the names of the 2 cities
-    public ArrayList<Railroad> getRailroad(String city1, String city2)
+    public static ArrayList<Railroad> getRailroad(String city1, String city2)
     {
         ArrayList<Railroad> r = new ArrayList<Railroad>();
-        for(City c: verticies)
+        for(City c: vertices)
         {
             if(c.getName().equals(city1)||c.getName().equals(city2))
             {
@@ -35,19 +36,19 @@ public class Graph
    
     public City addVertex(String name)
     {
-        //System.out.println(verticies);
+        //System.out.println(vertices);
          City newVertex = new City(name);
-        verticies.add(newVertex);
+        vertices.add(newVertex);
         return newVertex;
         
     }
 //ddssf
     public void addEdge (City a, City b, int weight)
     {
-        int x = verticies.indexOf(a);
-        int y = verticies.indexOf(b);
-        City city1 = verticies.get(x);
-        City city2 = verticies.get(y);
+        int x = vertices.indexOf(a);
+        int y = vertices.indexOf(b);
+        City city1 = vertices.get(x);
+        City city2 = vertices.get(y);
 
 
         city1.addTrack(b, weight);
@@ -62,17 +63,17 @@ public class Graph
     {
         int x =-1;
         int y=-1;
-        for(int i = 0; i<verticies.size();i++)
+        for(int i = 0; i<vertices.size();i++)
         {
-            if(verticies.get(i).getName().equals(a.getName()))
+            if(vertices.get(i).getName().equals(a.getName()))
             x=i;
-            if(verticies.get(i).getName().equals(b.getName()))
+            if(vertices.get(i).getName().equals(b.getName()))
             y=i;
 
         }
         
-        City city1 = verticies.get(x);
-        City city2 = verticies.get(y);
+        City city1 = vertices.get(x);
+        City city2 = vertices.get(y);
         city1.addTrack(new Railroad(color, length, isTunnel, engineCount, city1, b));
         city2.addTrack(new Railroad(color, length, isTunnel, engineCount, city2, a));
 
@@ -83,7 +84,7 @@ public class Graph
     {
         int x =-1;
         int y=-1;
-        for(int i = 0; i<verticies.size();i++)
+        for(int i = 0; i<vertices.size();i++)
         {
           City neighbor =  r.getCityB();
 
@@ -95,23 +96,65 @@ public class Graph
         }
     }
 
+    public void depthFirstTraversal(City start, ArrayList<City> visitedVertices)
+    {
+        if (visitedVertices.contains(start)) return;
+
+        visitedVertices.add(start);
+        connectedCityHolder.add(start.getName());
+
+        for (Railroad r : start.getEdges())
+        {
+            City neighbor = (r.getCityA().equals(start)) ? r.getCityB() : r.getCityA();
+            depthFirstTraversal(neighbor, visitedVertices);
+        }
+    }
+
+
+    // the name is kinda bad, but im too lazy to change it; the method is just used to check if there is a continuous route between 2 cities ( akak ticket card completion)
+    public boolean isConnectedFinal(City a, City b)
+    {
+        connectedCityHolder = new ArrayList<>();
+        ArrayList<City> visited = new ArrayList<>();
+
+        depthFirstTraversal(a, visited);
+
+        return connectedCityHolder.contains(b.getName());
+    }
+
+
+    ////////////////////
+    ///// this checks adjacency 
     public static boolean isConnected (City a, City b)
     {
         boolean connected = false;
-        int i = vertices.indexOf(a);
-        City A = vertices.get(i);
+         int i=0;
+         for(City x : vertices)
+         {
+            if(x.getName().equals(a.getName()))
+            break;
+            i++;
+         }
+
+         
+         City A = vertices.get(i);
+         
         ArrayList <Railroad> ACity = A.getEdges();
+      
+      
         for(Railroad r: ACity)
         {
-            if(r.getCityA().equals(b)|| r.getCityB().equals(b))
+            if(r.getCityA().getName().equals(b.getName())|| r.getCityB().getName().equals(b.getName()))
+            if(r.getCityA().getName().equals(b.getName())|| r.getCityB().getName().equals(b.getName()))
             connected = true;
 
         }
         return connected;
     }
+
 // returns a list of all Cities
     public ArrayList<City> getVertices() {
-        return verticies;
+        return vertices;
     }
 
 }
