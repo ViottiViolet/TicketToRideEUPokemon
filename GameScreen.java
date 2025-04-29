@@ -420,7 +420,7 @@ private final Game game;
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args, JFrame p) {
        
     
 
@@ -433,6 +433,8 @@ private final Game game;
         Object[] options =  optionList.toArray();
          JList<Object> list = new JList<>(options);
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        p.dispose();
 
         JScrollPane scrollPane = new JScrollPane(list);
                 
