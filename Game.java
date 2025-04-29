@@ -5,8 +5,8 @@ import javax.imageio.ImageIO;
 
 public class Game {
     private Stack <TrainCard> deck;
-    public static ArrayList<TicketCard> longRoutes = new ArrayList<>();
-    public static ArrayList<TicketCard> normRoutes = new ArrayList<>();
+    private static Stack<TicketCard> longRoutes = new Stack<>();
+    private static Stack<TicketCard> normRoutes = new Stack<>();
      private Stack <TrainCard> trainDeck = new Stack<>();
     private ArrayList<TrainCard> faceUpCards = new ArrayList<>();
     private static final String[] CARD_COLORS = {"black", "blue", "green", "orange", "pink", "red", "white", "yellow", };
@@ -248,4 +248,13 @@ public class Game {
     return boardGraph;
     
  }
+    public Stack<TicketCard> getNormRoutes()
+    {
+        return normRoutes;
+    }
+
+    public Stack<TicketCard> getLongRoutes()
+{
+    return longRoutes;
+}
 }

@@ -2,7 +2,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 import javax.swing.*;
 
 
@@ -327,10 +329,20 @@ private final Game game;
         yellow.setVisible(false);
         wild.setVisible(false);
          List<String> optionList = new ArrayList<String>();
-        optionList.add("discard 1");
-        optionList.add("discard 2");
-        optionList.add("discard 3");
-        optionList.add("discard 4");
+        Stack<TicketCard> tickets = game.getNormRoutes();
+        Stack<TicketCard> lTickets = game.getLongRoutes();
+        Collections.shuffle(tickets);
+        Collections.shuffle(lTickets);
+        
+        TicketCard ticket = tickets.pop();
+
+        optionList.add("discard 1:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        ticket = tickets.pop();
+        optionList.add("discard 2:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        ticket = tickets.pop();
+        optionList.add("discard 3:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        ticket = lTickets.pop();
+        optionList.add("discard 4:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
         Object[] options =  optionList.toArray();
          JList<Object> list = new JList<>(options);
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
