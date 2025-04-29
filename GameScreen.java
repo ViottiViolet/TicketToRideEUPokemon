@@ -467,6 +467,7 @@ public class GameScreen extends JFrame {
             g.drawImage(map.getImage(), 235, 10, (int)(mapw*0.77), (int)(maph*0.77), this);
         }
     }
+
 public static void main(String[]args, JFrame p)
 {
     System.out.println(""+GameScreen.class.getResource("/Images/Game/draw.png")+"HHHOO");
@@ -474,6 +475,7 @@ public static void main(String[]args, JFrame p)
     p.dispose();
     //SwingUtilities.invokeLater(() -> new GameScreen());
     
+
 
 }
     

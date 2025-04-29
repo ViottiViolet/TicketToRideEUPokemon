@@ -12,13 +12,15 @@ public class StartScreen extends JFrame {
     private final ImageIcon rulesBtn;
     private final int buttonHeight, buttonWidth;
     private final ImageIcon rulesScreen;
+    private final JLabel loadingLabel;
 //sdjfhsfhsfhs
     public void startGame()
     {
         
         //test 
-    ng[0]);
-   .main(new Stri;g[0]);  dispose();
+
+        GameScreen.main(new String[0], this);
+
 
     }
 
@@ -38,9 +40,15 @@ public class StartScreen extends JFrame {
         startLabel = new JLabel(new ImageIcon(startBtn.getImage().getScaledInstance((int)(buttonWidth/1.5), (int)(buttonHeight/1.5), Image.SCALE_SMOOTH)));
         rulesLabel = new JLabel(new ImageIcon(rulesBtn.getImage().getScaledInstance((int)(buttonWidth/1.5), (int)(buttonHeight/1.5), Image.SCALE_SMOOTH)));
         rulesScreenLabel = new JLabel(new ImageIcon(rulesScreen.getImage().getScaledInstance(getWidth() - 100, getHeight() - 90, Image.SCALE_SMOOTH)));
+
+        loadingLabel = new JLabel("! Starting the game will take a few seconds...");
+        loadingLabel.setFont(new Font("Dialog", Font.BOLD, 12));
+        loadingLabel.setForeground(Color.BLACK);
+
         startLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                loadingLabel.setVisible(true);
                 startGame();
             }
 
@@ -94,6 +102,8 @@ public class StartScreen extends JFrame {
         add(startLabel);
         add(rulesLabel);
         add(rulesScreenLabel);
+        add(loadingLabel);
+        
         add(panel);
         pack();
         setVisible(true);
@@ -104,6 +114,8 @@ public class StartScreen extends JFrame {
 
         startLabel.setBounds(getWidth()-460,250,(int)(buttonWidth/1.5),(int)(buttonHeight/1.5));
         rulesLabel.setBounds(getWidth()-460,350,(int)(buttonWidth/1.5),(int)(buttonHeight/1.5));
+
+        loadingLabel.setBounds(1110, 250, 1050, 200);
     }
 
     static class BackgroundPanel extends JPanel{
