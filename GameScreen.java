@@ -476,7 +476,7 @@ public class GameScreen extends JFrame {
          JList<Object> list = new JList<>(options);
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        //p.dispose();
+        //StartScreen.getFrames()[0].dispose();
 
         JScrollPane scrollPane = new JScrollPane(list);
                 
