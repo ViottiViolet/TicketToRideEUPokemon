@@ -10,7 +10,7 @@ public class TrainerIcon
     private ImageIcon profile, bg, train, station;
     private int rank;
 
-    private JLabel bgLabel, profileLabel, nameLabel, trainLabel, stationLabel, stationNumLabel;
+    private JLabel bgLabel, profileLabel, nameLabel, trainLabel, trainNumLabel, stationLabel, stationNumLabel;
     private Player player;
 
     public TrainerIcon(String name, int r, JPanel p, Player play)
@@ -31,6 +31,9 @@ public class TrainerIcon
         bgLabel = new JLabel(new ImageIcon(bg.getImage().getScaledInstance((int)(h - 55), (int)(h/2 + 30), Image.SCALE_SMOOTH)));
 
         trainLabel = new JLabel(new ImageIcon(train.getImage().getScaledInstance((int)(251/4), (int)(201/4), Image.SCALE_SMOOTH)));
+        trainNumLabel = new JLabel(player.getNumTrains() + "");
+        trainNumLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+        trainNumLabel.setForeground(Color.BLACK);
 
         stationLabel = new JLabel(new ImageIcon(station.getImage().getScaledInstance((int)(251/4), (int)(201/4), Image.SCALE_SMOOTH)));
         stationNumLabel = new JLabel(player.getNumStations() + "");
@@ -54,6 +57,8 @@ public class TrainerIcon
         bgLabel.setBounds(5, 190*rank - 165, (int)(h - 55), (int)(h/2 + 30));
 
         trainLabel.setBounds(-30, 190*rank - 95, (int)(h/2), (int)(h/2));
+        trainNumLabel.setText(player.getNumTrains() + "");
+        trainNumLabel.setBounds(65, 190*rank - 95, (int)(h/2), (int)(h/2));
         stationLabel.setBounds(80, 190*rank - 100, (int)(h/2), (int)(h/2));
         stationNumLabel.setText(player.getNumStations() + ""); 
         stationNumLabel.setBounds(175, 190*rank - 95, (int)(h/2), (int)(h/2));
@@ -62,6 +67,7 @@ public class TrainerIcon
     public void addToPanel(JPanel p) {
         p.add(nameLabel);
         p.add(trainLabel);
+        p.add(trainNumLabel);
         p.add(stationLabel);
         p.add(stationNumLabel);
         p.add(profileLabel);

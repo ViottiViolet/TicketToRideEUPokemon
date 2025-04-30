@@ -37,14 +37,14 @@ public class Player implements Comparable
             trains.push(new Train(playerNum));
         }
         
-       playerNum = x;
-         image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
-         score = 0;
+        playerNum = x;
+        image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
+        score = 0;
         trainCards = new HashMap<String, Stack<TrainCard>>();
         Tickets = new ArrayList<TicketCard>();
-         completedTickets = new ArrayList<>();
-         longestPath = 0;
-         usedStations = new ArrayList <TrainStation>();
+        completedTickets = new ArrayList<>();
+        longestPath = 0;
+        usedStations = new ArrayList <TrainStation>();
 
     }
   
@@ -124,11 +124,21 @@ public class Player implements Comparable
 
     public ArrayList<TrainCard> buy(Railroad r, int numWilds)
     {
+
+
         ArrayList<TrainCard> usedCards = new ArrayList<TrainCard>();
         String color = r.getColor();
         int price = r.getLength();
         ArrayList <TrainCard> list;
-        for(int i = 0; i<numWilds; i++)
+
+        //TEMPORARY
+        for(int i = 0; i<price; i++)
+        {
+            trains.pop();
+        }
+        return usedCards;
+
+        /*for(int i = 0; i<numWilds; i++)
         {
             usedCards.add(trainCards.get("wild").pop());
 
@@ -137,10 +147,10 @@ public class Player implements Comparable
         if(price==0)
         return usedCards;
 
-         for(int i = 0; i<price; i++)
+        for(int i = 0; i<price; i++)
         {
             usedCards.add(trainCards.get(color).pop());
-
+            trains.pop();
         }
         City A = r.getCityA();
         City B = r.getCityB();
@@ -148,7 +158,7 @@ public class Player implements Comparable
         graph.addVertex(B.getName());
         graph.addEdge(A,B,r.getLength());
         addScore(r.getLength());// updates score
-        return usedCards;
+        return usedCards;*/
     }
 
     public String canAfford(Railroad r)
