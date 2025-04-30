@@ -468,7 +468,7 @@ public class GameScreen extends JFrame {
         }
     }
 
-public static void main(String[]args, JFrame p)
+public static void main(String[] args, JFrame p)
 {
     System.out.println(""+GameScreen.class.getResource("/Images/Game/draw.png")+"HHHOO");
     new GameScreen();
