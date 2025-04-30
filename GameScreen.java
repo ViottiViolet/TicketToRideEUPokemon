@@ -96,7 +96,7 @@ public class GameScreen extends JFrame {
         invenLabel = new JLabel(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         purchLabel = new JLabel(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         backLabel = new JLabel(new ImageIcon(backbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-        textLabel = new JLabel("Click the train to purchase a route or the station to place a train station!");
+        textLabel = new JLabel("It is now Player " + GameState.getTurn() + "'s turn!");
         trainLabel = new JLabel(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         stationLabel = new JLabel(new ImageIcon(stationBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         arenaLabel = new JLabel(new ImageIcon(arena.getImage().getScaledInstance((int)(1599*1.1), (int)(940*1.1), Image.SCALE_SMOOTH)));
@@ -161,7 +161,6 @@ public class GameScreen extends JFrame {
                 stationselect = false;
                 trainselect = false;
                 textLabel.setText("Click the train to purchase a route or the station to place a train station!");
-                textLabel.setVisible(true);
             }
 
             @Override
@@ -199,7 +198,6 @@ public class GameScreen extends JFrame {
                     trainselect = true;
                     trainLabel.setIcon(new ImageIcon(trainhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
                     textLabel.setText("Select the cities on either side of the route you would like to purchase!");
-                    textLabel.setVisible(true);
                     
                     cityButtons.enableAll(2);
                 }
@@ -215,7 +213,6 @@ public class GameScreen extends JFrame {
                     stationselect = true;
                     stationLabel.setIcon(new ImageIcon(stationhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
                     textLabel.setText("Select the city where you would like to place your train station !");
-                    textLabel.setVisible(true);
                    
                     cityButtons.enableAll(1);
                 }
@@ -296,7 +293,6 @@ public class GameScreen extends JFrame {
         invenLabel.setBounds(getWidth()-300,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
         purchLabel.setBounds(getWidth()-560,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
         textLabel.setBounds(getWidth()-1270,getHeight()-225,(int)(1490/3.2),(int)(460/3.2));
-        textLabel.setVisible(false);
         textBoxLabel.setBounds(getWidth()-1300,getHeight()-225,(int)(1490/3.2), (int)(460/3.2));
 
         arenaLabel.setBounds(-120,-15,(int)(1599*1.1),(int)(940*1.1));
@@ -445,7 +441,7 @@ public class GameScreen extends JFrame {
 
         trainLabel.setIcon(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         stationLabel.setIcon(new ImageIcon(stationBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
-        textLabel.setVisible(false);
+        textLabel.setText("It is now Player " + GameState.getTurn() + "'s turn!");
         purchase = false;
 
         a.reposition();
@@ -468,15 +464,45 @@ public class GameScreen extends JFrame {
         }
     }
 
-public static void main(String[]args, JFrame p)
-{
-    System.out.println(""+GameScreen.class.getResource("/Images/Game/draw.png")+"HHHOO");
-    new GameScreen();
-    p.dispose();
-    //SwingUtilities.invokeLater(() -> new GameScreen());
+    public static void main(String[] args) {
+
+        new GameScreen();
+        List<String> optionList = new ArrayList<String>();
+        optionList.add("discard 1");
+        optionList.add("discard 2");
+        optionList.add("discard 3");
+        optionList.add("discard 4");
+        Object[] options =  optionList.toArray();
+         JList<Object> list = new JList<>(options);
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        //p.dispose();
+
+        JScrollPane scrollPane = new JScrollPane(list);
+                
+                                    choice = JOptionPane.showOptionDialog(null, scrollPane,
+                                    "Pick a card to discard",
+                                    JOptionPane.OK_CANCEL_OPTION,
+                                    JOptionPane.PLAIN_MESSAGE,
+                                    null, null, null);
+                                    choice++;
+                                    
+                                    if (choice == 1 ) {
+                                        Object selected = list.getSelectedValue();
+                                       optionList.remove(optionList.indexOf(selected));
+                                       options =  optionList.toArray();
+                                       list = new JList<>(options);
+                                       list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+                                        scrollPane = new JScrollPane(list);
+                                         JOptionPane.showOptionDialog(null, scrollPane,
+                                                    "Pick a card to discard",
+                                                    JOptionPane.OK_CANCEL_OPTION,
+                                                    JOptionPane.PLAIN_MESSAGE,
+                                                    null, null, null);
+                
+                                    }
     
 
-
-}
-    
+    }
 }
