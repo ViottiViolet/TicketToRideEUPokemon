@@ -358,9 +358,9 @@ public class GameScreen extends JFrame {
                                     JOptionPane.OK_CANCEL_OPTION,
                                     JOptionPane.PLAIN_MESSAGE,
                                     null, null, null);
-                                    choice++;
+                                    ;
                                     
-                                    if (choice == 1 ) {
+                                    if (choice == JOptionPane.OK_OPTION) {
                                         Object selected = list.getSelectedValue();
                                        selectedDest.remove(selected);
                                        optionList.remove(optionList.indexOf(selected));
@@ -483,41 +483,11 @@ public class GameScreen extends JFrame {
     public static void main(String[] args) {
 
         new GameScreen();
-        List<String> optionList = new ArrayList<String>();
-        optionList.add("discard 1");
-        optionList.add("discard 2");
-        optionList.add("discard 3");
-        optionList.add("discard 4");
-        Object[] options =  optionList.toArray();
-         JList<Object> list = new JList<>(options);
-        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+       
 
         //StartScreen.getFrames()[0].dispose();
 
-        JScrollPane scrollPane = new JScrollPane(list);
-                
-                                    choice = JOptionPane.showOptionDialog(null, scrollPane,
-                                    "Pick a card to discard",
-                                    JOptionPane.OK_CANCEL_OPTION,
-                                    JOptionPane.PLAIN_MESSAGE,
-                                    null, null, null);
-                                    choice++;
-                                    
-                                    if (choice == 1 ) {
-                                        Object selected = list.getSelectedValue();
-                                       optionList.remove(optionList.indexOf(selected));
-                                       options =  optionList.toArray();
-                                       list = new JList<>(options);
-                                       list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-                                        scrollPane = new JScrollPane(list);
-                                         JOptionPane.showOptionDialog(null, scrollPane,
-                                                    "Pick a card to discard",
-                                                    JOptionPane.OK_CANCEL_OPTION,
-                                                    JOptionPane.PLAIN_MESSAGE,
-                                                    null, null, null);
-                
-                                    }
+       
     
 
     }
