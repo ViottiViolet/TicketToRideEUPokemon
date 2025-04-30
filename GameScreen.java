@@ -23,6 +23,7 @@ public class GameScreen extends JFrame {
 
     private static JLabel black, blue, green, orange, pink, red, white, yellow, wild, back;
     private static JLabel routeback;
+    private static ArrayList<JLabel> cardNums;
 
     private static ImageIcon drawbtn, drawhover;
     private static ImageIcon invenbtn, invenhover;
@@ -116,7 +117,15 @@ public class GameScreen extends JFrame {
         back = new JLabel(new ImageIcon(backImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         routeback = new JLabel(new ImageIcon(routebackImg.getImage().getScaledInstance((int)(433), (int)(577), Image.SCALE_SMOOTH)));
 
-       
+
+        cardNums = new ArrayList<JLabel>();
+        for (int i = 0; i < 9; i++)
+        {
+            cardNums.add(new JLabel("wiwi"));
+            cardNums.get(i).setFont(new Font("Dialog", Font.BOLD, 30));
+            cardNums.get(i).setForeground(Color.BLACK);
+        }
+        
 
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -276,6 +285,11 @@ public class GameScreen extends JFrame {
         add(wild);
         add(yellow);
 
+        for (JLabel j : cardNums)
+        {
+            add(j);
+        }
+
         add(backLabel);
         add(arenaLabel);
 
@@ -330,7 +344,14 @@ public class GameScreen extends JFrame {
         white.setVisible(false);
         yellow.setVisible(false);
         wild.setVisible(false);
-         List<String> optionList = new ArrayList<String>();
+
+        for (int i = 0; i < 9; i++)
+        {
+            cardNums.get(i).setBounds(400,400,(int)(cardWidth/6),(int)(cardHeight/6));
+            cardNums.get(i).setVisible(false);
+        }
+
+        List<String> optionList = new ArrayList<String>();
         Stack<TicketCard> tickets = game.getNormRoutes();
         Stack<TicketCard> lTickets = game.getLongRoutes();
         Collections.shuffle(tickets);
@@ -408,6 +429,11 @@ public class GameScreen extends JFrame {
             white.setVisible(true);
             yellow.setVisible(true);
             wild.setVisible(true);
+
+            for (JLabel j : cardNums)
+            {
+                j.setVisible(true);
+            }
         }
 
     }
@@ -440,6 +466,12 @@ public class GameScreen extends JFrame {
             white.setVisible(false);
             yellow.setVisible(false);
             wild.setVisible(false);
+
+            for (JLabel j : cardNums)
+            {
+                j.setVisible(false);
+            }
+
             inven = false;
         }
 
