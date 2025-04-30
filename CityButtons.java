@@ -199,8 +199,9 @@ class CityButton {
                             if (!citiesSelected.get(1).getPurchased()) citiesSelected.get(1).getLabel().setIcon(null);
                             if (!railroads.isEmpty()) railroads.get(choice-1).claim();
                             CityButtons.disableAll();
-                            GameScreen.nextTurn();
+                            GameState.players[GameState.getTurn()-1].buy(railroads.get(choice-1), 0);
                             GameState.nextTurn();
+                            GameScreen.nextTurn();
                         }
                         citiesSelected.clear();
                         railroads.clear();
@@ -229,8 +230,8 @@ class CityButton {
                             isPurchased = true;
                             CityButtons.disableAll();
                             GameState.players[GameState.getTurn()-1].placeTrainStation(new City(citiesSelected.get(0).getName()));
-                            GameScreen.nextTurn();
                             GameState.nextTurn();
+                            GameScreen.nextTurn();
                         }
                         citiesSelected.clear();
                     }

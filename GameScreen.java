@@ -93,7 +93,7 @@ private final Game game;
         invenLabel = new JLabel(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         purchLabel = new JLabel(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         backLabel = new JLabel(new ImageIcon(backbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-        textLabel = new JLabel("Click the train to purchase a route or the station to place a train station!");
+        textLabel = new JLabel("It is now Player " + GameState.getTurn() + "'s turn!");
         trainLabel = new JLabel(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         stationLabel = new JLabel(new ImageIcon(stationBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         arenaLabel = new JLabel(new ImageIcon(arena.getImage().getScaledInstance((int)(1599*1.1), (int)(940*1.1), Image.SCALE_SMOOTH)));
@@ -157,7 +157,6 @@ private final Game game;
                 stationselect = false;
                 trainselect = false;
                 textLabel.setText("Click the train to purchase a route or the station to place a train station!");
-                textLabel.setVisible(true);
             }
 
             @Override
@@ -195,7 +194,6 @@ private final Game game;
                     trainselect = true;
                     trainLabel.setIcon(new ImageIcon(trainhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
                     textLabel.setText("Select the cities on either side of the route you would like to purchase!");
-                    textLabel.setVisible(true);
                     
                     cityButtons.enableAll(2);
                 }
@@ -211,7 +209,6 @@ private final Game game;
                     stationselect = true;
                     stationLabel.setIcon(new ImageIcon(stationhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
                     textLabel.setText("Select the city where you would like to place your train station !");
-                    textLabel.setVisible(true);
                    
                     cityButtons.enableAll(1);
                 }
@@ -291,7 +288,6 @@ private final Game game;
         invenLabel.setBounds(getWidth()-300,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
         purchLabel.setBounds(getWidth()-560,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
         textLabel.setBounds(getWidth()-1270,getHeight()-225,(int)(1490/3.2),(int)(460/3.2));
-        textLabel.setVisible(false);
         textBoxLabel.setBounds(getWidth()-1300,getHeight()-225,(int)(1490/3.2), (int)(460/3.2));
 
         arenaLabel.setBounds(-120,-15,(int)(1599*1.1),(int)(940*1.1));
@@ -397,7 +393,7 @@ private final Game game;
 
         trainLabel.setIcon(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         stationLabel.setIcon(new ImageIcon(stationBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
-        textLabel.setVisible(false);
+        textLabel.setText("It is now Player " + GameState.getTurn() + "'s turn!");
         purchase = false;
 
         a.reposition();
@@ -420,9 +416,7 @@ private final Game game;
         }
     }
 
-    public static void main(String[] args, JFrame p) {
-       
-    
+    public static void main(String[] args) {
 
         new GameScreen();
         List<String> optionList = new ArrayList<String>();
@@ -434,7 +428,7 @@ private final Game game;
          JList<Object> list = new JList<>(options);
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        p.dispose();
+        //p.dispose();
 
         JScrollPane scrollPane = new JScrollPane(list);
                 
@@ -460,7 +454,7 @@ private final Game game;
                                                     null, null, null);
                 
                                     }
+    
 
-
-}
+    }
 }
