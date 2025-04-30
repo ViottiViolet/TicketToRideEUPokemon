@@ -2,12 +2,15 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 import javax.swing.*;
 
 
 public class GameScreen extends JFrame {
-private final Game game;
+
+    private final Game game;
     private static JLabel drawLabel;
     private static JLabel invenLabel;
     private static JLabel purchLabel;
@@ -110,6 +113,7 @@ private final Game game;
         yellow = new JLabel(new ImageIcon(yellowImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         back = new JLabel(new ImageIcon(backImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         routeback = new JLabel(new ImageIcon(routebackImg.getImage().getScaledInstance((int)(433), (int)(577), Image.SCALE_SMOOTH)));
+        
 
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -234,6 +238,7 @@ private final Game game;
             
         });
         
+        
 
         /*panel.addMouseListener(new MouseAdapter() {
             
@@ -326,6 +331,49 @@ private final Game game;
         white.setVisible(false);
         yellow.setVisible(false);
         wild.setVisible(false);
+         List<String> optionList = new ArrayList<String>();
+        Stack<TicketCard> tickets = game.getNormRoutes();
+        Stack<TicketCard> lTickets = game.getLongRoutes();
+        Collections.shuffle(tickets);
+        Collections.shuffle(lTickets);
+        
+        TicketCard ticket = tickets.pop();
+
+        optionList.add("discard 1:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        ticket = tickets.pop();
+        optionList.add("discard 2:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        ticket = tickets.pop();
+        optionList.add("discard 3:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        ticket = lTickets.pop();
+        optionList.add("discard 4:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        Object[] options =  optionList.toArray();
+         JList<Object> list = new JList<>(options);
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        JScrollPane scrollPane = new JScrollPane(list);
+                
+                                    choice = JOptionPane.showOptionDialog(null, scrollPane,
+                                    "Destination cards",
+                                    JOptionPane.OK_CANCEL_OPTION,
+                                    JOptionPane.PLAIN_MESSAGE,
+                                    null, null, null);
+                                    choice++;
+                                    
+                                    if (choice == 1 ) {
+                                        Object selected = list.getSelectedValue();
+                                       optionList.remove(optionList.indexOf(selected));
+                                       options =  optionList.toArray();
+                                       list = new JList<>(options);
+                                       list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+                                        scrollPane = new JScrollPane(list);
+                                         JOptionPane.showOptionDialog(null, scrollPane,
+                                                    "Destination Cards",
+                                                    JOptionPane.OK_CANCEL_OPTION,
+                                                    JOptionPane.PLAIN_MESSAGE,
+                                                    null, null, null);
+                
+                                    }
 
     }
 
@@ -420,45 +468,15 @@ private final Game game;
         }
     }
 
-    public static void main(String[] args) {
-       
+public static void main(String[]args, JFrame p)
+{
+    System.out.println(""+GameScreen.class.getResource("/Images/Game/draw.png")+"HHHOO");
+    new GameScreen();
+    p.dispose();
+    //SwingUtilities.invokeLater(() -> new GameScreen());
     
-
-        new GameScreen();
-        List<String> optionList = new ArrayList<String>();
-        optionList.add("discard 1");
-        optionList.add("discard 2");
-        optionList.add("discard 3");
-        optionList.add("discard 4");
-        Object[] options =  optionList.toArray();
-         JList<Object> list = new JList<>(options);
-        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-        JScrollPane scrollPane = new JScrollPane(list);
-                
-                                    choice = JOptionPane.showOptionDialog(null, scrollPane,
-                                    "Pick a card to discard",
-                                    JOptionPane.OK_CANCEL_OPTION,
-                                    JOptionPane.PLAIN_MESSAGE,
-                                    null, null, null);
-                                    choice++;
-                                    
-                                    if (choice == 1 ) {
-                                        Object selected = list.getSelectedValue();
-                                       optionList.remove(optionList.indexOf(selected));
-                                       options =  optionList.toArray();
-                                       list = new JList<>(options);
-                                       list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-                                        scrollPane = new JScrollPane(list);
-                                         JOptionPane.showOptionDialog(null, scrollPane,
-                                                    "Pick a card to discard",
-                                                    JOptionPane.OK_CANCEL_OPTION,
-                                                    JOptionPane.PLAIN_MESSAGE,
-                                                    null, null, null);
-                
-                                    }
 
 
 }
+    
 }
