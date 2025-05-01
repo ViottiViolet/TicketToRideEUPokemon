@@ -47,6 +47,8 @@ public class GameScreen extends JFrame {
     private static boolean trainselect, stationselect = false;
     private GameState gameState;
     private static int choice = 1; 
+    private static ArrayList<Object> selectedDest;
+    private static JList<Object> destinationJList = new JList<>();
 
    
 
@@ -358,15 +360,17 @@ public class GameScreen extends JFrame {
         
         TicketCard ticket = tickets.pop();
 
-        optionList.add("discard 1:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
         ticket = tickets.pop();
-        optionList.add("discard 2:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
         ticket = tickets.pop();
-        optionList.add("discard 3:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
         ticket = lTickets.pop();
-        optionList.add("discard 4:"+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
         Object[] options =  optionList.toArray();
          JList<Object> list = new JList<>(options);
+         selectedDest = new ArrayList<>();
+         selectedDest.add(list);
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         JScrollPane scrollPane = new JScrollPane(list);
@@ -376,10 +380,11 @@ public class GameScreen extends JFrame {
                                     JOptionPane.OK_CANCEL_OPTION,
                                     JOptionPane.PLAIN_MESSAGE,
                                     null, null, null);
-                                    choice++;
+                                    ;
                                     
-                                    if (choice == 1 ) {
+                                    if (choice == JOptionPane.OK_OPTION) {
                                         Object selected = list.getSelectedValue();
+                                       selectedDest.remove(selected);
                                        optionList.remove(optionList.indexOf(selected));
                                        options =  optionList.toArray();
                                        list = new JList<>(options);
@@ -391,10 +396,14 @@ public class GameScreen extends JFrame {
                                                     JOptionPane.OK_CANCEL_OPTION,
                                                     JOptionPane.PLAIN_MESSAGE,
                                                     null, null, null);
+                                                     selected = list.getSelectedValue();
+                                                     selectedDest.remove(selected);
+                                                     
+                                                    } 
                 
                                     }
 
-    }
+    
 
     public void open()
     {
@@ -484,6 +493,12 @@ public class GameScreen extends JFrame {
         d.reposition();
 
     }
+    /*public static void addDestCards(ArrayList<Object> cards){
+        for(int i=0; i<selectedDest.size(); i++){
+            destinationJList.add(i, selectedDest.)
+        }
+    }*/
+    
 
     static class BackgroundPanel extends JPanel{
         @Override
@@ -501,41 +516,11 @@ public class GameScreen extends JFrame {
     public static void main(String[] args) {
 
         new GameScreen();
-        List<String> optionList = new ArrayList<String>();
-        optionList.add("discard 1");
-        optionList.add("discard 2");
-        optionList.add("discard 3");
-        optionList.add("discard 4");
-        Object[] options =  optionList.toArray();
-         JList<Object> list = new JList<>(options);
-        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+       
 
         //StartScreen.getFrames()[0].dispose();
 
-        JScrollPane scrollPane = new JScrollPane(list);
-                
-                                    choice = JOptionPane.showOptionDialog(null, scrollPane,
-                                    "Pick a card to discard",
-                                    JOptionPane.OK_CANCEL_OPTION,
-                                    JOptionPane.PLAIN_MESSAGE,
-                                    null, null, null);
-                                    choice++;
-                                    
-                                    if (choice == 1 ) {
-                                        Object selected = list.getSelectedValue();
-                                       optionList.remove(optionList.indexOf(selected));
-                                       options =  optionList.toArray();
-                                       list = new JList<>(options);
-                                       list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-                                        scrollPane = new JScrollPane(list);
-                                         JOptionPane.showOptionDialog(null, scrollPane,
-                                                    "Pick a card to discard",
-                                                    JOptionPane.OK_CANCEL_OPTION,
-                                                    JOptionPane.PLAIN_MESSAGE,
-                                                    null, null, null);
-                
-                                    }
+       
     
 
     }
