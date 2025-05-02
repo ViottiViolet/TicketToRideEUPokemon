@@ -246,6 +246,11 @@ public class Player implements Comparable
         return 3 - usedStations.size();
     }
 
+    public HashMap<String, Stack<TrainCard>> getNumCards()
+    {
+        return trainCards;
+    }
+
    public void numRoutesCompleted()
    {
 
