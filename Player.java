@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ public class Player implements Comparable
     private ImageIcon image;
     private int score;
     private HashMap<String, Stack<TrainCard>> trainCards;
+    public static ArrayList<String> colorOrder;
     private ArrayList <TicketCard> Tickets;
     private ArrayList<TicketCard> completedTickets;
     private int longestPath;// for european express 
@@ -41,6 +43,11 @@ public class Player implements Comparable
         image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
         score = 0;
         trainCards = new HashMap<String, Stack<TrainCard>>();
+        colorOrder = new ArrayList<String>(Arrays.asList("black", "blue", "green", "orange", "pink", "red", "white", "yellow", "wild"));
+        for (String color : colorOrder)
+        {
+            trainCards.put(color, new Stack<TrainCard>());
+        }
         Tickets = new ArrayList<TicketCard>();
         completedTickets = new ArrayList<>();
         longestPath = 0;

@@ -347,9 +347,8 @@ public class GameScreen extends JFrame {
 
         for (int i = 0; i < 9; i++)
         {
-            cardNums.get(i).setBounds(85 + i*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
+            cardNums.get(i).setBounds(95 + i*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
             cardNums.get(i).setVisible(false);
-            //cardNums.get(i).setText(GameState.players[GameState.getTurn()-1].getNumCards().get("wild").size() + "");
         }
 
         List<String> optionList = new ArrayList<String>();
@@ -431,9 +430,10 @@ public class GameScreen extends JFrame {
             yellow.setVisible(true);
             wild.setVisible(true);
 
-            for (JLabel j : cardNums)
+            for (int i = 0; i < 9; i++)
             {
-                j.setVisible(true);
+                cardNums.get(i).setVisible(true);
+                cardNums.get(i).setText(GameState.players[GameState.getTurn()-1].getNumCards().get(Player.colorOrder.get(i)).size() + "");
             }
         }
 
