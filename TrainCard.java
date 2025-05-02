@@ -2,7 +2,6 @@ import javax.swing.ImageIcon;
 
 public class TrainCard {
 	
-	public static final String WILD = "wild";
 	private String color;
 	private ImageIcon card;
 	
@@ -26,3 +25,4 @@ public class TrainCard {
 
 
 }
+

@@ -19,7 +19,7 @@ public class StartScreen extends JFrame {
         
         //test 
 
-        GameScreen.main(new String[0], this);
+        GameScreen.main(new String[0]);
 
 
     }
@@ -136,3 +136,4 @@ public class StartScreen extends JFrame {
    
 
 }
+

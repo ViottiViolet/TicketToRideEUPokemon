@@ -1,3 +1,5 @@
+
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -6,6 +8,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Stack;
 import javax.swing.ImageIcon;
+
+
 
 
 public class Player implements Comparable
@@ -21,6 +25,7 @@ public class Player implements Comparable
     private Stack <TrainStation> trainStations; 
     private ArrayList <TrainStation> usedStations; 
     private Stack <Train> trains;
+
 
     public Player(int x)
     { 
@@ -45,8 +50,10 @@ public class Player implements Comparable
         longestPath = 0;
         usedStations = new ArrayList <TrainStation>();
 
+
     }
   
+
 
     public int compareTo(Object o) {
        int difference = score-((Player)o).getScore();
@@ -59,7 +66,11 @@ public class Player implements Comparable
 
 
 
+
+
+
     }
+
 
     public void placeTrainStation(City a)
     {
@@ -71,11 +82,14 @@ public class Player implements Comparable
         //System.out.println(playerNum + " has " + (4 - usedStations.size()));
     }
 
+
     public int calculateLongestPath()//TODO
     {
         return 1;// temporary
 
+
     }
+
 
     public boolean isCompleted (TicketCard ticket)
     {
@@ -86,7 +100,12 @@ public class Player implements Comparable
 
 
 
+
+
+
     }
+
+
 
 
     // checks all tickets and adds the completed tickets into the completedTickets list
@@ -99,16 +118,21 @@ public class Player implements Comparable
         }
     }
 
+
       public int numTicketsComplete()
     {
         return completedTickets.size();
     }
 
+
     public ArrayList<TicketCard> getCompletedTickets()
     {
         return completedTickets;
 
+
     }
+
+
 
 
     public Graph getGraph()
@@ -116,19 +140,24 @@ public class Player implements Comparable
         return graph;
     }
 
+
     public int getScore()
     {
         return score;
     }
 
+
     public ArrayList<TrainCard> buy(Railroad r, int numWilds)
     {
+
+
 
 
         ArrayList<TrainCard> usedCards = new ArrayList<TrainCard>();
         String color = r.getColor();
         int price = r.getLength();
         ArrayList <TrainCard> list;
+
 
         //TEMPORARY
         for(int i = 0; i<price; i++)
@@ -137,14 +166,17 @@ public class Player implements Comparable
         }
         return usedCards;
 
+
         /*for(int i = 0; i<numWilds; i++)
         {
             usedCards.add(trainCards.get("wild").pop());
+
 
         }
         price-=numWilds;
         if(price==0)
         return usedCards;
+
 
         for(int i = 0; i<price; i++)
         {
@@ -159,6 +191,7 @@ public class Player implements Comparable
         addScore(r.getLength());// updates score
         return usedCards;*/
     }
+
 
     public String canAfford(Railroad r)
     {
@@ -210,18 +243,24 @@ public class Player implements Comparable
 
 
 
+
+
+
     }
+
 
     public void add(TrainCard card)
     {
         String color = card.getColor();
         Set set = trainCards.keySet();
 
+
         if(!(trainCards.containsKey(card.getColor())))
         {
             Stack <TrainCard> list = new Stack <TrainCard>();
             list.push(new TrainCard(card.getColor()));
             trainCards.put(card.getColor(),list);
+
 
         }
         else
@@ -230,6 +269,7 @@ public class Player implements Comparable
               stack.push(new TrainCard(color));
             trainCards.put(color, stack);
         }
+
 
         
     }
@@ -240,15 +280,26 @@ public class Player implements Comparable
     }
 
 
+
+
     public int getNumStations()
     {
         return 3 - usedStations.size();
     }
 
+
+    public HashMap<String, Stack<TrainCard>> getNumCards()
+    {
+        return trainCards;
+    }
+
+
    public void numRoutesCompleted()
    {
 
+
    }
+
 
     public void addScore(int length) 
     {
@@ -264,25 +315,15 @@ public class Player implements Comparable
             score += 21;
     }
 
+
     public void removeTrains(int length) 
     {
         for (int i = 0; i < length; i++)
             trains.pop();
     }
 
-    public ArrayList<TrainCard> getTrainCards() {
-        return trainCards;
-    }
 
-    public void addCompletedRoute(Railroad route) {
-        completedRoutes.add(route);
-    }
-
-    public void addScore(int points) {
-        score += points;
-    }
-
-    public void removeTrains(int count) {
-        numTrains -= count;
-    }
 }
+
+
+
