@@ -32,6 +32,11 @@ public class GameState {
         return false;
     }
 
+    public int getCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+
     public static void nextTurn() {
         currentPlayer = (currentPlayer + 1) % 4;
         if (currentPlayer == 0) currentPlayer = 4;
@@ -43,6 +48,11 @@ public class GameState {
             score[i] = players[i].getScore();
         }
         //set screen to endscreen
+    }
+
+    public Player[] getPlayers()
+    {
+        return players;
     }
 
 
