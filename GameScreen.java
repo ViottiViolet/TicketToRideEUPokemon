@@ -347,9 +347,8 @@ public class GameScreen extends JFrame {
 
         for (int i = 0; i < 9; i++)
         {
-            cardNums.get(i).setBounds(85 + i*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
+            cardNums.get(i).setBounds(400,400,(int)(cardWidth/6),(int)(cardHeight/6));
             cardNums.get(i).setVisible(false);
-            //cardNums.get(i).setText(GameState.players[GameState.getTurn()-1].getNumCards().get("wild").size() + "");
         }
 
         List<String> optionList = new ArrayList<String>();
@@ -389,9 +388,11 @@ public class GameScreen extends JFrame {
                                     ;
                                     
                                     if (choice == JOptionPane.OK_OPTION) {
-                                      Object selected = list.getSelectedValue();
+                                      int selected = list.getSelectedIndex();
                                         selectedDest.remove(selectedDest.get(selected));
+                                        System.out.println(selectedDest.get(selected));
                                        optionList.remove(optionList.indexOf(selected));
+                                       System.out.println(selected);
                                        options =  optionList.toArray();
                                        list = new JList<>(options);
                                        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -404,7 +405,7 @@ public class GameScreen extends JFrame {
                                                     null, null, null);
                                                     } 
                                                     Object selected = list.getSelectedValue();
-                                                    selectedDest.remove(selectedDest.indexOf(selected));
+                                                    selectedDest.remove(1);
                                                     for(int i=0; i< selectedDest.size(); i++)
                                                     System.out.println(selectedDest.get(i).getCityA()+"-"+selectedDest.get(i).getCityB());
                                     }
