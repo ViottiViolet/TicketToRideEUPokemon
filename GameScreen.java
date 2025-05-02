@@ -266,7 +266,8 @@ public class GameScreen extends JFrame {
         c = new TrainerIcon("3", 3, panel, GameState.players[2]);
         d = new TrainerIcon("4", 4, panel, GameState.players[3]);
 
-        cityButtons = new CityButtons(panel);
+        cityButtons = new CityButtons(panel, gameState);
+       
         cityButtons.disableAll();
 
         draw = false;
