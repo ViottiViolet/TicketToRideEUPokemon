@@ -29,13 +29,11 @@ public class Player implements Comparable
     private Stack <TrainStation> trainStations; 
     private ArrayList <TrainStation> usedStations; 
     private Stack <Train> trains;
-   
+    private int moves ; 
 
-    /**
-     * @param x
-     */
     public Player(int x)
     { 
+        moves = 0;
         playerNum = x;
         trainStations = new Stack<TrainStation>();
         trains = new Stack<Train>();
@@ -125,6 +123,11 @@ public class Player implements Comparable
 
     }
 
+    public int getCardTypeNum (String color)
+    {
+        return trainCards.get(color).size(); 
+    }
+
 
     public Graph getGraph()
     {
@@ -136,13 +139,13 @@ public class Player implements Comparable
         return score;
     }
 
-    public ArrayList<TrainCard> buy(Railroad r, int numWilds)
+    public ArrayList<TrainCard> buy(Railroad r, int numWilds, int pric, String color)
     {
 
 
         ArrayList<TrainCard> usedCards = new ArrayList<TrainCard>();
-        String color = r.getColor();
-        int price = r.getLength();
+        
+        int price = pric;
         ArrayList <TrainCard> list;
 
         //TEMPORARY
@@ -150,9 +153,9 @@ public class Player implements Comparable
         {
             trains.pop();
         }
-        return usedCards;
+        //return usedCards;
 
-        /*for(int i = 0; i<numWilds; i++)
+        for(int i = 0; i<numWilds; i++)
         {
             usedCards.add(trainCards.get("wild").pop());
 
@@ -166,13 +169,14 @@ public class Player implements Comparable
             usedCards.add(trainCards.get(color).pop());
             trains.pop();
         }
+        r.claim();
         City A = r.getCityA();
         City B = r.getCityB();
         graph.addVertex(A.getName());//adds to graph
         graph.addVertex(B.getName());
         graph.addEdge(A,B,r.getLength());
         addScore(r.getLength());// updates score
-        return usedCards;*/
+        return usedCards;
     }
 
     public String canAfford(Railroad r)
@@ -229,6 +233,7 @@ public class Player implements Comparable
 
     public void add(TrainCard card)
     {
+        moves++;
         String color = card.getColor();
         Set set = trainCards.keySet();
 
@@ -246,6 +251,21 @@ public class Player implements Comparable
             trainCards.put(color, stack);
         }
 
+        
+    }
+    public boolean canAffordM(Railroad r, int price)
+    {
+        String color = r.getColor();
+        if(trainCards.get(color).size()<price)
+        {
+            return true;
+        }
+        if(trainCards.containsKey("wilds"))
+        {
+            if(trainCards.get(color).size()<price)
+            return true;
+        }
+        return false;
         
     }
     
@@ -289,5 +309,30 @@ public class Player implements Comparable
         for (int i = 0; i < length; i++)
             trains.pop();
     }
+
+    public int getWilds()
+    {
+        Set  set = trainCards.keySet();
+        Iterator <String> iter = set.iterator();
+        Stack stack = new Stack();
+        while(iter.hasNext())
+        {
+            String key = iter.next();
+            Stack s = trainCards.get(key);
+            if(key.equals("wild"));
+            {
+            stack = s;
+            break;
+            }
+        }
+        System.out.println(stack.size());
+        return stack.size();
+    }
+    public int getMoves()
+    {
+        return moves;
+    }
+    public void resetMoves ()
+    {moves = 0;}
 
 }

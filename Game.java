@@ -156,6 +156,7 @@ public class Game {
                 deck.push(new TrainCard("yellow"));
 
             }
+        Collections.shuffle(deck);
 
            // System.out.println("line 166");
 
@@ -216,6 +217,12 @@ public class Game {
                 faceUpCards.add(trainDeck.remove(0));
             }
         }
+    }
+    public Stack <TrainCard> getDeck ()
+    {
+
+        return deck;
+
     }
     
 

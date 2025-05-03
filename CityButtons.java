@@ -11,60 +11,60 @@ public class CityButtons {
     private static ArrayList<CityButton> cityList;
    public GameState state;
     
-    public CityButtons(JPanel p, GameState g)
+    public CityButtons(JPanel p, GameState g, Game G)
     {
       // this.state = state;
         cityList = new ArrayList<CityButton>();
         int x = 322;
         int y = 54;
 
-        cityList.add(new CityButton(715-x, 88-y, p, "Edinburgh", g));
-        cityList.add(new CityButton(1263-x, 62-y, p, "Stockholm", g));
-        cityList.add(new CityButton(1652-x, 94-y, p, "Petrograd", g));
-        cityList.add(new CityButton(814-x, 281-y, p, "London", g));
-        cityList.add(new CityButton(936-x, 286-y, p, "Amsterdamn", g));
-        cityList.add(new CityButton(1140-x, 161-y, p, "Kobenhavn", g));
-        cityList.add(new CityButton(1433-x, 99-y, p, "Riga", g));
-        cityList.add(new CityButton(1323-x, 214-y, p, "Danzig", g));
-        cityList.add(new CityButton(1778-x, 248-y, p, "Moskva", g));
-        cityList.add(new CityButton(910-x, 346-y, p, "Bruxelles", g));
-        cityList.add(new CityButton(1044-x, 295-y, p, "Essen", g));
-        cityList.add(new CityButton(1174-x, 312-y, p, "Berlin", g));
-        cityList.add(new CityButton(1385-x, 301-y, p, "Warszawa", g));
-        cityList.add(new CityButton(1532-x, 276-y, p, "Wilno", g));
-        cityList.add(new CityButton(1663-x, 276-y, p, "Smolensk", g));
-        cityList.add(new CityButton(680-x, 430-y, p, "Brest", g));
-        cityList.add(new CityButton(797-x, 394-y, p, "Dieppe", g));
-        cityList.add(new CityButton(1018-x, 383-y, p, "Frankfurt", g));
-        cityList.add(new CityButton(1582-x, 370-y, p, "Kyiv", g));
-        cityList.add(new CityButton(1757-x, 438-y, p, "Kharkov", g));
-        cityList.add(new CityButton(860-x, 448-y, p, "Paris", g));
-        cityList.add(new CityButton(1099-x, 441-y, p, "Monchen", g));
-        cityList.add(new CityButton(1247-x, 460-y, p, "Wein", g));
-        cityList.add(new CityButton(1309-x, 493-y, p, "Budapest", g));
-        cityList.add(new CityButton(1810-x, 506-y, p, "Rostov", g));
-        cityList.add(new CityButton(1010-x, 522-y, p, "Zurich", g));
-        cityList.add(new CityButton(1119-x, 562-y, p, "Venezela", g));
-        cityList.add(new CityButton(1228-x, 578-y, p, "Zagrab", g));
-        cityList.add(new CityButton(1508-x, 583-y, p, "Bucuresti", g));
-        cityList.add(new CityButton(1685-x, 601-y, p, "Sevastopol", g));
-        cityList.add(new CityButton(1802-x, 620-y, p, "Sochi", g));
-        cityList.add(new CityButton(778-x, 645-y, p, "Pamplona", g));
-        cityList.add(new CityButton(648-x, 749-y, p, "Madrid", g));
-        cityList.add(new CityButton(560-x, 780-y, p, "Lisboa", g));
-        cityList.add(new CityButton(647-x, 846-y, p, "Cadiz", g));
-        cityList.add(new CityButton(794-x, 766-y, p, "Barcelona", g));
-        cityList.add(new CityButton(975-x, 644-y, p, "Marseille", g));
-        cityList.add(new CityButton(1130-x, 677-y, p, "Roma", g));
-        cityList.add(new CityButton(1179-x, 845-y, p, "Palermo", g));
-        cityList.add(new CityButton(1341-x, 653-y, p, "Sarajevo", g));
-        cityList.add(new CityButton(1242-x, 711-y, p, "Brindisi", g));
-        cityList.add(new CityButton(1427-x, 664-y, p, "Sofia", g));
-        cityList.add(new CityButton(1403-x, 808-y, p, "Athina", g));
-        cityList.add(new CityButton(1575-x, 743-y, p, "Constantinople", g));
-        cityList.add(new CityButton(1674-x, 810-y, p, "Angora", g));
-        cityList.add(new CityButton(1778-x, 780-y, p, "Erzurum", g));
-        cityList.add(new CityButton(1515-x, 842-y, p, "Smyrna", g));
+        cityList.add(new CityButton(715-x, 88-y, p, "Edinburgh", g,G));
+        cityList.add(new CityButton(1263-x, 62-y, p, "Stockholm", g,G));
+        cityList.add(new CityButton(1652-x, 94-y, p, "Petrograd", g,G));
+        cityList.add(new CityButton(814-x, 281-y, p, "London", g,G));
+        cityList.add(new CityButton(936-x, 286-y, p, "Amsterdamn", g,G));
+        cityList.add(new CityButton(1140-x, 161-y, p, "Kobenhavn", g,G));
+        cityList.add(new CityButton(1433-x, 99-y, p, "Riga", g,G));
+        cityList.add(new CityButton(1323-x, 214-y, p, "Danzig", g,G));
+        cityList.add(new CityButton(1778-x, 248-y, p, "Moskva", g,G));
+        cityList.add(new CityButton(910-x, 346-y, p, "Bruxelles", g,G));
+        cityList.add(new CityButton(1044-x, 295-y, p, "Essen", g,G));
+        cityList.add(new CityButton(1174-x, 312-y, p, "Berlin", g,G));
+        cityList.add(new CityButton(1385-x, 301-y, p, "Warszawa", g,G));
+        cityList.add(new CityButton(1532-x, 276-y, p, "Wilno", g,G));
+        cityList.add(new CityButton(1663-x, 276-y, p, "Smolensk", g,G));
+        cityList.add(new CityButton(680-x, 430-y, p, "Brest", g,G));
+        cityList.add(new CityButton(797-x, 394-y, p, "Dieppe", g,G));
+        cityList.add(new CityButton(1018-x, 383-y, p, "Frankfurt", g,G));
+        cityList.add(new CityButton(1582-x, 370-y, p, "Kyiv", g,G));
+        cityList.add(new CityButton(1757-x, 438-y, p, "Kharkov", g,G));
+        cityList.add(new CityButton(860-x, 448-y, p, "Paris", g,G));
+        cityList.add(new CityButton(1099-x, 441-y, p, "Monchen", g,G));
+        cityList.add(new CityButton(1247-x, 460-y, p, "Wein", g,G));
+        cityList.add(new CityButton(1309-x, 493-y, p, "Budapest", g,G));
+        cityList.add(new CityButton(1810-x, 506-y, p, "Rostov", g,G));
+        cityList.add(new CityButton(1010-x, 522-y, p, "Zurich", g,G));
+        cityList.add(new CityButton(1119-x, 562-y, p, "Venezela", g,G));
+        cityList.add(new CityButton(1228-x, 578-y, p, "Zagrab", g,G));
+        cityList.add(new CityButton(1508-x, 583-y, p, "Bucuresti", g,G));
+        cityList.add(new CityButton(1685-x, 601-y, p, "Sevastopol", g,G));
+        cityList.add(new CityButton(1802-x, 620-y, p, "Sochi", g,G));
+        cityList.add(new CityButton(778-x, 645-y, p, "Pamplona", g,G));
+        cityList.add(new CityButton(648-x, 749-y, p, "Madrid", g,G));
+        cityList.add(new CityButton(560-x, 780-y, p, "Lisboa", g,G));
+        cityList.add(new CityButton(647-x, 846-y, p, "Cadiz", g,G));
+        cityList.add(new CityButton(794-x, 766-y, p, "Barcelona", g,G));
+        cityList.add(new CityButton(975-x, 644-y, p, "Marseille", g,G));
+        cityList.add(new CityButton(1130-x, 677-y, p, "Roma", g,G));
+        cityList.add(new CityButton(1179-x, 845-y, p, "Palermo", g,G));
+        cityList.add(new CityButton(1341-x, 653-y, p, "Sarajevo", g,G));
+        cityList.add(new CityButton(1242-x, 711-y, p, "Brindisi", g,G));
+        cityList.add(new CityButton(1427-x, 664-y, p, "Sofia", g,G));
+        cityList.add(new CityButton(1403-x, 808-y, p, "Athina", g,G));
+        cityList.add(new CityButton(1575-x, 743-y, p, "Constantinople", g,G));
+        cityList.add(new CityButton(1674-x, 810-y, p, "Angora", g,G));
+        cityList.add(new CityButton(1778-x, 780-y, p, "Erzurum", g,G));
+        cityList.add(new CityButton(1515-x, 842-y, p, "Smyrna", g,G));
         
     }
     public void setState(GameState state)
@@ -110,9 +110,11 @@ class CityButton {
     private ArrayList<Railroad> railroads;
     private City city;
    private GameState state;
+   private Game game;
 
-    public CityButton(int x, int y, JPanel p, String n, GameState g)
+    public CityButton(int x, int y, JPanel p, String n, GameState g, Game game)
     {
+        this.game = game;
         glow = new ImageIcon(getClass().getResource("/Images/Game/city glow.png" ));
         station = new ImageIcon(getClass().getResource("/Images/Stations/1.png"));
         glowLabel = new JLabel(new ImageIcon(glow.getImage().getScaledInstance((int)(120/3), (int)(120/3), Image.SCALE_SMOOTH)));
@@ -128,6 +130,8 @@ class CityButton {
             @Override
                public void mouseClicked(MouseEvent e) {
                     //glowLabel.setVisible(true);
+                    int pIndex = state.getCurrentPlayer()-1;
+                            Player pl = state.getPlayers()[pIndex];
                     choice = 0;
                     if (!isPurchased)
                     {
@@ -163,29 +167,24 @@ class CityButton {
                         }
                         else 
                         {
-                            int pIndex = state.getCurrentPlayer()-1;
-                            Player p = state.getPlayers()[pIndex];
+                            
 
                             String[] options;
                             if (railroads.size()>1) {
-                               // if(p.canAfford(railroads.get(0)).equals("yes"))
-                                {
-                                    String name = javax.swing.JOptionPane.showInputDialog("What is your name?");
-
-
-                                }
+                               
+                                
                                 options = new String[]{"Cancel", "Confirm: " + railroads.get(0).getColor(), "Confirm: " + railroads.get(1).getColor()};
                             }
                             else
                             {
                                 options = new String[]{"Cancel", "Confirm"};
                             }
-                         //   choice = JOptionPane.showOptionDialog(p,
-                           //         "Do you want to purchase the route between " + citiesSelected.get(0).getName() + " and " + citiesSelected.get(1).getName() + "?",
-                          //          "Route Selected",
-                          //          JOptionPane.DEFAULT_OPTION,
-                           //         JOptionPane.WARNING_MESSAGE,
-                           //         null, options, null);
+                            choice = JOptionPane.showOptionDialog(p,
+                           "Do you want to purchase the route between " + citiesSelected.get(0).getName() + " and " + citiesSelected.get(1).getName() + "?",
+                                  "Route Selected",
+                                    JOptionPane.DEFAULT_OPTION,
+                                    JOptionPane.WARNING_MESSAGE,
+                                    null, options, null);
                         }
                         if (choice == 0)
                         {
@@ -217,7 +216,8 @@ class CityButton {
                             if (!citiesSelected.get(1).getPurchased()) citiesSelected.get(1).getLabel().setIcon(null);
                             if (!railroads.isEmpty()) railroads.get(choice-1).claim();
                             CityButtons.disableAll();
-                            GameState.players[GameState.getTurn()-1].buy(railroads.get(choice-1), 0);
+                            purchaser( pl, railroads.get(choice-1));
+                            //GameState.players[GameState.getTurn()-1].buy(railroads.get(choice-1), 0);
                             GameState.nextTurn();
                             GameScreen.nextTurn();
                         }
@@ -265,6 +265,101 @@ class CityButton {
 
         name = n;
         isPurchased = false;
+    }
+
+    public void purchaser ( Player p, Railroad r)
+    {
+        String check;
+        check = p.canAfford(r);
+        if(check.equals("no"))
+        return;
+        String color = r.getColor();
+       String str = null;
+       if(r.getEngineCount()!=0)
+       str = "ferry";
+       else if(r.isTunnel())
+       str = "mountain";
+       else 
+       str = "normal";
+        int numWilds;
+        if(str.equals("normal"))
+        {
+            String recolor = "";
+            if(color.equals("none"))
+            {
+                String colors = "blackbluegreenorangepinkredwhiteyellow";
+                String rcolor = javax.swing.JOptionPane.showInputDialog("what color card do you want to use? ( type all lower case with correct splling)");
+                while (!colors.contains(rcolor))
+                {
+                     rcolor = javax.swing.JOptionPane.showInputDialog("what color card do you want to use ? - last input was invalid( type all lower case with correct splling)");
+
+                }
+                
+            }
+
+            numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use?"));
+            while(p.getWilds()<numWilds)
+           {
+               numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use? previous number was invalid"));
+           }
+           p.buy(r, numWilds, r.getLength(), r.getColor());
+        }
+        if(str=="ferry")
+        {
+
+            JOptionPane.showMessageDialog(null, "because this railroad requires "+r.getEngineCount()+" wilds cards");
+            numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use?"+" must use at least "+r.getEngineCount()));
+            while(p.getWilds()<numWilds||numWilds<r.getEngineCount())
+            numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use? previous number was invalid"));
+            p.buy(r,numWilds,r.getLength(), r.getColor());
+            game.getBoardGraph();
+
+        }
+        
+        if(str.equals("mountain"))
+        {
+            numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use?"));
+            while(p.getWilds()<numWilds)
+           {
+               numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use? previous number was invalid"));
+           }
+            ArrayList <TrainCard> three = new ArrayList<>();
+            int count =0;
+            for(int i =0; i<3;i++)
+            {
+                TrainCard card = game.getDeck().pop();
+                if(card.getColor().equals(color))
+                count++;
+                three.add(card);
+            }
+            JOptionPane.showMessageDialog(null, "the three cards drawn were: "+three.get(0).getColor()+", "+three.get(1).getColor()+", "+three.get(2).getColor());
+            if(count!=0)
+            {
+                if(p.canAffordM(r,(r.getLength()+count)))
+                {
+                    int result = JOptionPane.showConfirmDialog(null,"purchasing this route requies "+count+"more cards (if needed we will have to take wild cards), do you wish to confirm purchase?","Confirmation",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION)
+                    {
+                        if(p.getCardTypeNum(color)+numWilds>=r.getLength()+count)
+                        p.buy(r,numWilds,r.getLength()+count, r.getColor());
+                        else{
+                            int nWilds = r.getLength()+count-p.getCardTypeNum(color);
+                        p.buy(r,nWilds, r.getLength()+count, r.getColor());
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                p.buy(r, numWilds, r.getLength(), r.getColor());
+            }
+            
+
+
+        }
+      
+
     }
 
     public CityButton getCity()
