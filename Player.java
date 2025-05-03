@@ -332,4 +332,9 @@ public class Player implements Comparable
     public void resetMoves ()
     {moves = 0;}
 
+    public int getNumber()
+    {
+        return playerNum;
+    }
+
 }
