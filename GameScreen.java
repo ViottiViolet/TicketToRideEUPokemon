@@ -49,11 +49,14 @@ public class GameScreen extends JFrame {
     private static int choice = 1; 
     private static ArrayList<Object> selectedDest;
     private static JList<Object> destinationJList = new JList<>();
+    private int drawCardTwice;
 
    
 
     public GameScreen() {
         game = new Game();
+        gameState = new GameState(game);
+        drawCardTwice = 0;
        
 
 
@@ -239,11 +242,20 @@ public class GameScreen extends JFrame {
           
             @Override
                public void mouseClicked(MouseEvent e) {
+                int pnum = gameState.getCurrentPlayer();
+                Player current = gameState.getPlayers()[pnum-1];
+                current.add(game.getDeck().pop());
                 JOptionPane.showMessageDialog(panel,
                                 "pluh",
                                 "pluh",
                                 JOptionPane.WARNING_MESSAGE);
+                                if(current.getMoves()==2)
+                                {
+                                    gameState.nextTurn();
+                                    
+                                }
             }
+           
             
         });
         
@@ -266,7 +278,7 @@ public class GameScreen extends JFrame {
         c = new TrainerIcon("3", 3, panel, GameState.players[2]);
         d = new TrainerIcon("4", 4, panel, GameState.players[3]);
 
-        cityButtons = new CityButtons(panel, gameState);
+        cityButtons = new CityButtons(panel, gameState,game);
        
         cityButtons.disableAll();
 

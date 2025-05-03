@@ -217,6 +217,12 @@ public class Game {
             }
         }
     }
+    public Stack <TrainCard> getDeck ()
+    {
+
+        return deck;
+
+    }
     
 
     public ArrayList<TrainCard> getFaceUpCards() {
