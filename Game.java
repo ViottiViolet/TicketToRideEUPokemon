@@ -156,6 +156,7 @@ public class Game {
                 deck.push(new TrainCard("yellow"));
 
             }
+        Collections.shuffle(deck);
 
            // System.out.println("line 166");
 
