@@ -251,6 +251,7 @@ public class GameScreen extends JFrame {
                                 JOptionPane.WARNING_MESSAGE);
                                 if(current.getMoves()==2)
                                 {
+                                    current.resetMoves();
                                     gameState.nextTurn();
                                     nextTurn();
                                     
