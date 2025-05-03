@@ -252,6 +252,7 @@ public class GameScreen extends JFrame {
                                 if(current.getMoves()==2)
                                 {
                                     gameState.nextTurn();
+                                    nextTurn();
                                     
                                 }
             }
