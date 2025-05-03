@@ -5,9 +5,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import javax.swing.ImageIcon;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 
 public class Player implements Comparable
@@ -24,7 +29,11 @@ public class Player implements Comparable
     private Stack <TrainStation> trainStations; 
     private ArrayList <TrainStation> usedStations; 
     private Stack <Train> trains;
+   
 
+    /**
+     * @param x
+     */
     public Player(int x)
     { 
         playerNum = x;
@@ -52,9 +61,7 @@ public class Player implements Comparable
         completedTickets = new ArrayList<>();
         longestPath = 0;
         usedStations = new ArrayList <TrainStation>();
-
     }
-  
 
     public int compareTo(Object o) {
        int difference = score-((Player)o).getScore();

@@ -47,8 +47,11 @@ public class GameScreen extends JFrame {
     private static boolean trainselect, stationselect = false;
     private GameState gameState;
     private static int choice = 1; 
-    private static ArrayList<Object> selectedDest;
-    private static JList<Object> destinationJList = new JList<>();
+    List<TicketCard> selectedDest1 = new ArrayList<>(); 
+    List<TicketCard> selectedDest2 = new ArrayList<>();
+    List<TicketCard> selectedDest3 = new ArrayList<>(); 
+    List<TicketCard> selectedDest4 = new ArrayList<>(); 
+    
 
    
 
@@ -353,55 +356,157 @@ public class GameScreen extends JFrame {
         }
 
         List<String> optionList = new ArrayList<String>();
+        List<TicketCard> optionL = new ArrayList<>();
         Stack<TicketCard> tickets = game.getNormRoutes();
         Stack<TicketCard> lTickets = game.getLongRoutes();
         Collections.shuffle(tickets);
         Collections.shuffle(lTickets);
-        
-        TicketCard ticket = tickets.pop();
+       
+         for (int playerTurn = 1; playerTurn <= 4; playerTurn++) {
+            List<TicketCard> selectedDest = null;
+            switch (playerTurn) {
+                case 1: selectedDest = selectedDest1; 
+                TicketCard ticket = tickets.pop();
+                 optionL.add(ticket);
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = tickets.pop();
+                 optionL.add(ticket);
+         
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = tickets.pop();  
+                 optionL.add(ticket);
+         
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = lTickets.pop();
+                 optionL.add(ticket);
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 
+                break;
 
-        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
-        ticket = tickets.pop();
-        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
-        ticket = tickets.pop();
-        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
-        ticket = lTickets.pop();
-        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                case 2: selectedDest = selectedDest2; 
+                optionL = new ArrayList<>();
+                optionList = new ArrayList<>();
+                 ticket = tickets.pop();
+                 optionL.add(ticket);
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = tickets.pop();
+                 optionL.add(ticket);
+         
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = tickets.pop();  
+                 optionL.add(ticket);
+         
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = lTickets.pop();
+                 optionL.add(ticket);
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 
+                break;
+                case 3: selectedDest = selectedDest3; 
+                optionL = new ArrayList<>();
+                optionList = new ArrayList<>();
+                 ticket = tickets.pop();
+                 optionL.add(ticket);
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = tickets.pop();
+                 optionL.add(ticket);
+         
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = tickets.pop();  
+                 optionL.add(ticket);
+         
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = lTickets.pop();
+                 optionL.add(ticket);
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 
+                break;
+                case 4: selectedDest = selectedDest4; 
+                optionL = new ArrayList<>();
+                optionList = new ArrayList<>();
+                 ticket = tickets.pop();
+                 optionL.add(ticket);
+
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = tickets.pop();
+                 optionL.add(ticket);
+         
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = tickets.pop();  
+                 optionL.add(ticket);
+         
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 ticket = lTickets.pop();
+                 optionL.add(ticket);
+                 optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
+                 
+                break;
+                
+            }
+
         Object[] options =  optionList.toArray();
-         JList<Object> list = new JList<>(options);
-         selectedDest = new ArrayList<>();
-         selectedDest.add(list);
+        JList<Object> list = new JList<>(options);
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         JScrollPane scrollPane = new JScrollPane(list);
                 
                                     choice = JOptionPane.showOptionDialog(null, scrollPane,
-                                    "Destination cards",
+                                    "Player " + playerTurn + " Destination Cards",
                                     JOptionPane.OK_CANCEL_OPTION,
                                     JOptionPane.PLAIN_MESSAGE,
                                     null, null, null);
                                     ;
                                     
                                     if (choice == JOptionPane.OK_OPTION) {
-                                        Object selected = list.getSelectedValue();
-                                       selectedDest.remove(selected);
-                                       optionList.remove(optionList.indexOf(selected));
+                                       String selected = (String)list.getSelectedValue();
+                                       TicketCard selectedTicket = null;
+                                       for (int i = 0; i < optionList.size(); i++) {
+                                        if (optionList.get(i).equals(selected)) {
+                                            selectedTicket = optionL.get(i);
+                                            break;
+                                        }
+                                    }
+                                    if (selectedTicket != null) {
+                                        selectedDest.remove(selectedTicket);
+                                        optionL.remove(selectedTicket);
+                                        optionList.remove(selected); 
+                                    }
+                                     
                                        options =  optionList.toArray();
                                        list = new JList<>(options);
                                        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
                                         scrollPane = new JScrollPane(list);
                                          JOptionPane.showOptionDialog(null, scrollPane,
-                                                    "Destination Cards",
+                                         "Player " + playerTurn + " Destination Cards",
                                                     JOptionPane.OK_CANCEL_OPTION,
                                                     JOptionPane.PLAIN_MESSAGE,
                                                     null, null, null);
-                                                     selected = list.getSelectedValue();
-                                                     selectedDest.remove(selected);
+                                                     selected = (String)list.getSelectedValue();
+                                                     TicketCard secondSelectedTicket = null;
+
+                                                     for (int i = 0; i < optionList.size(); i++) {
+                                                        if (optionList.get(i).equals(selected)) {
+                                                            secondSelectedTicket = optionL.get(i);
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (secondSelectedTicket != null) {
+                                                        selectedDest.remove(secondSelectedTicket);
+                                                        optionL.remove(secondSelectedTicket);
+                                                        optionList.remove(selected); 
+                                                    }
+                                                    
+                                                       
                                                      
-                                                    } 
-                
-                                    }
+                                                      }
+                    
+                                                }
+                                                for (int i =0; i<selectedDest1.size(); i++) {
+                                                    System.out.println(selectedDest1.get(i));
+                                                   }
+    }
+                                    
 
     
 
@@ -494,11 +599,6 @@ public class GameScreen extends JFrame {
         d.reposition();
 
     }
-    /*public static void addDestCards(ArrayList<Object> cards){
-        for(int i=0; i<selectedDest.size(); i++){
-            destinationJList.add(i, selectedDest.)
-        }
-    }*/
     
 
     static class BackgroundPanel extends JPanel{
