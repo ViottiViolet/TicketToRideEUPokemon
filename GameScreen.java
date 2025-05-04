@@ -10,7 +10,7 @@ import javax.swing.*;
 
 public class GameScreen extends JFrame {
 
-    private  Game game;
+    private final Game game;
     private static JLabel drawLabel;
     private static JLabel invenLabel;
     private static JLabel purchLabel;
@@ -41,24 +41,22 @@ public class GameScreen extends JFrame {
 
     private static TrainerIcon a, b, c, d;
     CityButtons cityButtons;
-    static boolean draw;
-    static boolean inven;
+    boolean draw, inven;
 
     private static boolean purchase = false;
     private static boolean trainselect, stationselect = false;
-    private static GameState gameState;
+    private GameState gameState;
     private static int choice = 1; 
     private static ArrayList<Object> selectedDest;
     private static JList<Object> destinationJList = new JList<>();
-    //private int drawCardTwice;
+    private int drawCardTwice;
 
    
 
     public GameScreen() {
         game = new Game();
         gameState = new GameState(game);
-      //  drawCardTwice = 0;
-        System.out.println(game.getBoardGraph().getVertices().size());
+        drawCardTwice = 0;
        
 
 
@@ -104,7 +102,7 @@ public class GameScreen extends JFrame {
         invenLabel = new JLabel(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         purchLabel = new JLabel(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         backLabel = new JLabel(new ImageIcon(backbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-        textLabel = new JLabel("It is now Player " + gameState.getTurn() + "'s turn!");
+        textLabel = new JLabel("It is now Player " + GameState.getTurn() + "'s turn!");
         trainLabel = new JLabel(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         stationLabel = new JLabel(new ImageIcon(stationBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         arenaLabel = new JLabel(new ImageIcon(arena.getImage().getScaledInstance((int)(1599*1.1), (int)(940*1.1), Image.SCALE_SMOOTH)));
@@ -122,7 +120,7 @@ public class GameScreen extends JFrame {
         back = new JLabel(new ImageIcon(backImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         routeback = new JLabel(new ImageIcon(routebackImg.getImage().getScaledInstance((int)(433), (int)(577), Image.SCALE_SMOOTH)));
 
-        System.out.println(game.getBoardGraph().getVertices().size()+"124");
+
         cardNums = new ArrayList<JLabel>();
         for (int i = 0; i < 9; i++)
         {
@@ -157,7 +155,7 @@ public class GameScreen extends JFrame {
                 inven = true;
                 open();
             }
-          //  System.out.println(game.getBoardGraph().getVertices().size()+"124");
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 invenLabel.setIcon(new ImageIcon(invenhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
@@ -180,7 +178,6 @@ public class GameScreen extends JFrame {
                 textLabel.setText("Click the train to purchase a route or the station to place a train station!");
             }
 
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 purchLabel.setIcon(new ImageIcon(purchhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
@@ -194,7 +191,6 @@ public class GameScreen extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 close();
-                System.out.println("back");
             }
 
             @Override
@@ -212,17 +208,13 @@ public class GameScreen extends JFrame {
            
             @Override
                public void mouseClicked(MouseEvent e) {
-                //System.out.println(game.getBoardGraph().getVertices().size()+"213");
                 if(purchase && stationselect==false){
-                    
                     //System.out.println("select train");
                     trainselect = true;
                     trainLabel.setIcon(new ImageIcon(trainhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
                     textLabel.setText("Select the cities on either side of the route you would like to purchase!");
                     
                     cityButtons.enableAll(2);
-                    
-                   
                 }
             }
             
@@ -250,7 +242,7 @@ public class GameScreen extends JFrame {
           
             @Override
                public void mouseClicked(MouseEvent e) {
-                int pnum = gameState.getTurn();
+                int pnum = gameState.getCurrentPlayer();
                 Player current = gameState.getPlayers()[pnum-1];
                 TrainCard card = game.getDeck().pop();
                 current.add(card);
@@ -283,12 +275,11 @@ public class GameScreen extends JFrame {
             
         });*/
 
-        //GameState.makePlayers();
+        GameState.makePlayers();
         a = new TrainerIcon("1", 1, panel, GameState.players[0],gameState);
         b = new TrainerIcon("2", 2, panel, GameState.players[1],gameState);
         c = new TrainerIcon("3", 3, panel, GameState.players[2],gameState);
         d = new TrainerIcon("4", 4, panel, GameState.players[3], gameState);
-      //  System.out.println(game.getBoardGraph().getVertices().size());
 
         cityButtons = new CityButtons(panel, gameState,game);
        
@@ -458,7 +449,7 @@ public class GameScreen extends JFrame {
             for (int i = 0; i < 9; i++)
             {
                 cardNums.get(i).setVisible(true);
-                cardNums.get(i).setText(gameState.players[gameState.getTurn()-1].getNumCards().get(Player.colorOrder.get(i)).size() + "");
+                cardNums.get(i).setText(GameState.players[GameState.getTurn()-1].getNumCards().get(Player.colorOrder.get(i)).size() + "");
             }
         }
 
@@ -509,7 +500,7 @@ public class GameScreen extends JFrame {
 
         trainLabel.setIcon(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         stationLabel.setIcon(new ImageIcon(stationBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
-        textLabel.setText("It is now Player " + gameState.getTurn() + "'s turn!");
+        textLabel.setText("It is now Player " + GameState.getTurn() + "'s turn!");
         purchase = false;
 
         a.reposition();
@@ -536,10 +527,7 @@ public class GameScreen extends JFrame {
             int maph = 1080;
             g.drawImage(map.getImage(), 235, 10, (int)(mapw*0.77), (int)(maph*0.77), this);
         }
-
-       
     }
-  
 
     public static void main(String[] args) {
 
@@ -552,36 +540,4 @@ public class GameScreen extends JFrame {
     
 
     }
-
-
-
-    public static void setTextLabel(String string) {
-        // TODO Auto-generated method stub
-        textLabel.setText(string);
-    }
-
-    public static void reset() {
-        // Reset the text label only if appropriate
-        if(textLabel.getText().equals("choose another play")) {
-            trainselect = false;
-            trainLabel.setIcon(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
-        }
-    
-        // Reset all mode flags
-        purchase = false;
-        draw = false;
-        inven = false;
-        trainselect = false;
-        stationselect = false;
-    
-        // Reset icons just to be safe
-        trainLabel.setIcon(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
-        stationLabel.setIcon(new ImageIcon(stationBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
-    
-        // Update label
-        textLabel.setText("choose another play");
-    }
-    
-
-    
 }

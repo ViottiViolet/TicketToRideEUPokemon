@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class Graph
 {
-    private  ArrayList<String> connectedCityHolder = new ArrayList<String>();
-    private  ArrayList<City> vertices = new ArrayList<City>();
-    private  ArrayList<City> visitedVertices = new ArrayList<City>();
+    private static ArrayList<String> connectedCityHolder = new ArrayList<String>();
+    private static ArrayList<City> vertices = new ArrayList<City>();
+    private static ArrayList<City> visitedVertices = new ArrayList<City>();
 
     public Graph ()
     {
@@ -12,7 +12,7 @@ public class Graph
     }
 
     // returns the railroad(s) between 2 cities, takes in the names of the 2 cities
-    public  ArrayList<Railroad> getRailroad(String city1, String city2)
+    public static ArrayList<Railroad> getRailroad(String city1, String city2)
     {
         ArrayList<Railroad> r = new ArrayList<Railroad>();
         for(City c: vertices)
@@ -45,18 +45,8 @@ public class Graph
 //ddssf
     public void addEdge (City a, City b, int weight)
     {
-        int x=0 ;
-        int y =0;
-
-        for(int i = 0; i<vertices.size();i++)
-        {
-            if (vertices.get(i).getName().equals(a.getName()))
-            x =i;
-            if (vertices.get(i).getName().equals(b.getName()))
-            y =i;
-
-        }
-       
+        int x = vertices.indexOf(a);
+        int y = vertices.indexOf(b);
         City city1 = vertices.get(x);
         City city2 = vertices.get(y);
 
@@ -135,7 +125,7 @@ public class Graph
 
     ////////////////////
     ///// this checks adjacency 
-    public  boolean isConnected (City a, City b)
+    public static boolean isConnected (City a, City b)
     {
         boolean connected = false;
          int i=0;

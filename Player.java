@@ -28,7 +28,6 @@ public class Player implements Comparable
 
     public Player(int x)
     { 
-         graph = new Graph();
         moves = 0;
         playerNum = x;
         trainStations = new Stack<TrainStation>();

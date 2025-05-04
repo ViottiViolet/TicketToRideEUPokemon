@@ -112,9 +112,9 @@ class CityButton {
    private GameState state;
    private Game game;
 
-    public CityButton(int x, int y, JPanel p, String n, GameState g, Game G)
+    public CityButton(int x, int y, JPanel p, String n, GameState g, Game game)
     {
-        game = G;
+        this.game = game;
         glow = new ImageIcon(getClass().getResource("/Images/Game/city glow.png" ));
         station = new ImageIcon(getClass().getResource("/Images/Stations/1.png"));
         glowLabel = new JLabel(new ImageIcon(glow.getImage().getScaledInstance((int)(120/3), (int)(120/3), Image.SCALE_SMOOTH)));
@@ -130,7 +130,8 @@ class CityButton {
             @Override
                public void mouseClicked(MouseEvent e) {
                     //glowLabel.setVisible(true);
-                   
+                    int pIndex = state.getCurrentPlayer()-1;
+                            Player pl = state.getPlayers()[pIndex];
                     choice = 0;
                     if (!isPurchased)
                     {
@@ -155,10 +156,8 @@ class CityButton {
                             citiesToSelect++;
                             return;
                         }
-                        railroads = game.getBoardGraph().getRailroad(citiesSelected.get(0).getName(), citiesSelected.get(1).getName());
-                        
-                       System.out.println(game.getBoardGraph().getVertices().size());
-                        if (!game.getBoardGraph().isConnected(citiesSelected.get(0).city(), citiesSelected.get(1).city()))
+                        railroads = Graph.getRailroad(citiesSelected.get(0).getName(), citiesSelected.get(1).getName());
+                        if (!Game.getBoardGraph().isConnected(citiesSelected.get(0).city(), citiesSelected.get(1).city()))
                         {
                             JOptionPane.showMessageDialog(p,
                                 "You've selected two cities which aren't connected to each other. Please try again.",
@@ -189,8 +188,6 @@ class CityButton {
                         }
                         if (choice == 0)
                         {
-                            GameScreen.reset();
-                           
                             citiesToSelect+=2;
                             
                             if (!citiesSelected.get(0).getPurchased()) citiesSelected.get(0).getLabel().setIcon(null);
@@ -199,7 +196,7 @@ class CityButton {
                         }
                         else
                         {
-                            if (!railroads.isEmpty() && (railroads.get(choice-1).getIsOwned() == true || game.getBoardGraph().getRailroad(railroads.get(choice-1).getCityB().getName(), railroads.get(choice-1).getCityA().getName()).get(choice-1).getIsOwned() == true))
+                            if (!railroads.isEmpty() && (railroads.get(choice-1).getIsOwned() == true || Graph.getRailroad(railroads.get(choice-1).getCityB().getName(), railroads.get(choice-1).getCityA().getName()).get(choice-1).getIsOwned() == true))
                             {
                                 JOptionPane.showMessageDialog(p,
                                 "You cannot buy a route which has already been purchased. Please try again.",
@@ -219,17 +216,10 @@ class CityButton {
                             if (!citiesSelected.get(1).getPurchased()) citiesSelected.get(1).getLabel().setIcon(null);
                             if (!railroads.isEmpty()) railroads.get(choice-1).claim();
                             CityButtons.disableAll();
-                            int current = state.getTurn();
-                            purchaser( railroads.get(choice-1));
-
-                            if(current == state.getTurn())
-                            {
-                                CityButtons.disableAll();
-                                GameScreen.setTextLabel("choose another play");
-                                GameScreen.reset();
-                            }
+                            purchaser( pl, railroads.get(choice-1));
                             //GameState.players[GameState.getTurn()-1].buy(railroads.get(choice-1), 0);
-                           
+                            GameState.nextTurn();
+                            GameScreen.nextTurn();
                         }
                         citiesSelected.clear();
                         railroads.clear();
@@ -252,14 +242,14 @@ class CityButton {
                         else
                         {
                             // TO CODE: based on player turn, append different int from 1 to 4
-                            station = new ImageIcon(getClass().getResource("/Images/Stations/" + (state.getTurn()) + ".png"));
+                            station = new ImageIcon(getClass().getResource("/Images/Stations/" + (GameState.getTurn()) + ".png"));
                             citiesSelected.get(0).getLabel().setIcon(new ImageIcon(station.getImage().getScaledInstance((int)(1720/25), (int)(2300/25), Image.SCALE_SMOOTH)));
                             citiesSelected.get(0).getLabel().setBounds(x,y+5,(int)(1720/25), (int)(2300/25));
                             isPurchased = true;
                             CityButtons.disableAll();
-                            state.players[state.getTurn()-1].placeTrainStation(new City(citiesSelected.get(0).getName()));
-                            state.nextTurn();
-                            state.nextTurn();
+                            GameState.players[GameState.getTurn()-1].placeTrainStation(new City(citiesSelected.get(0).getName()));
+                            GameState.nextTurn();
+                            GameScreen.nextTurn();
                         }
                         citiesSelected.clear();
                     }
@@ -277,19 +267,12 @@ class CityButton {
         isPurchased = false;
     }
 
-    public void purchaser ( Railroad r)
+    public void purchaser ( Player p, Railroad r)
     {
-        int index = state.getTurn()-1;
-
-        Player p = state.getPlayers()[index];
-        
         String check;
         check = p.canAfford(r);
         if(check.equals("no"))
-        {
-            JOptionPane.showMessageDialog(null, "you do not have enough cards to buy this railroad");
         return;
-        }
         String color = r.getColor();
        String str = null;
        if(r.getEngineCount()!=0)
@@ -320,7 +303,6 @@ class CityButton {
                numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use? previous number was invalid"));
            }
            p.buy(r, numWilds, r.getLength(), r.getColor());
-           
         }
         if(str=="ferry")
         {
@@ -376,10 +358,6 @@ class CityButton {
 
 
         }
-        JOptionPane.showMessageDialog(null,"you have purchased the railroad between "+r.getCityA().getName()+" and "+r.getCityB().getName());
-        state.nextTurn();
-        GameScreen.nextTurn();
-
       
 
     }

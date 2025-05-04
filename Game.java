@@ -12,7 +12,7 @@ public class Game {
 
     private ArrayList<TrainCard> faceUpCards = new ArrayList<>();
     private static final String[] CARD_COLORS = {"black", "blue", "green", "orange", "pink", "red", "white", "yellow", };
-    private Graph boardGraph;
+    private static Graph boardGraph;
 
     public Game() {
         deck = new Stack<>();
@@ -243,9 +243,8 @@ public class Game {
         }
     }
 
-    public  Graph getBoardGraph() 
+    public static Graph getBoardGraph() 
     {
-      //  System.out.println(boardGraph.getVertices().size());
     return boardGraph;
 
     
