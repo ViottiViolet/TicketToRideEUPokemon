@@ -47,15 +47,20 @@ public class GameScreen extends JFrame {
 
     private static boolean purchase = false;
     private static boolean trainselect, stationselect = false;
-    private GameState gameState;
+    private static GameState gameState;
     private static int choice = 1; 
-    List<TicketCard> selectedDest1 = new ArrayList<>(); 
-    List<TicketCard> selectedDest2 = new ArrayList<>();
-    List<TicketCard> selectedDest3 = new ArrayList<>(); 
-    List<TicketCard> selectedDest4 = new ArrayList<>(); 
-    private List<JLabel> dCardLabel = new ArrayList<>();
+    private static List<TicketCard> selectedDest = new ArrayList<>();
+    private static List<TicketCard> selectedDest1 = new ArrayList<>(); 
+    private static List<TicketCard> selectedDest2 = new ArrayList<>();
+    private static List<TicketCard> selectedDest3 = new ArrayList<>(); 
+    private static List<TicketCard> selectedDest4 = new ArrayList<>(); 
+    private static List<JLabel> dCardLabel = new ArrayList<>();
     private List<ImageIcon> dCardImage = new ArrayList<>();
-    private List<TicketCard> dCardData = new ArrayList<>();
+    private List<ImageIcon> dLCardImage = new ArrayList<>();
+    
+
+    private static List<TicketCard> dCardData = new ArrayList<>();
+    private static boolean invenVisible;
     Stack<TicketCard> tickets;
     Stack<TicketCard> lTickets;
 
@@ -64,7 +69,7 @@ public class GameScreen extends JFrame {
     public GameScreen() {
         game = new Game();
         gameState = new GameState(game);
-        //drawCardTwice = 0;
+        drawCardTwice = 0;
          tickets = game.getNormRoutes();
          lTickets = game.getLongRoutes();
         
@@ -140,16 +145,21 @@ public class GameScreen extends JFrame {
         }
         for(int i=0; i<tickets.size(); i++ ){
             dCardImage.add(new ImageIcon(getClass().getResource("/Images/Routes/"+tickets.get(i).getCityA().getName()+"- "+tickets.get(i).getCityB().getName()+".png")));
-            
+        }
+        for(int i=0; i<lTickets.size(); i++ ){
+            dLCardImage.add(new ImageIcon(getClass().getResource("/Images/Long Routes/"+lTickets.get(i).getCityA().getName()+"- "+lTickets.get(i).getCityB().getName()+".png")));
         }
         for(int i=0; i<tickets.size(); i++ ){
             TicketCard card = tickets.get(i);
-           dCardLabel.add(new JLabel(new ImageIcon(dCardImage.get(i).getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH))));
+           dCardLabel.add(new JLabel(new ImageIcon(dCardImage.get(i).getImage().getScaledInstance((int)(433), (int)(557), Image.SCALE_SMOOTH))));
            dCardData.add(card);
         }
-
-        
-
+        for(int i=0; i<lTickets.size(); i++ ){
+            TicketCard Lcard = lTickets.get(i);
+           dCardLabel.add(new JLabel(new ImageIcon(dLCardImage.get(i).getImage().getScaledInstance((int)(433/1.5), (int)(557/1.5), Image.SCALE_SMOOTH))));
+           dCardData.add(Lcard);
+        }
+         
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -174,6 +184,8 @@ public class GameScreen extends JFrame {
                 //System.out.println("open inventory");
                 inven = true;
                 open();
+                
+                playerDestCards();
             }
 
             @Override
@@ -211,6 +223,8 @@ public class GameScreen extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 close();
+                
+            
             }
 
             @Override
@@ -328,6 +342,7 @@ public class GameScreen extends JFrame {
         for(JLabel i : dCardLabel){
             add(i);
         }
+        
 
         add(backLabel);
         add(arenaLabel);
@@ -384,14 +399,18 @@ public class GameScreen extends JFrame {
         yellow.setVisible(false);
         wild.setVisible(false);
 
+        invenVisible = false;
+
         for (int i = 0; i < 9; i++)
         {
             cardNums.get(i).setBounds(95 + i*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
             cardNums.get(i).setVisible(false);
         }
-        for(int j = 0; j< tickets.size(); j++){
-            dCardLabel.get(j).setBounds(295 + j*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
+        for(int j = 0; j< dCardLabel.size(); j++){
+            dCardLabel.get(j).setBounds(295 + j*160,300,(int)(433*1.6),(int)(577*1.2));
             dCardLabel.get(j).setVisible(false);
+        
+
         }
 
       
@@ -400,7 +419,7 @@ public class GameScreen extends JFrame {
         Collections.shuffle(lTickets);
 
     for (int playerTurn = 1; playerTurn <= 4; playerTurn++) {
-    List<TicketCard> selectedDest = null;
+     selectedDest = null;
     
     switch (playerTurn) {
         case 1: selectedDest = selectedDest1; break;
@@ -448,7 +467,7 @@ public class GameScreen extends JFrame {
                 for (int i = 0; i < optionList.size(); i++) {
                     if (optionList.get(i).equals(selected)) {
                         TicketCard selectedTicket = optionL.get(i);
-                        selectedDest.remove(selectedTicket); // Only needed if you pre-added these to selectedDest
+                        selectedDest.remove(selectedTicket); 
                         optionL.remove(i);
                         optionList.remove(i);
                         break;
@@ -504,47 +523,10 @@ public class GameScreen extends JFrame {
             white.setVisible(true);
             yellow.setVisible(true);
             wild.setVisible(true);
+
+            invenVisible = true;
             System.out.println("Showing selectedDest1 cards:");
-            if (gameState.getCurrentPlayer() == 1) {
-                int xOffSet = 0;
-            HashSet<Integer> matchedIndexes = new HashSet<>();
-            for(TicketCard selected: selectedDest1){
-                for(int k =0; k< tickets.size(); k++){
-                     if(matchedIndexes.contains(k)) continue;
-                     TicketCard ticket = tickets.get(k);
-                }
-            //for (int j = 0; j < selectedDest1.size(); j++) {
-                //TicketCard selected = selectedDest1.get(j);
-               // System.out.println(selected.getCityA().getName() + " to " + selected.getCityB().getName());
-               
-                for (int k = 0; k < tickets.size(); k++) {
-                    TicketCard c = dCardData.get(k);
-                
-                String a1 = selected.getCityA().getName().trim();
-                String b1 = selected.getCityB().getName().trim();
-                String a2 = c.getCityA().getName().trim();
-                String b2 = c.getCityB().getName().trim();
-
-                boolean match = 
-                    (a1.equals(a2) && b1.equals(b2)) || 
-                    (a1.equals(b2) && b1.equals(a2));
-                    //System.out.println("Comparing: " + a1 + " - " + b1 + " to " + a2 + " - " + b2 + " | Match: " + match);
-
-                    if (match) {
-                        JLabel label = dCardLabel.get(k);
-                        label.setBounds(295 + xOffSet * 160, 500, (int)(cardWidth / 6), (int)(cardHeight / 6));
-                        label.setVisible(true);
-                        matchedIndexes.add(k);
-                        xOffSet++;
-                        break;
-                    }
-                }
-            }
-            
-           /*  for(int j = 0; j< 8; j++){
-                dCardLabel.get(j).setBounds(295 + j*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
-                dCardLabel.get(j).setVisible(true);
-            }*/
+          
             
 
             for (int i = 0; i < 9; i++)
@@ -552,7 +534,7 @@ public class GameScreen extends JFrame {
                 cardNums.get(i).setVisible(true);
                 cardNums.get(i).setText(GameState.players[GameState.getTurn()-1].getNumCards().get(Player.colorOrder.get(i)).size() + "");
             }
-            }
+            
         }
 
     }
@@ -586,17 +568,79 @@ public class GameScreen extends JFrame {
             yellow.setVisible(false);
             wild.setVisible(false);
 
+            invenVisible = false;
+
             for (JLabel j : cardNums)
             {
                 j.setVisible(false);
             }
 
             inven = false;
+            for(int j = 0; j< dCardLabel.size(); j++){
+                dCardLabel.get(j).setVisible(false);
+                
+                repaint();
+            }
         }
 
 
     }
    
+    public static void playerDestCards(){
+        for(int j = 0; j< dCardLabel.size(); j++){
+            dCardLabel.get(j).setBounds(295 + j*160,300,(int)(433*1.6),(int)(577*1.2));
+            dCardLabel.get(j).setVisible(false);
+            
+
+        }
+        if (!invenVisible) {
+            return;
+        }
+    
+        selectedDest= null;
+        if (gameState.getCurrentPlayer() == 1) {
+            selectedDest = selectedDest1;
+        }
+        else if (gameState.getCurrentPlayer() == 2) {
+            selectedDest = selectedDest2;
+        }
+        else if (gameState.getCurrentPlayer() == 3) {
+            selectedDest = selectedDest3;
+        }
+        else if (gameState.getCurrentPlayer() == 4) {
+            selectedDest = selectedDest4;
+        }
+
+            int xOffSet = 0;
+        HashSet<Integer> matchedIndexes = new HashSet<>();
+        for(TicketCard selected: selectedDest){
+            for(int k =0; k< dCardLabel.size(); k++){
+                 if(matchedIndexes.contains(k)) continue;
+                 
+                TicketCard c = dCardData.get(k);
+             
+            String a1 = selected.getCityA().getName().trim();
+            String b1 = selected.getCityB().getName().trim();
+            String a2 = c.getCityA().getName().trim();
+            String b2 = c.getCityB().getName().trim();
+
+            boolean match = 
+                (a1.equals(a2) && b1.equals(b2)) || 
+                (a1.equals(b2) && b1.equals(a2));
+                System.out.println("Comparing: " + a1 + " - " + b1 + " to " + a2 + " - " + b2 + " | Match: " + match);
+
+                if (match) {
+                    JLabel label = dCardLabel.get(k);
+                    label.setBounds(50 + xOffSet*250, 500, (int)(433*1.6),(int)(577*1.2));
+                    label.setVisible(true);
+                    matchedIndexes.add(k);
+                    xOffSet++;
+                    break;
+                }
+            }
+        }
+        
+    }
     
     
     public static void nextTurn()
@@ -611,10 +655,17 @@ public class GameScreen extends JFrame {
         b.reposition();
         c.reposition();
         d.reposition();
+        
+        for(int j = 0; j< dCardLabel.size(); j++){
+            dCardLabel.get(j).setBounds(295 + j*160,300,(int)(433*1.6),(int)(577*1.2));
+            dCardLabel.get(j).setVisible(false);
+            
+
+        playerDestCards();
 
     }
-    
-
+   
+    }
     static class BackgroundPanel extends JPanel{
         @Override
         protected void paintComponent(Graphics g) {
@@ -627,6 +678,7 @@ public class GameScreen extends JFrame {
             g.drawImage(map.getImage(), 235, 10, (int)(mapw*0.77), (int)(maph*0.77), this);
         }
     }
+
 
     public static void main(String[] args) {
 
