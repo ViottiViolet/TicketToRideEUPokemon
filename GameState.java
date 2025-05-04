@@ -3,18 +3,17 @@ public class GameState {
     public static Player[] players;
     private Game game;
     private int playerLastTurnIndex;
-    public  int currentPlayer = 1;
-    public  int turn;
-    public  int gamestate;
+    public static int currentPlayer = 1;
+    public static int turn;
+    public static int gamestate;
     private boolean lastTurn;
-    public  int[] score;
+    public static int[] score;
    
     public GameState(Game g) {
         //players = new Player[]{new Player(1), new Player(2), new Player(3), new Player(4)};
         lastTurn = false;
         game = g;
         score = new int[4];
-        makePlayers();
     }
 
     public static void makePlayers()
@@ -33,15 +32,12 @@ public class GameState {
         return false;
     }
 
-    public void seTurn (int i)
+    public int getCurrentPlayer()
     {
-
-
+        return currentPlayer;
     }
 
-   
-
-    public  void nextTurn() {
+    public static void nextTurn() {
         currentPlayer = (currentPlayer + 1) % 4;
         if (currentPlayer == 0) currentPlayer = 4;
         
@@ -60,7 +56,7 @@ public class GameState {
     }
 
 
-    public  int getTurn()
+    public static int getTurn()
     {
         return currentPlayer;
     }
