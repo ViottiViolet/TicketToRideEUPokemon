@@ -1,8 +1,10 @@
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
 import javax.swing.*;
@@ -51,15 +53,21 @@ public class GameScreen extends JFrame {
     List<TicketCard> selectedDest2 = new ArrayList<>();
     List<TicketCard> selectedDest3 = new ArrayList<>(); 
     List<TicketCard> selectedDest4 = new ArrayList<>(); 
-    
+    private List<JLabel> dCardLabel = new ArrayList<>();
+    private List<ImageIcon> dCardImage = new ArrayList<>();
+    private List<TicketCard> dCardData = new ArrayList<>();
+    Stack<TicketCard> tickets;
+    Stack<TicketCard> lTickets;
 
    
 
     public GameScreen() {
         game = new Game();
         gameState = new GameState(game);
-        drawCardTwice = 0;
-       
+        //drawCardTwice = 0;
+         tickets = game.getNormRoutes();
+         lTickets = game.getLongRoutes();
+        
 
 
         setTitle("Ticket to Ride Europe: Pokemon Express GAME");
@@ -130,6 +138,16 @@ public class GameScreen extends JFrame {
             cardNums.get(i).setFont(new Font("Dialog", Font.BOLD, 30));
             cardNums.get(i).setForeground(Color.BLACK);
         }
+        for(int i=0; i<tickets.size(); i++ ){
+            dCardImage.add(new ImageIcon(getClass().getResource("/Images/Routes/"+tickets.get(i).getCityA().getName()+"- "+tickets.get(i).getCityB().getName()+".png")));
+            
+        }
+        for(int i=0; i<tickets.size(); i++ ){
+            TicketCard card = tickets.get(i);
+           dCardLabel.add(new JLabel(new ImageIcon(dCardImage.get(i).getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH))));
+           dCardData.add(card);
+        }
+
         
 
         drawLabel.addMouseListener(new MouseAdapter() {
@@ -307,6 +325,9 @@ public class GameScreen extends JFrame {
         {
             add(j);
         }
+        for(JLabel i : dCardLabel){
+            add(i);
+        }
 
         add(backLabel);
         add(arenaLabel);
@@ -368,25 +389,27 @@ public class GameScreen extends JFrame {
             cardNums.get(i).setBounds(95 + i*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
             cardNums.get(i).setVisible(false);
         }
-        
+        for(int j = 0; j< tickets.size(); j++){
+            dCardLabel.get(j).setBounds(295 + j*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
+            dCardLabel.get(j).setVisible(false);
+        }
 
       
-        Stack<TicketCard> tickets = game.getNormRoutes();
-        Stack<TicketCard> lTickets = game.getLongRoutes();
+        
         Collections.shuffle(tickets);
         Collections.shuffle(lTickets);
 
-       for (int playerTurn = 1; playerTurn <= 4; playerTurn++) {
+    for (int playerTurn = 1; playerTurn <= 4; playerTurn++) {
     List<TicketCard> selectedDest = null;
+    
     switch (playerTurn) {
         case 1: selectedDest = selectedDest1; break;
         case 2: selectedDest = selectedDest2; break;
         case 3: selectedDest = selectedDest3; break;
         case 4: selectedDest = selectedDest4; break;
     }
-
-    handleDestinationSelection(playerTurn, selectedDest, tickets, lTickets);
-    
+        
+        handleDestinationSelection(playerTurn, selectedDest, tickets, lTickets);  
 }
       
     }
@@ -398,11 +421,14 @@ public class GameScreen extends JFrame {
         for (int i = 0; i < 3; i++) {
             TicketCard ticket = tickets.pop();
             optionL.add(ticket);
+            selectedDest.add(ticket);
             optionList.add("discard: " + ticket.getCityA().getName() + "->" + ticket.getCityB().getName() + " points: " + ticket.getWorth());
         }
     
         TicketCard longTicket = lTickets.pop();
         optionL.add(longTicket);
+        selectedDest.add(longTicket);
+
         optionList.add("discard: " + longTicket.getCityA().getName() + "->" + longTicket.getCityB().getName() + " points: " + longTicket.getWorth());
     
         for (int discardCount = 0; discardCount < 2; discardCount++) {
@@ -429,6 +455,26 @@ public class GameScreen extends JFrame {
                     }
                 }
             }
+        }
+        if (playerTurn==1)
+        {
+        selectedDest1=selectedDest;
+        System.out.println(selectedDest1);
+        }
+        else if (playerTurn==2)
+        {
+        selectedDest2=selectedDest;
+        System.out.println(selectedDest2);
+        }
+        else if (playerTurn==3)
+        {
+        selectedDest3=selectedDest;
+        System.out.println(selectedDest3);
+        }
+        else if (playerTurn==4)
+        {
+        selectedDest4=selectedDest;
+        System.out.println(selectedDest4);
         }
     }
     
@@ -458,12 +504,54 @@ public class GameScreen extends JFrame {
             white.setVisible(true);
             yellow.setVisible(true);
             wild.setVisible(true);
+            System.out.println("Showing selectedDest1 cards:");
+            if (gameState.getCurrentPlayer() == 1) {
+                int xOffSet = 0;
+            HashSet<Integer> matchedIndexes = new HashSet<>();
+            for(TicketCard selected: selectedDest1){
+                for(int k =0; k< tickets.size(); k++){
+                     if(matchedIndexes.contains(k)) continue;
+                     TicketCard ticket = tickets.get(k);
+                }
+            //for (int j = 0; j < selectedDest1.size(); j++) {
+                //TicketCard selected = selectedDest1.get(j);
+               // System.out.println(selected.getCityA().getName() + " to " + selected.getCityB().getName());
+               
+                for (int k = 0; k < tickets.size(); k++) {
+                    TicketCard c = dCardData.get(k);
+                
+                String a1 = selected.getCityA().getName().trim();
+                String b1 = selected.getCityB().getName().trim();
+                String a2 = c.getCityA().getName().trim();
+                String b2 = c.getCityB().getName().trim();
+
+                boolean match = 
+                    (a1.equals(a2) && b1.equals(b2)) || 
+                    (a1.equals(b2) && b1.equals(a2));
+                    //System.out.println("Comparing: " + a1 + " - " + b1 + " to " + a2 + " - " + b2 + " | Match: " + match);
+
+                    if (match) {
+                        JLabel label = dCardLabel.get(k);
+                        label.setBounds(295 + xOffSet * 160, 500, (int)(cardWidth / 6), (int)(cardHeight / 6));
+                        label.setVisible(true);
+                        matchedIndexes.add(k);
+                        xOffSet++;
+                        break;
+                    }
+                }
+            }
+            
+           /*  for(int j = 0; j< 8; j++){
+                dCardLabel.get(j).setBounds(295 + j*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
+                dCardLabel.get(j).setVisible(true);
+            }*/
             
 
             for (int i = 0; i < 9; i++)
             {
                 cardNums.get(i).setVisible(true);
                 cardNums.get(i).setText(GameState.players[GameState.getTurn()-1].getNumCards().get(Player.colorOrder.get(i)).size() + "");
+            }
             }
         }
 
