@@ -28,6 +28,7 @@ public class Player implements Comparable
 
     public Player(int x)
     { 
+         graph = new Graph();
         moves = 0;
         playerNum = x;
         trainStations = new Stack<TrainStation>();
@@ -146,10 +147,7 @@ public class Player implements Comparable
         ArrayList <TrainCard> list;
 
         //TEMPORARY
-        for(int i = 0; i<price; i++)
-        {
-            trains.pop();
-        }
+      
         //return usedCards;
 
         for(int i = 0; i<numWilds; i++)
@@ -173,6 +171,7 @@ public class Player implements Comparable
         graph.addVertex(B.getName());
         graph.addEdge(A,B,r.getLength());
         addScore(r.getLength());// updates score
+        Game.addToDiscard(usedCards);
         return usedCards;
     }
 
