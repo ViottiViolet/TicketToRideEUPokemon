@@ -246,10 +246,11 @@ public class GameScreen extends JFrame {
                public void mouseClicked(MouseEvent e) {
                 int pnum = gameState.getCurrentPlayer();
                 Player current = gameState.getPlayers()[pnum-1];
-                current.add(game.getDeck().pop());
+                TrainCard card = game.getDeck().pop();
+                current.add(card);
                 JOptionPane.showMessageDialog(panel,
-                                "pluh",
-                                "pluh",
+                                "a "+card.getColor()+" card was added to your hand ",
+                                "cardn drawn ",
                                 JOptionPane.WARNING_MESSAGE);
                                 if(current.getMoves()==2)
                                 {
@@ -277,10 +278,10 @@ public class GameScreen extends JFrame {
         });*/
 
         GameState.makePlayers();
-        a = new TrainerIcon("1", 1, panel, GameState.players[0]);
-        b = new TrainerIcon("2", 2, panel, GameState.players[1]);
-        c = new TrainerIcon("3", 3, panel, GameState.players[2]);
-        d = new TrainerIcon("4", 4, panel, GameState.players[3]);
+        a = new TrainerIcon("1", 1, panel, GameState.players[0],gameState);
+        b = new TrainerIcon("2", 2, panel, GameState.players[1],gameState);
+        c = new TrainerIcon("3", 3, panel, GameState.players[2],gameState);
+        d = new TrainerIcon("4", 4, panel, GameState.players[3], gameState);
 
         cityButtons = new CityButtons(panel, gameState,game);
        
