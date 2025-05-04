@@ -10,7 +10,7 @@ public class TrainerIcon
     private ImageIcon profile, bg, train, station;
     private int rank;
 
-    private JLabel bgLabel, profileLabel, nameLabel, trainLabel, trainNumLabel, stationLabel, stationNumLabel;
+    private JLabel bgLabel, profileLabel, nameLabel, trainLabel, trainNumLabel, stationLabel, stationNumLabel, pointsLabel;
     private Player player;
     private GameState state;
 
@@ -27,6 +27,10 @@ public class TrainerIcon
         nameLabel = new JLabel("PLAYER " + name);
         nameLabel.setFont(new Font("Dialog", Font.BOLD + Font.ITALIC, 20));
         nameLabel.setForeground(Color.BLACK);
+
+        pointsLabel = new JLabel("points: "+player.getScore());
+        pointsLabel.setFont(new Font("Dialog", Font.BOLD + Font.ITALIC, 15));
+        pointsLabel.setForeground(Color.BLUE);
 
         profileLabel = new JLabel(new ImageIcon(profile.getImage().getScaledInstance((int)(300/3), (int)(300/3), Image.SCALE_SMOOTH)));
        
@@ -55,7 +59,9 @@ public class TrainerIcon
 
     public void reposition()
     {
+        update();
         profileLabel.setBounds(10, 190*rank- 150, (int)(h/3), (int)(h/3));
+        pointsLabel.setBounds(10, 190*rank- 200, (int)(h/3), (int)(h/3));
         nameLabel.setBounds(120, 190*rank - 210, (int)(h/2), (int)(h/2));
         bgLabel.setBounds(5, 190*rank - 165, (int)(h - 55), (int)(h/2 + 30));
 
@@ -65,7 +71,7 @@ public class TrainerIcon
         stationLabel.setBounds(80, 190*rank - 100, (int)(h/2), (int)(h/2));
         stationNumLabel.setText(player.getNumStations() + ""); 
         stationNumLabel.setBounds(175, 190*rank - 95, (int)(h/2), (int)(h/2));
-        if(state.getCurrentPlayer()==player.getNumber())
+        if(state.getTurn()==player.getNumber())
         {
             profileLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
 
@@ -79,12 +85,21 @@ public class TrainerIcon
 
     public void addToPanel(JPanel p) {
         p.add(nameLabel);
+        p.add(pointsLabel);
         p.add(trainLabel);
         p.add(trainNumLabel);
         p.add(stationLabel);
         p.add(stationNumLabel);
         p.add(profileLabel);
         p.add(bgLabel);
+        
     }
+
+    public void update() {
+        pointsLabel.setText("points: " + player.getScore());
+        trainNumLabel.setText(player.getNumTrains() + "");
+        stationNumLabel.setText(player.getNumStations() + "");
+    }
+    
 
 }
