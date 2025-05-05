@@ -62,16 +62,14 @@ public class GameScreen extends JFrame {
     public GameScreen() {
         game = new Game();
         gameState = new GameState(game);
-      //  drawCardTwice = 0;
-        System.out.println(game.getBoardGraph().getVertices().size());
-       
-
+        GameState.makePlayers();
 
         setTitle("Ticket to Ride Europe: Pokemon Express GAME");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(1550, 1080));
         setResizable(false);
 
+        // Load button images
         drawbtn = new ImageIcon(getClass().getResource("/Images/Game/draw.png"));
         drawhover = new ImageIcon(getClass().getResource("/Images/Game/draw hover.png"));
         invenbtn = new ImageIcon(getClass().getResource("/Images/Game/inventory.png"));
@@ -81,12 +79,13 @@ public class GameScreen extends JFrame {
         backbtn = new ImageIcon(getClass().getResource("/Images/Game/back.png"));
         backhover = new ImageIcon(getClass().getResource("/Images/Game/back hover.png"));
         arena = new ImageIcon(getClass().getResource("/Images/Game/arena.png"));
-        trainBtn = new ImageIcon(getClass().getResource("/Images/Game/locomotiveBtn.png"));
+        trainBtn = new ImageIcon(getClass().getResource("/Images/Game/locomotive.png"));
         trainhighlight = new ImageIcon(getClass().getResource("/Images/Game/locomotive highlight.png"));
         stationBtn = new ImageIcon(getClass().getResource("/Images/Game/station.png"));
         stationhighlight = new ImageIcon(getClass().getResource("/Images/Game/station highlight.png"));
         textBox = new ImageIcon(getClass().getResource("/Images/Game/textbox.png"));
-
+        
+        // Load card images
         blackImg = new ImageIcon(getClass().getResource("/Images/Cards/black.png"));
         blueImg = new ImageIcon(getClass().getResource("/Images/Cards/blue.png"));
         greenImg = new ImageIcon(getClass().getResource("/Images/Cards/green.png"));
@@ -94,17 +93,18 @@ public class GameScreen extends JFrame {
         pinkImg = new ImageIcon(getClass().getResource("/Images/Cards/pink.png"));
         redImg = new ImageIcon(getClass().getResource("/Images/Cards/red.png"));
         whiteImg = new ImageIcon(getClass().getResource("/Images/Cards/white.png"));
-        wildImg = new ImageIcon(getClass().getResource("/Images/Cards/wild.png"));
         yellowImg = new ImageIcon(getClass().getResource("/Images/Cards/yellow.png"));
+        wildImg = new ImageIcon(getClass().getResource("/Images/Cards/wild.png"));
         backImg = new ImageIcon(getClass().getResource("/Images/Cards/back.png"));
-        routebackImg =  new ImageIcon(getClass().getResource("/Images/Game/RouteCardBack.png"));
+        routebackImg = new ImageIcon(getClass().getResource("/Images/Game/RouteCardBack.png"));
+        
+        // Set dimensions
+        buttonHeight = drawbtn.getIconHeight();
+        buttonWidth = drawbtn.getIconWidth();
+        cardHeight = blackImg.getIconHeight();
+        cardWidth = blackImg.getIconWidth();
 
-        buttonHeight = 46;
-        buttonWidth = 129;
-
-        cardHeight = 1280;
-        cardWidth = 920;
-
+        // Initialize main buttons
         drawLabel = new JLabel(new ImageIcon(drawbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         invenLabel = new JLabel(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
         purchLabel = new JLabel(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
@@ -115,6 +115,7 @@ public class GameScreen extends JFrame {
         arenaLabel = new JLabel(new ImageIcon(arena.getImage().getScaledInstance((int)(1599*1.1), (int)(940*1.1), Image.SCALE_SMOOTH)));
         textBoxLabel = new JLabel(new ImageIcon(textBox.getImage().getScaledInstance((int)(1490/3.2), (int)(460/3.2), Image.SCALE_SMOOTH)));
 
+        // Initialize card labels
         black = new JLabel(new ImageIcon(blackImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         blue = new JLabel(new ImageIcon(blueImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         green = new JLabel(new ImageIcon(greenImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
@@ -127,210 +128,14 @@ public class GameScreen extends JFrame {
         back = new JLabel(new ImageIcon(backImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
         routeback = new JLabel(new ImageIcon(routebackImg.getImage().getScaledInstance((int)(433), (int)(577), Image.SCALE_SMOOTH)));
 
-        System.out.println(game.getBoardGraph().getVertices().size()+"124");
+        // Initialize card numbers
         cardNums = new ArrayList<JLabel>();
-        for (int i = 0; i < 9; i++)
-        {
-            cardNums.add(new JLabel("wiwi"));
+        for (int i = 0; i < 9; i++) {
+            cardNums.add(new JLabel("0"));
             cardNums.get(i).setFont(new Font("Dialog", Font.BOLD, 30));
             cardNums.get(i).setForeground(Color.BLACK);
         }
-        
 
-        drawLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (purchase) return;
-                //System.out.println("open draw");
-                draw = true;
-                open();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                drawLabel.setIcon(new ImageIcon(drawhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                drawLabel.setIcon(new ImageIcon(drawbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-            }
-        });
-        invenLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //System.out.println("open inventory");
-                inven = true;
-                open();
-            }
-          //  System.out.println(game.getBoardGraph().getVertices().size()+"124");
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                invenLabel.setIcon(new ImageIcon(invenhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                invenLabel.setIcon(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-            }
-        });
-        purchLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //System.out.println("open purchase");
-                
-                if (purchase) return;
-
-                purchase = true;
-                stationselect = false;
-                trainselect = false;
-                textLabel.setText("Click the train to purchase a route or the station to place a train station!");
-            }
-
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                purchLabel.setIcon(new ImageIcon(purchhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                purchLabel.setIcon(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-            }
-        });
-        backLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                close();
-                System.out.println("back");
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                backLabel.setIcon(new ImageIcon(backhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                backLabel.setIcon(new ImageIcon(backbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-            }
-        });
-
-        trainLabel.addMouseListener(new MouseAdapter() {
-            
-           
-            @Override
-               public void mouseClicked(MouseEvent e) {
-                //System.out.println(game.getBoardGraph().getVertices().size()+"213");
-                if(purchase && stationselect==false){
-                    
-                    //System.out.println("select train");
-                    trainselect = true;
-                    trainLabel.setIcon(new ImageIcon(trainhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
-                    textLabel.setText("Select the cities on either side of the route you would like to purchase!");
-                    
-                    cityButtons.enableAll(2);
-                    
-                   
-                }
-            }
-            
-        });
-        stationLabel.addMouseListener(new MouseAdapter() {
-          
-            @Override
-               public void mouseClicked(MouseEvent e) {
-                if(purchase && trainselect == false){
-                    //System.out.println("select station");
-                    stationselect = true;
-                    stationLabel.setIcon(new ImageIcon(stationhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
-                    textLabel.setText("Select the city where you would like to place your train station !");
-                   
-                    cityButtons.enableAll(1);
-                }
-            }
-            
-        });
-
-        BackgroundPanel panel = new BackgroundPanel();
-        panel.setLayout(null);
-
-        back.addMouseListener(new MouseAdapter() {
-          
-            @Override
-               public void mouseClicked(MouseEvent e) {
-                int pnum = gameState.getTurn();
-                Player current = gameState.getPlayers()[pnum-1];
-                TrainCard card = game.getDeck().pop();
-                current.add(card);
-                JOptionPane.showMessageDialog(panel,
-                                "a "+card.getColor()+" card was added to your hand ",
-                                "cardn drawn ",
-                                JOptionPane.WARNING_MESSAGE);
-                                if(current.getMoves()==2)
-                                {
-                                    current.resetMoves();
-                                    gameState.nextTurn();
-                                    nextTurn();
-                                    
-                                }
-            }
-           
-            
-        });
-        
-        
-
-        /*panel.addMouseListener(new MouseAdapter() {
-            
-           
-            @Override
-               public void mouseClicked(MouseEvent e) {
-                System.out.println(MouseInfo.getPointerInfo().getLocation().x + ", " + MouseInfo.getPointerInfo().getLocation().y);
-                
-            }
-            
-        });*/
-
-        //GameState.makePlayers();
-        a = new TrainerIcon("1", 1, panel, GameState.players[0],gameState);
-        b = new TrainerIcon("2", 2, panel, GameState.players[1],gameState);
-        c = new TrainerIcon("3", 3, panel, GameState.players[2],gameState);
-        d = new TrainerIcon("4", 4, panel, GameState.players[3], gameState);
-      //  System.out.println(game.getBoardGraph().getVertices().size());
-
-        cityButtons = new CityButtons(panel, gameState,game);
-       
-        cityButtons.disableAll();
-
-        draw = false;
-        inven = false;
-
-        add(back);
-        add(routeback);
-
-        add(black);
-        add(blue);
-        add(green);
-        add(orange);
-        add(pink);
-        add(red);
-        add(white);
-        add(wild);
-        add(yellow);
-
-        for (JLabel j : cardNums)
-        {
-            add(j);
-        }
-
-        add(backLabel);
-        add(arenaLabel);
-
-        add(drawLabel);
-        add(invenLabel);
-        add(purchLabel);
-        add(textLabel);
-        add(textBoxLabel);
-        add(trainLabel);
-        add(stationLabel);
-        
         // Initialize draw functionality components
         deckBackImg = new ImageIcon(getClass().getResource("/Images/Cards/back.png"));
         deckLabel = new JLabel(new ImageIcon(deckBackImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
@@ -363,6 +168,7 @@ public class GameScreen extends JFrame {
                                 JOptionPane.showMessageDialog(null, "Wild card drawn - turn ends");
                                 gameState.nextTurn();
                                 nextTurn();
+                                close();
                             }
                         } else {
                             // Non-wild card
@@ -375,8 +181,17 @@ public class GameScreen extends JFrame {
                                 if (cardsDrawn == 2) {
                                     gameState.nextTurn();
                                     nextTurn();
+                                    close();
                                 }
                             }
+                        }
+                        
+                        // Update the face-up cards display
+                        ArrayList<TrainCard> updatedFaceUpCards = game.getFaceUpCards();
+                        if (cardIndex < updatedFaceUpCards.size()) {
+                            TrainCard newCard = updatedFaceUpCards.get(cardIndex);
+                            ImageIcon cardImage = getCardImage(newCard.getColor());
+                            faceUpLabels[cardIndex].setIcon(new ImageIcon(cardImage.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
                         }
                     }
                 }
@@ -395,164 +210,184 @@ public class GameScreen extends JFrame {
                     current.add(card);
                     cardsDrawn++;
                     
+                    String message = "You drew a " + card.getColor() + " card.";
+                    if (cardsDrawn < 2) {
+                        message += " You may draw one more card.";
+                    }
+                    JOptionPane.showMessageDialog(null, message);
+                    
                     if (cardsDrawn == 2) {
                         gameState.nextTurn();
                         nextTurn();
+                        close();
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "The deck is empty!");
                 }
             }
         });
 
-        add(deckLabel);
-        add(discardLabel);
-        for (JLabel label : faceUpLabels) {
-            panel.add(label);
-        }
-
-        add(panel);
+        // Set up the background panel
+        BackgroundPanel panel = new BackgroundPanel();
+        panel.setLayout(null);
+        
+        // Add all components to the panel
+        addComponentsToPanel(panel);
+        
+        // Set component positions
+        setComponentPositions();
+        
+        // Add mouse listeners
+        addMouseListeners();
+        
+        // Initialize trainer icons
+        a = new TrainerIcon("1", 1, panel, GameState.players[0], gameState);
+        b = new TrainerIcon("2", 2, panel, GameState.players[1], gameState);
+        c = new TrainerIcon("3", 3, panel, GameState.players[2], gameState);
+        d = new TrainerIcon("4", 4, panel, GameState.players[3], gameState);
+        
+        // Initialize city buttons
+        cityButtons = new CityButtons(panel, gameState, game);
+        cityButtons.disableAll();
+        
+        // Set initial states
+        draw = false;
+        inven = false;
+        
+        // Set the panel as the content pane
+        setContentPane(panel);
+        
         pack();
         setVisible(true);
         setLocationRelativeTo(null);
+    }
 
-        drawLabel.setBounds(getWidth()-820,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
-        invenLabel.setBounds(getWidth()-300,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
-        purchLabel.setBounds(getWidth()-560,getHeight()-200,(int)(buttonWidth*2),(int)(buttonHeight*2));
-        textLabel.setBounds(getWidth()-1270,getHeight()-225,(int)(1490/3.2),(int)(460/3.2));
-        textBoxLabel.setBounds(getWidth()-1300,getHeight()-225,(int)(1490/3.2), (int)(460/3.2));
-
-        arenaLabel.setBounds(-120,-15,(int)(1599*1.1),(int)(940*1.1));
-        arenaLabel.setVisible(false);
-
-        backLabel.setBounds(getWidth()-280,10,(int)(buttonWidth*2),(int)(buttonHeight*2));
-        backLabel.setVisible(false);
-
-        trainLabel.setBounds(getWidth()-1540,getHeight()-220,(int)(251*0.6),(int)(201*0.6));
-        stationLabel.setBounds(getWidth()-1430,getHeight()-230,(int)(251*0.6),(int)(201*0.6));
-
-        back.setBounds(getWidth()-600,getHeight()-500,(int)(cardWidth/6),(int)(cardHeight/6));
-        back.setVisible(false);
-        routeback.setBounds(getWidth()-1370,getHeight()-700,(int)(433*1.6),(int)(577*1.2));
-        routeback.setVisible(false);
-
-        black.setBounds(40,150,(int)(cardWidth/6),(int)(cardHeight/6));
-        blue.setBounds(200,150,(int)(cardWidth/6),(int)(cardHeight/6));
-        green.setBounds(360,150,(int)(cardWidth/6),(int)(cardHeight/6));
-        orange.setBounds(520,150,(int)(cardWidth/6),(int)(cardHeight/6));
-        pink.setBounds(680,150,(int)(cardWidth/6),(int)(cardHeight/6));
-        red.setBounds(840,150,(int)(cardWidth/6),(int)(cardHeight/6));
-        white.setBounds(1000,150,(int)(cardWidth/6),(int)(cardHeight/6));
-        yellow.setBounds(1160,150,(int)(cardWidth/6),(int)(cardHeight/6));
-        wild.setBounds(1320,150,(int)(cardWidth/6),(int)(cardHeight/6));
-        black.setVisible(false);
-        blue.setVisible(false);
-        green.setVisible(false);
-        orange.setVisible(false);
-        pink.setVisible(false);
-        red.setVisible(false);
-        white.setVisible(false);
-        yellow.setVisible(false);
-        wild.setVisible(false);
-
-        for (int i = 0; i < 9; i++)
-        {
-            cardNums.get(i).setBounds(95 + i*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
-            cardNums.get(i).setVisible(false);
+    private void addComponentsToPanel(BackgroundPanel panel) {
+        panel.add(back);
+        panel.add(routeback);
+        panel.add(black);
+        panel.add(blue);
+        panel.add(green);
+        panel.add(orange);
+        panel.add(pink);
+        panel.add(red);
+        panel.add(white);
+        panel.add(wild);
+        panel.add(yellow);
+        
+        for (JLabel j : cardNums) {
+            panel.add(j);
         }
 
-        List<String> optionList = new ArrayList<String>();
-        Stack<TicketCard> tickets = game.getNormRoutes();
-        Stack<TicketCard> lTickets = game.getLongRoutes();
-        Collections.shuffle(tickets);
-        Collections.shuffle(lTickets);
+        panel.add(backLabel);
+        panel.add(arenaLabel);
+        panel.add(drawLabel);
+        panel.add(invenLabel);
+        panel.add(purchLabel);
+        panel.add(textLabel);
+        panel.add(textBoxLabel);
+        panel.add(trainLabel);
+        panel.add(stationLabel);
         
-        TicketCard ticket = tickets.pop();
+        // Add draw functionality components
+        panel.add(deckLabel);
+        panel.add(discardLabel);
+        for (JLabel label : faceUpLabels) {
+            panel.add(label);
+        }
+    }
 
-        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
-        ticket = tickets.pop();
-        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
-        ticket = tickets.pop();
-        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
-        ticket = lTickets.pop();
-        optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
-        Object[] options =  optionList.toArray();
-         JList<Object> list = new JList<>(options);
-         selectedDest = new ArrayList<>();
-         selectedDest.add(list);
-        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    private void setComponentPositions() {
+        // Set positions for main buttons
+        drawLabel.setBounds(getWidth()-820, getHeight()-200, (int)(buttonWidth*2), (int)(buttonHeight*2));
+        invenLabel.setBounds(getWidth()-300, getHeight()-200, (int)(buttonWidth*2), (int)(buttonHeight*2));
+        purchLabel.setBounds(getWidth()-560, getHeight()-200, (int)(buttonWidth*2), (int)(buttonHeight*2));
+        
+        // Set positions for text elements
+        textLabel.setBounds(getWidth()-1270, getHeight()-225, (int)(1490/3.2), (int)(460/3.2));
+        textBoxLabel.setBounds(getWidth()-1300, getHeight()-225, (int)(1490/3.2), (int)(460/3.2));
+        
+        // Set positions for arena and back button
+        arenaLabel.setBounds(-120, -15, (int)(1599*1.1), (int)(940*1.1));
+        backLabel.setBounds(getWidth()-280, 10, (int)(buttonWidth*2), (int)(buttonHeight*2));
+        
+        // Set positions for train and station buttons
+        trainLabel.setBounds(getWidth()-1540, getHeight()-220, (int)(251*0.6), (int)(201*0.6));
+        stationLabel.setBounds(getWidth()-1430, getHeight()-230, (int)(251*0.6), (int)(201*0.6));
+        
+        // Calculate center positions for cards
+        int centerX = getWidth() / 2;
+        int centerY = getHeight() / 2;
+        int cardSpacing = (int)(cardWidth/5);
+        
+        // Set positions for deck and discard pile
+        deckLabel.setBounds(centerX - (int)(cardWidth/3) - cardSpacing, centerY - (int)(cardHeight/12), (int)(cardWidth/6), (int)(cardHeight/6));
+        discardLabel.setBounds(centerX - (int)(cardWidth/3) + cardSpacing, centerY - (int)(cardHeight/12), (int)(cardWidth/6), (int)(cardHeight/6));
+        
+        // Set positions for face up cards
+        int totalWidth = 5 * ((int)(cardWidth/6) + cardSpacing);
+        int startX = centerX - totalWidth/2;
+        for (int i = 0; i < 5; i++) {
+            faceUpLabels[i].setBounds(startX + i * ((int)(cardWidth/6) + cardSpacing), centerY + (int)(cardHeight/6), (int)(cardWidth/6), (int)(cardHeight/6));
+        }
+        
+        // Initially hide certain elements
+        arenaLabel.setVisible(false);
+        backLabel.setVisible(false);
+        deckLabel.setVisible(false);
+        discardLabel.setVisible(false);
+        for (JLabel label : faceUpLabels) {
+            label.setVisible(false);
+        }
+    }
 
-        JScrollPane scrollPane = new JScrollPane(list);
-                
-                                    choice = JOptionPane.showOptionDialog(null, scrollPane,
-                                    "Destination cards",
-                                    JOptionPane.OK_CANCEL_OPTION,
-                                    JOptionPane.PLAIN_MESSAGE,
-                                    null, null, null);
-                                    ;
-                                    
-                                    if (choice == JOptionPane.OK_OPTION) {
-                                        Object selected = list.getSelectedValue();
-                                       selectedDest.remove(selected);
-                                       optionList.remove(optionList.indexOf(selected));
-                                       options =  optionList.toArray();
-                                       list = new JList<>(options);
-                                       list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-                                        scrollPane = new JScrollPane(list);
-                                         JOptionPane.showOptionDialog(null, scrollPane,
-                                                    "Destination Cards",
-                                                    JOptionPane.OK_CANCEL_OPTION,
-                                                    JOptionPane.PLAIN_MESSAGE,
-                                                    null, null, null);
-                                                     selected = list.getSelectedValue();
-                                                     selectedDest.remove(selected);
-                                                     
-                                                    } 
-                
-                                    }
-
-    
-
-    public void open()
-    {
-        arenaLabel.setVisible(true);
-        backLabel.setVisible(true);
-
+    public void open() {
+        // Hide main screen elements
         drawLabel.setVisible(false);
         invenLabel.setVisible(false);
         purchLabel.setVisible(false);
+        
+        // Show back button and arena
+        backLabel.setVisible(true);
+        arenaLabel.setVisible(true);
 
-        if (draw)
-        {
-            // Reset drawing state
+        if (draw) {
+            // Reset draw state
             cardsDrawn = 0;
             drewWild = false;
             
-            // Show draw screen elements
+            // Show deck and discard pile
             deckLabel.setVisible(true);
             discardLabel.setVisible(true);
             
-            // Update face up cards
+            // Update and show face-up cards
             ArrayList<TrainCard> faceUpCards = game.getFaceUpCards();
             for (int i = 0; i < 5; i++) {
                 if (i < faceUpCards.size()) {
                     TrainCard card = faceUpCards.get(i);
-                    ImageIcon cardImg = new ImageIcon(getClass().getResource("/Images/Cards/" + card.getColor() + ".png"));
-                    faceUpLabels[i].setIcon(new ImageIcon(cardImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+                    ImageIcon cardImage = getCardImage(card.getColor());
+                    faceUpLabels[i].setIcon(new ImageIcon(cardImage.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
                     faceUpLabels[i].setVisible(true);
                 } else {
                     faceUpLabels[i].setVisible(false);
                 }
             }
             
-            // Update discard pile if there are discarded cards
-            if (!game.getDiscardPile().isEmpty()) {
-                TrainCard topCard = game.getDiscardPile().peek();
-                ImageIcon cardImg = new ImageIcon(getClass().getResource("/Images/Cards/" + topCard.getColor() + ".png"));
-                discardLabel.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+            // Update discard pile if not empty
+            Stack<TrainCard> discardPile = game.getDiscardPile();
+            if (!discardPile.isEmpty()) {
+                TrainCard topCard = discardPile.peek();
+                ImageIcon cardImage = getCardImage(topCard.getColor());
+                discardLabel.setIcon(new ImageIcon(cardImage.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
             }
-        }
-        else if (inven)
-        {
+            discardLabel.setVisible(!discardPile.isEmpty());
+            
+            // Update text
+            textLabel.setText("Draw up to 2 cards. Wild cards can only be drawn as the first card.");
+        } else if (inven) {
+            // Show inventory screen
+            back.setVisible(true);
+            routeback.setVisible(true);
             black.setVisible(true);
             blue.setVisible(true);
             green.setVisible(true);
@@ -560,58 +395,61 @@ public class GameScreen extends JFrame {
             pink.setVisible(true);
             red.setVisible(true);
             white.setVisible(true);
-            yellow.setVisible(true);
             wild.setVisible(true);
-
-            for (int i = 0; i < 9; i++)
-            {
-                cardNums.get(i).setVisible(true);
-                cardNums.get(i).setText(gameState.players[gameState.getTurn()-1].getNumCards().get(Player.colorOrder.get(i)).size() + "");
+            yellow.setVisible(true);
+            
+            for (JLabel j : cardNums) {
+                j.setVisible(true);
+                j.setText(gameState.players[gameState.getTurn()-1].getNumCards().get(Player.colorOrder.get(cardNums.indexOf(j))).size() + "");
             }
+            
+            textLabel.setText("Your inventory:");
         }
-
     }
 
-    public void close()
-    {
-
-        arenaLabel.setVisible(false);
+    public void close() {
+        // Reset states
+        draw = false;
+        inven = false;
+        purchase = false;
+        trainselect = false;
+        stationselect = false;
+        
+        // Hide draw-related components
+        deckLabel.setVisible(false);
+        discardLabel.setVisible(false);
+        for (JLabel label : faceUpLabels) {
+            label.setVisible(false);
+        }
+        
+        // Hide inventory screen elements
+        back.setVisible(false);
+        routeback.setVisible(false);
+        black.setVisible(false);
+        blue.setVisible(false);
+        green.setVisible(false);
+        orange.setVisible(false);
+        pink.setVisible(false);
+        red.setVisible(false);
+        white.setVisible(false);
+        wild.setVisible(false);
+        yellow.setVisible(false);
+        
+        for (JLabel j : cardNums) {
+            j.setVisible(false);
+        }
+        
+        // Hide back button and arena
         backLabel.setVisible(false);
-
+        arenaLabel.setVisible(false);
+        
+        // Show main screen elements
         drawLabel.setVisible(true);
         invenLabel.setVisible(true);
         purchLabel.setVisible(true);
-
-        if (draw)
-        {
-            deckLabel.setVisible(false);
-            discardLabel.setVisible(false);
-            for (JLabel label : faceUpLabels) {
-                label.setVisible(false);
-            }
-            draw = false;
-        }
-        else if (inven)
-        {
-            black.setVisible(false);
-            blue.setVisible(false);
-            green.setVisible(false);
-            orange.setVisible(false);
-            pink.setVisible(false);
-            red.setVisible(false);
-            white.setVisible(false);
-            yellow.setVisible(false);
-            wild.setVisible(false);
-
-            for (JLabel j : cardNums)
-            {
-                j.setVisible(false);
-            }
-
-            inven = false;
-        }
-
-
+        
+        // Reset text
+        textLabel.setText("It is now Player " + gameState.getTurn() + "'s turn!");
     }
 
     public static void nextTurn()
@@ -694,4 +532,119 @@ public class GameScreen extends JFrame {
     
 
     
+    private void addMouseListeners() {
+        drawLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                draw = true;
+                open();
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                drawLabel.setIcon(new ImageIcon(drawhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                drawLabel.setIcon(new ImageIcon(drawbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+        });
+
+        invenLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                inven = true;
+                open();
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                invenLabel.setIcon(new ImageIcon(invenhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                invenLabel.setIcon(new ImageIcon(invenbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+        });
+
+        purchLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                purchase = true;
+                textLabel.setText("Click on a route to purchase it or click on a city to place a train station!");
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                purchLabel.setIcon(new ImageIcon(purchhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                purchLabel.setIcon(new ImageIcon(purchbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+        });
+
+        backLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                close();
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backLabel.setIcon(new ImageIcon(backhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backLabel.setIcon(new ImageIcon(backbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+            }
+        });
+
+        trainLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (purchase) {
+                    stationselect = false;
+                    textLabel.setText("Click on a route to purchase it!");
+                }
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                trainLabel.setIcon(new ImageIcon(trainhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                trainLabel.setIcon(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
+            }
+        });
+
+        stationLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (purchase) {
+                    stationselect = true;
+                    textLabel.setText("Click on a city to place a train station!");
+                }
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                stationLabel.setIcon(new ImageIcon(stationhighlight.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                stationLabel.setIcon(new ImageIcon(stationBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
+            }
+        });
+    }
+
+    private ImageIcon getCardImage(String color) {
+        switch (color.toLowerCase()) {
+            case "black": return blackImg;
+            case "blue": return blueImg;
+            case "green": return greenImg;
+            case "orange": return orangeImg;
+            case "pink": return pinkImg;
+            case "red": return redImg;
+            case "white": return whiteImg;
+            case "yellow": return yellowImg;
+            case "wild": return wildImg;
+            default: return backImg;
+        }
+    }
 }

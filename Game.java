@@ -4,20 +4,17 @@ import java.util.*;
 import javax.imageio.ImageIO;
 
 public class Game {
-    private Stack <TrainCard> deck;
-    private static Stack <TrainCard> discardPile;
+    private Stack<TrainCard> trainDeck;
+    private static Stack<TrainCard> discardPile;
     private static Stack<TicketCard> longRoutes = new Stack<>();
     private static Stack<TicketCard> normRoutes = new Stack<>();
-     private Stack <TrainCard> trainDeck = new Stack<>();
-
-
     private ArrayList<TrainCard> faceUpCards = new ArrayList<>();
-    private static final String[] CARD_COLORS = {"black", "blue", "green", "orange", "pink", "red", "white", "yellow", };
+    private static final String[] CARD_COLORS = {"black", "blue", "green", "orange", "pink", "red", "white", "yellow"};
     private Graph boardGraph;
 
     public Game() {
         discardPile = new Stack<>();
-        deck = new Stack<>();
+        trainDeck = new Stack<>();
         boardGraph = new Graph();
         boardGraph.addVertex("Lisboa");
         boardGraph.addVertex("Cadiz");
@@ -69,9 +66,6 @@ public class Game {
         boardGraph.addVertex("Snyrna");
         System.out.println("helloo");
 
-      //  boardGraph = new Graph();
-        trainDeck = new Stack<>();
-        faceUpCards = new ArrayList<>();
         initializeTrainDeck();
         drawFaceUpCards();
 
@@ -142,26 +136,6 @@ public class Game {
             longRoutes.add(new TicketCard(card, cityA, cityB, worth));
         }
 
-        for (int i = 0; i <14; i++)
-            {
-                if (i<12)
-                {
-                deck.push(new TrainCard("blue"));
-                deck.push(new TrainCard("black"));
-                deck.push(new TrainCard("green"));
-                deck.push(new TrainCard("orange"));
-                deck.push(new TrainCard("pink"));
-                deck.push(new TrainCard("red"));
-                deck.push(new TrainCard("white"));
-                deck.push(new TrainCard("yellow"));
-                }
-                deck.push(new TrainCard("yellow"));
-
-            }
-        Collections.shuffle(deck);
-
-           // System.out.println("line 166");
-
         //reading in normal routes
        // routesReader.nextLine();
         while(routesReader.hasNextLine()){
@@ -188,24 +162,12 @@ public class Game {
         //add colored cards
         for (String color : CARD_COLORS) {
             for (int i = 0; i < 12; i++) {
-                BufferedImage cardImage = null;
-                try {
-                    cardImage = ImageIO.read(getClass().getResource("/Images/Cards/" + color + ".png"));
-                } catch (IOException e) {
-                    System.out.println("error loading train card image: " + color);
-                }
                 trainDeck.add(new TrainCard(color));
             }
         }
        
         //add wild cards
         for (int i = 0; i < 14; i++) {
-            BufferedImage cardImage = null;
-            try {
-                cardImage = ImageIO.read(getClass().getResource("/Images/Cards/wild.png"));
-            } catch (IOException e) {
-                System.out.println("error loading wild card image");
-            }
             trainDeck.add(new TrainCard("wild"));
         }
         System.out.println("214");
@@ -220,11 +182,8 @@ public class Game {
             }
         }
     }
-    public Stack <TrainCard> getDeck ()
-    {
-
-        return deck;
-
+    public Stack<TrainCard> getDeck() {
+        return trainDeck;
     }
     
 
