@@ -57,8 +57,18 @@ private static BackgroundPanel panel;
     private static boolean trainselect, stationselect = false;
     private static GameState gameState;
     private static int choice = 1; 
-    private static ArrayList<Object> selectedDest;
-    private static JList<Object> destinationJList = new JList<>();
+    private static List<TicketCard> selectedDest = new ArrayList<>();
+    private static List<TicketCard> selectedDest1 = new ArrayList<>(); 
+    private static List<TicketCard> selectedDest2 = new ArrayList<>();
+    private static List<TicketCard> selectedDest3 = new ArrayList<>(); 
+    private static List<TicketCard> selectedDest4 = new ArrayList<>(); 
+    private static List<JLabel> dCardLabel = new ArrayList<>();
+    private List<ImageIcon> dCardImage = new ArrayList<>();
+    private List<ImageIcon> dLCardImage = new ArrayList<>();   
+    private static List<TicketCard> dCardData = new ArrayList<>();
+    private static boolean invenVisible;
+    Stack<TicketCard> tickets;
+    Stack<TicketCard> lTickets;
     //private int drawCardTwice;
 
    
@@ -68,7 +78,8 @@ private static BackgroundPanel panel;
         gameState = new GameState(game);
       //  drawCardTwice = 0;
         System.out.println(game.getBoardGraph().getVertices().size());
-       
+        tickets = game.getNormRoutes();
+         lTickets = game.getLongRoutes();
 
 
         setTitle("Ticket to Ride Europe: Pokemon Express GAME");
@@ -138,6 +149,22 @@ private static BackgroundPanel panel;
             cardNums.add(new JLabel("wiwi"));
             cardNums.get(i).setFont(new Font("Dialog", Font.BOLD, 30));
             cardNums.get(i).setForeground(Color.BLACK);
+        }
+        for(int i=0; i<tickets.size(); i++ ){
+            dCardImage.add(new ImageIcon(getClass().getResource("/Images/Routes/"+tickets.get(i).getCityA().getName()+"- "+tickets.get(i).getCityB().getName()+".png")));
+        }
+        for(int i=0; i<lTickets.size(); i++ ){
+            dLCardImage.add(new ImageIcon(getClass().getResource("/Images/Long Routes/"+lTickets.get(i).getCityA().getName()+"- "+lTickets.get(i).getCityB().getName()+".png")));
+        }
+        for(int i=0; i<tickets.size(); i++ ){
+            TicketCard card = tickets.get(i);
+           dCardLabel.add(new JLabel(new ImageIcon(dCardImage.get(i).getImage().getScaledInstance((int)(433), (int)(557), Image.SCALE_SMOOTH))));
+           dCardData.add(card);
+        }
+        for(int i=0; i<lTickets.size(); i++ ){
+            TicketCard Lcard = lTickets.get(i);
+           dCardLabel.add(new JLabel(new ImageIcon(dLCardImage.get(i).getImage().getScaledInstance((int)(433/1.5), (int)(557/1.5), Image.SCALE_SMOOTH))));
+           dCardData.add(Lcard);
         }
         // testing
        // JButton giveAllCardsButton = new JButton("Give All Cards");
@@ -216,6 +243,7 @@ private static BackgroundPanel panel;
                 //System.out.println("open inventory");
                 inven = true;
                 open();
+                 playerDestCards();
             }
           //  System.out.println(game.getBoardGraph().getVertices().size()+"124");
             @Override
@@ -383,6 +411,9 @@ private static BackgroundPanel panel;
         {
             add(j);
         }
+         for(JLabel i : dCardLabel){
+            add(i);
+        }
 
         add(backLabel);
         add(arenaLabel);
@@ -439,19 +470,36 @@ private static BackgroundPanel panel;
         yellow.setVisible(false);
         wild.setVisible(false);
 
+        invenVisible = false;
+
         for (int i = 0; i < 9; i++)
         {
             cardNums.get(i).setBounds(95 + i*160,300,(int)(cardWidth/6),(int)(cardHeight/6));
             cardNums.get(i).setVisible(false);
         }
+         for(int j = 0; j< dCardLabel.size(); j++){
+            dCardLabel.get(j).setBounds(295 + j*160,300,(int)(433*1.6),(int)(577*1.2));
+            dCardLabel.get(j).setVisible(false);
+    
+        }
 
-        List<String> optionList = new ArrayList<String>();
-        Stack<TicketCard> tickets = game.getNormRoutes();
-        Stack<TicketCard> lTickets = game.getLongRoutes();
+    
         Collections.shuffle(tickets);
         Collections.shuffle(lTickets);
+
+         for (int playerTurn = 1; playerTurn <= 4; playerTurn++) {
+     selectedDest = null;
+    
+    switch (playerTurn) {
+        case 1: selectedDest = selectedDest1; break;
+        case 2: selectedDest = selectedDest2; break;
+        case 3: selectedDest = selectedDest3; break;
+        case 4: selectedDest = selectedDest4; break;
+    }
         
-        TicketCard ticket = tickets.pop();
+        handleDestinationSelection(playerTurn, selectedDest, tickets, lTickets);  
+}
+        /*TicketCard ticket = tickets.pop();
 
         optionList.add("discard: "+ticket.getCityA().getName()+"->"+ticket.getCityB().getName()+" points: "+ticket.getWorth());
         ticket = tickets.pop();
@@ -492,10 +540,72 @@ private static BackgroundPanel panel;
                                                      selected = list.getSelectedValue();
                                                      selectedDest.remove(selected);
                                                      
-                                                    } 
+                                                    } */
                 
                                     }
-
+                             private void handleDestinationSelection(int playerTurn, List<TicketCard> selectedDest, Stack<TicketCard> tickets, Stack<TicketCard> lTickets) {
+                                            List<String> optionList = new ArrayList<>();
+                                            List<TicketCard> optionL = new ArrayList<>();
+                                        
+                                            for (int i = 0; i < 3; i++) {
+                                                TicketCard ticket = tickets.pop();
+                                                optionL.add(ticket);
+                                                selectedDest.add(ticket);
+                                                optionList.add("discard: " + ticket.getCityA().getName() + "->" + ticket.getCityB().getName() + " points: " + ticket.getWorth());
+                                            }
+                                        
+                                            TicketCard longTicket = lTickets.pop();
+                                            optionL.add(longTicket);
+                                            selectedDest.add(longTicket);
+                                    
+                                            optionList.add("discard: " + longTicket.getCityA().getName() + "->" + longTicket.getCityB().getName() + " points: " + longTicket.getWorth());
+                                        
+                                            for (int discardCount = 0; discardCount < 2; discardCount++) {
+                                                Object[] options = optionList.toArray();
+                                                JList<Object> list = new JList<>(options);
+                                                list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                                                JScrollPane scrollPane = new JScrollPane(list);
+                                        
+                                                int choice = JOptionPane.showOptionDialog(null, scrollPane,
+                                                        "Player " + playerTurn + " - Choose ticket to discard (" + (discardCount + 1) + "/2)",
+                                                        JOptionPane.OK_CANCEL_OPTION,
+                                                        JOptionPane.PLAIN_MESSAGE,
+                                                        null, null, null);
+                                        
+                                                if (choice == JOptionPane.OK_OPTION) {
+                                                    String selected = (String) list.getSelectedValue();
+                                                    for (int i = 0; i < optionList.size(); i++) {
+                                                        if (optionList.get(i).equals(selected)) {
+                                                            TicketCard selectedTicket = optionL.get(i);
+                                                            selectedDest.remove(selectedTicket); 
+                                                            optionL.remove(i);
+                                                            optionList.remove(i);
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            if (playerTurn==1)
+                                            {
+                                            selectedDest1=selectedDest;
+                                            System.out.println(selectedDest1);
+                                            }
+                                            else if (playerTurn==2)
+                                            {
+                                            selectedDest2=selectedDest;
+                                            System.out.println(selectedDest2);
+                                            }
+                                            else if (playerTurn==3)
+                                            {
+                                            selectedDest3=selectedDest;
+                                            System.out.println(selectedDest3);
+                                            }
+                                            else if (playerTurn==4)
+                                            {
+                                            selectedDest4=selectedDest;
+                                            System.out.println(selectedDest4);
+                                            }
+                                        }
     
 
                                     public void open()
@@ -536,6 +646,7 @@ private static BackgroundPanel panel;
                                             white.setVisible(true);
                                             yellow.setVisible(true);
                                             wild.setVisible(true);
+                                             invenVisible = true;
                                     
                                             for (int i = 0; i < 9; i++) {
                                                 cardNums.get(i).setVisible(true);
@@ -577,12 +688,19 @@ private static BackgroundPanel panel;
             yellow.setVisible(false);
             wild.setVisible(false);
 
+             invenVisible = false;
+
             for (JLabel j : cardNums)
             {
                 j.setVisible(false);
             }
 
             inven = false;
+            for(int j = 0; j< dCardLabel.size(); j++){
+                dCardLabel.get(j).setVisible(false);
+                
+                repaint();
+            }
         }
         for (JLabel label : drawCardLabels) {
             panel.remove(label);
@@ -595,6 +713,61 @@ private static BackgroundPanel panel;
         panel.repaint();
 
 
+    }
+     public static void playerDestCards(){
+        for(int j = 0; j< dCardLabel.size(); j++){
+            dCardLabel.get(j).setBounds(295 + j*160,300,(int)(433*1.6),(int)(577*1.2));
+            dCardLabel.get(j).setVisible(false);
+            
+
+        }
+        if (!invenVisible) {
+            return;
+        }
+    
+        selectedDest= null;
+        if (gameState.getCurrentPlayer() == 1) {
+            selectedDest = selectedDest1;
+        }
+        else if (gameState.getCurrentPlayer() == 2) {
+            selectedDest = selectedDest2;
+        }
+        else if (gameState.getCurrentPlayer() == 3) {
+            selectedDest = selectedDest3;
+        }
+        else if (gameState.getCurrentPlayer() == 4) {
+            selectedDest = selectedDest4;
+        }
+
+            int xOffSet = 0;
+        HashSet<Integer> matchedIndexes = new HashSet<>();
+        for(TicketCard selected: selectedDest){
+            for(int k =0; k< dCardLabel.size(); k++){
+                 if(matchedIndexes.contains(k)) continue;
+                 
+                TicketCard c = dCardData.get(k);
+             
+            String a1 = selected.getCityA().getName().trim();
+            String b1 = selected.getCityB().getName().trim();
+            String a2 = c.getCityA().getName().trim();
+            String b2 = c.getCityB().getName().trim();
+
+            boolean match = 
+                (a1.equals(a2) && b1.equals(b2)) || 
+                (a1.equals(b2) && b1.equals(a2));
+                System.out.println("Comparing: " + a1 + " - " + b1 + " to " + a2 + " - " + b2 + " | Match: " + match);
+
+                if (match) {
+                    JLabel label = dCardLabel.get(k);
+                    label.setBounds(50 + xOffSet*250, 500, (int)(433*1.6),(int)(577*1.2));
+                    label.setVisible(true);
+                    matchedIndexes.add(k);
+                    xOffSet++;
+                    break;
+                }
+            }
+        }
+        
     }
 
     public static void nextTurn()
@@ -618,13 +791,16 @@ private static BackgroundPanel panel;
         b.reposition();
         c.reposition();
         d.reposition();
+         for(int j = 0; j< dCardLabel.size(); j++){
+            dCardLabel.get(j).setBounds(295 + j*160,300,(int)(433*1.6),(int)(577*1.2));
+            dCardLabel.get(j).setVisible(false);
+            
+
+        playerDestCards();
+
 
     }
-    /*public static void addDestCards(ArrayList<Object> cards){
-        for(int i=0; i<selectedDest.size(); i++){
-            destinationJList.add(i, selectedDest.)
-        }
-    }*/
+   
     
     public void displayFaceUpCards() {
         arenaLabel.removeAll();
