@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 
 public class Game {
     private Stack <TrainCard> deck;
+    private static Stack <TrainCard> discardPile;
     private static Stack<TicketCard> longRoutes = new Stack<>();
     private static Stack<TicketCard> normRoutes = new Stack<>();
      private Stack <TrainCard> trainDeck = new Stack<>();
@@ -12,9 +13,10 @@ public class Game {
 
     private ArrayList<TrainCard> faceUpCards = new ArrayList<>();
     private static final String[] CARD_COLORS = {"black", "blue", "green", "orange", "pink", "red", "white", "yellow", };
-    private static Graph boardGraph;
+    private Graph boardGraph;
 
     public Game() {
+        discardPile = new Stack<>();
         deck = new Stack<>();
         boardGraph = new Graph();
         boardGraph.addVertex("Lisboa");
@@ -243,8 +245,9 @@ public class Game {
         }
     }
 
-    public static Graph getBoardGraph() 
+    public  Graph getBoardGraph() 
     {
+      //  System.out.println(boardGraph.getVertices().size());
     return boardGraph;
 
     
@@ -258,5 +261,14 @@ public class Game {
 {
     return longRoutes;
 }
+public static void addToDiscard (ArrayList<TrainCard> cards)
+{
+    for (int i = 0; i< cards.size();i++)
+    {
+        discardPile.push(cards.get(i));
+    }
 }
+}
+
+
 
