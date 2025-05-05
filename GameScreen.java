@@ -716,61 +716,7 @@ private static BackgroundPanel panel;
 
 
     }
-     public static void playerDestCards(){
-        for(int j = 0; j< dCardLabel.size(); j++){
-            dCardLabel.get(j).setBounds(295 + j*160,300,(int)(433*1.6),(int)(577*1.2));
-            dCardLabel.get(j).setVisible(false);
-            
-
-        }
-        if (!invenVisible) {
-            return;
-        }
     
-        selectedDest= null;
-        if (gameState.getCurrentPlayer() == 1) {
-            selectedDest = selectedDest1;
-        }
-        else if (gameState.getCurrentPlayer() == 2) {
-            selectedDest = selectedDest2;
-        }
-        else if (gameState.getCurrentPlayer() == 3) {
-            selectedDest = selectedDest3;
-        }
-        else if (gameState.getCurrentPlayer() == 4) {
-            selectedDest = selectedDest4;
-        }
-
-            int xOffSet = 0;
-        HashSet<Integer> matchedIndexes = new HashSet<>();
-        for(TicketCard selected: selectedDest){
-            for(int k =0; k< dCardLabel.size(); k++){
-                 if(matchedIndexes.contains(k)) continue;
-                 
-                TicketCard c = dCardData.get(k);
-             
-            String a1 = selected.getCityA().getName().trim();
-            String b1 = selected.getCityB().getName().trim();
-            String a2 = c.getCityA().getName().trim();
-            String b2 = c.getCityB().getName().trim();
-
-            boolean match = 
-                (a1.equals(a2) && b1.equals(b2)) || 
-                (a1.equals(b2) && b1.equals(a2));
-                System.out.println("Comparing: " + a1 + " - " + b1 + " to " + a2 + " - " + b2 + " | Match: " + match);
-
-                if (match) {
-                    JLabel label = dCardLabel.get(k);
-                    label.setBounds(50 + xOffSet*250, 500, (int)(433*1.6),(int)(577*1.2));
-                    label.setVisible(true);
-                    matchedIndexes.add(k);
-                    xOffSet++;
-                    break;
-                }
-            }
-        }
-        
-    }
    
     public static void playerDestCards(){
         for(int j = 0; j< dCardLabel.size(); j++){
@@ -784,16 +730,16 @@ private static BackgroundPanel panel;
         }
     
         selectedDest= null;
-        if (gameState.getCurrentPlayer() == 1) {
+        if (gameState.getTurn() == 1) {
             selectedDest = selectedDest1;
         }
-        else if (gameState.getCurrentPlayer() == 2) {
+        else if (gameState.getTurn() == 2) {
             selectedDest = selectedDest2;
         }
-        else if (gameState.getCurrentPlayer() == 3) {
+        else if (gameState.getTurn() == 3) {
             selectedDest = selectedDest3;
         }
-        else if (gameState.getCurrentPlayer() == 4) {
+        else if (gameState.getTurn() == 4) {
             selectedDest = selectedDest4;
         }
 
@@ -859,6 +805,7 @@ private static BackgroundPanel panel;
 
 
     }
+}
    
     
     public void displayFaceUpCards() {
