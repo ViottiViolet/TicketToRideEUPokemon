@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class Graph
 {
-    private static ArrayList<String> connectedCityHolder = new ArrayList<String>();
-    private static ArrayList<City> vertices = new ArrayList<City>();
-    private static ArrayList<City> visitedVertices = new ArrayList<City>();
+    private  ArrayList<String> connectedCityHolder = new ArrayList<String>();
+    private  ArrayList<City> vertices = new ArrayList<City>();
+    private  ArrayList<City> visitedVertices = new ArrayList<City>();
 
     public Graph ()
     {
@@ -12,7 +12,7 @@ public class Graph
     }
 
     // returns the railroad(s) between 2 cities, takes in the names of the 2 cities
-    public static ArrayList<Railroad> getRailroad(String city1, String city2)
+    public  ArrayList<Railroad> getRailroad(String city1, String city2)
     {
         ArrayList<Railroad> r = new ArrayList<Railroad>();
         for(City c: vertices)
@@ -42,11 +42,29 @@ public class Graph
         return newVertex;
         
     }
+    public City addVertex(String name, int x, int y)
+    {
+        //System.out.println(vertices);
+         City newVertex = new City(name,x,y);
+        vertices.add(newVertex);
+        return newVertex;
+        
+    }
 //ddssf
     public void addEdge (City a, City b, int weight)
     {
-        int x = vertices.indexOf(a);
-        int y = vertices.indexOf(b);
+        int x=0 ;
+        int y =0;
+
+        for(int i = 0; i<vertices.size();i++)
+        {
+            if (vertices.get(i).getName().equals(a.getName()))
+            x =i;
+            if (vertices.get(i).getName().equals(b.getName()))
+            y =i;
+
+        }
+       
         City city1 = vertices.get(x);
         City city2 = vertices.get(y);
 
@@ -59,7 +77,7 @@ public class Graph
 
     }
     //public Railroad (String color, int length, boolean istunnel, int engineCount, City a, City b)
-    public void addEdge(String color, int length, boolean isTunnel, int engineCount, City a, City b)
+    public void addEdge(String color, int length, boolean isTunnel, int engineCount, City a, City b, int X, int Y)
     {
         int x =-1;
         int y=-1;
@@ -74,8 +92,8 @@ public class Graph
         
         City city1 = vertices.get(x);
         City city2 = vertices.get(y);
-        city1.addTrack(new Railroad(color, length, isTunnel, engineCount, city1, b));
-        city2.addTrack(new Railroad(color, length, isTunnel, engineCount, city2, a));
+        city1.addTrack(new Railroad(color, length, isTunnel, engineCount, city1, b,X,Y));
+        city2.addTrack(new Railroad(color, length, isTunnel, engineCount, city2, a,X,Y));
 
 
 
@@ -125,7 +143,7 @@ public class Graph
 
     ////////////////////
     ///// this checks adjacency 
-    public static boolean isConnected (City a, City b)
+    public  boolean isConnected (City a, City b)
     {
         boolean connected = false;
          int i=0;
@@ -155,6 +173,17 @@ public class Graph
 // returns a list of all Cities
     public ArrayList<City> getVertices() {
         return vertices;
+    }
+
+    public City getVertex (String name)
+    {
+        for(int i = 0; i<vertices.size();i++)
+        {
+            if(vertices.get(i).getName().equals(name))
+            return vertices.get(i);
+
+        }
+        return null;
     }
 
 }
