@@ -34,6 +34,10 @@ public class GameState {
         return false;
     }
 
+    public int getCurrentPlayer()
+    {
+        return currentPlayer;
+    }
 
     public static void nextTurn() {
         currentPlayer = (currentPlayer + 1) % 4;
@@ -48,7 +52,10 @@ public class GameState {
         //set screen to endscreen
     }
 
-
+    public Player[] getPlayers()
+    {
+        return players;
+    }
 
 
     public static int getTurn()

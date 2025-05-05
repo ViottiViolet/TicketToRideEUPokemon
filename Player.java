@@ -1,6 +1,7 @@
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ public class Player implements Comparable
     private ImageIcon image;
     private int score;
     private HashMap<String, Stack<TrainCard>> trainCards;
+    public static ArrayList<String> colorOrder;
     private ArrayList <TicketCard> Tickets;
     private ArrayList<TicketCard> completedTickets;
     private int longestPath;// for european express 
@@ -25,10 +27,12 @@ public class Player implements Comparable
     private Stack <TrainStation> trainStations; 
     private ArrayList <TrainStation> usedStations; 
     private Stack <Train> trains;
-
+    private int moves ; 
 
     public Player(int x)
     { 
+         graph = new Graph();
+        moves = 0;
         playerNum = x;
         trainStations = new Stack<TrainStation>();
         trains = new Stack<Train>();
@@ -45,6 +49,11 @@ public class Player implements Comparable
         image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
         score = 0;
         trainCards = new HashMap<String, Stack<TrainCard>>();
+        colorOrder = new ArrayList<String>(Arrays.asList("black", "blue", "green", "orange", "pink", "red", "white", "yellow", "wild"));
+        for (String color : colorOrder)
+        {
+            trainCards.put(color, new Stack<TrainCard>());
+        }
         Tickets = new ArrayList<TicketCard>();
         completedTickets = new ArrayList<>();
         longestPath = 0;
@@ -132,7 +141,10 @@ public class Player implements Comparable
 
     }
 
-
+    public int getCardTypeNum (String color)
+    {
+        return trainCards.get(color).size(); 
+    }
 
 
     public Graph getGraph()
@@ -146,28 +158,23 @@ public class Player implements Comparable
         return score;
     }
 
-
-    public ArrayList<TrainCard> buy(Railroad r, int numWilds)
+    public ArrayList<TrainCard> buy(Railroad r, int numWilds, int pric, String color)
     {
 
 
 
 
         ArrayList<TrainCard> usedCards = new ArrayList<TrainCard>();
-        String color = r.getColor();
-        int price = r.getLength();
+        
+        int price = pric;
         ArrayList <TrainCard> list;
 
 
         //TEMPORARY
-        for(int i = 0; i<price; i++)
-        {
-            trains.pop();
-        }
-        return usedCards;
+      
+        //return usedCards;
 
-
-        /*for(int i = 0; i<numWilds; i++)
+        for(int i = 0; i<numWilds; i++)
         {
             usedCards.add(trainCards.get("wild").pop());
 
@@ -183,13 +190,15 @@ public class Player implements Comparable
             usedCards.add(trainCards.get(color).pop());
             trains.pop();
         }
+        r.claim();
         City A = r.getCityA();
         City B = r.getCityB();
         graph.addVertex(A.getName());//adds to graph
         graph.addVertex(B.getName());
         graph.addEdge(A,B,r.getLength());
         addScore(r.getLength());// updates score
-        return usedCards;*/
+        Game.addToDiscard(usedCards);
+        return usedCards;
     }
 
 
@@ -251,6 +260,7 @@ public class Player implements Comparable
 
     public void add(TrainCard card)
     {
+        moves++;
         String color = card.getColor();
         Set set = trainCards.keySet();
 
@@ -273,6 +283,36 @@ public class Player implements Comparable
 
         
     }
+    public boolean canAffordM(Railroad r, int price)
+    {
+        String color = r.getColor();
+        if(trainCards.get(color).size()<price)
+        {
+            return true;
+        }
+        if(trainCards.containsKey("wilds"))
+        {
+            if(trainCards.get(color).size()<price)
+            return true;
+        }
+        return false;
+        
+    }
+    public boolean canAffordM(Railroad r, int price)
+    {
+        String color = r.getColor();
+        if(trainCards.get(color).size()<price)
+        {
+            return true;
+        }
+        if(trainCards.containsKey("wilds"))
+        {
+            if(trainCards.get(color).size()<price)
+            return true;
+        }
+        return false;
+        
+    }
     
     public int getNumTrains()
     {
@@ -287,12 +327,10 @@ public class Player implements Comparable
         return 3 - usedStations.size();
     }
 
-
     public HashMap<String, Stack<TrainCard>> getNumCards()
     {
         return trainCards;
     }
-
 
    public void numRoutesCompleted()
    {
@@ -322,8 +360,34 @@ public class Player implements Comparable
             trains.pop();
     }
 
+    public int getWilds()
+    {
+        Set  set = trainCards.keySet();
+        Iterator <String> iter = set.iterator();
+        Stack stack = new Stack();
+        while(iter.hasNext())
+        {
+            String key = iter.next();
+            Stack s = trainCards.get(key);
+            if(key.equals("wild"));
+            {
+            stack = s;
+            break;
+            }
+        }
+        System.out.println(stack.size());
+        return stack.size();
+    }
+    public int getMoves()
+    {
+        return moves;
+    }
+    public void resetMoves ()
+    {moves = 0;}
+
+    public int getNumber()
+    {
+        return playerNum;
+    }
 
 }
-
-
-

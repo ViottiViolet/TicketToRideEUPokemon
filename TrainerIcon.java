@@ -12,9 +12,11 @@ public class TrainerIcon
 
     private JLabel bgLabel, profileLabel, nameLabel, trainLabel, trainNumLabel, stationLabel, stationNumLabel;
     private Player player;
+    private GameState state;
 
-    public TrainerIcon(String name, int r, JPanel p, Player play)
+    public TrainerIcon(String name, int r, JPanel p, Player play, GameState state)
     {
+        this.state = state;
         profile = new ImageIcon(getClass().getResource("/Images/Trainers/" + name + ".png"));
         bg = new ImageIcon(getClass().getResource("/Images/Trainers/" + name + "bg.png"));
         train = new ImageIcon(getClass().getResource("/Images/Game/locomotive highlight.png"));
@@ -27,6 +29,7 @@ public class TrainerIcon
         nameLabel.setForeground(Color.BLACK);
 
         profileLabel = new JLabel(new ImageIcon(profile.getImage().getScaledInstance((int)(300/3), (int)(300/3), Image.SCALE_SMOOTH)));
+       
 
         bgLabel = new JLabel(new ImageIcon(bg.getImage().getScaledInstance((int)(h - 55), (int)(h/2 + 30), Image.SCALE_SMOOTH)));
 
@@ -62,6 +65,16 @@ public class TrainerIcon
         stationLabel.setBounds(80, 190*rank - 100, (int)(h/2), (int)(h/2));
         stationNumLabel.setText(player.getNumStations() + ""); 
         stationNumLabel.setBounds(175, 190*rank - 95, (int)(h/2), (int)(h/2));
+        if(state.getCurrentPlayer()==player.getNumber())
+        {
+            profileLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
+
+        }
+        else
+        {
+            profileLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 0));
+
+        }
     }
 
     public void addToPanel(JPanel p) {
