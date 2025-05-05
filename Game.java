@@ -268,6 +268,10 @@ public static void addToDiscard (ArrayList<TrainCard> cards)
         discardPile.push(cards.get(i));
     }
 }
+
+public Stack<TrainCard> getDiscardPile() {
+    return discardPile;
+}
 }
 
 

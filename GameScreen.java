@@ -52,7 +52,12 @@ public class GameScreen extends JFrame {
     private static JList<Object> destinationJList = new JList<>();
     //private int drawCardTwice;
 
-   
+    private static JLabel deckLabel;  // For face-down deck
+    private static JLabel discardLabel;  // For discard pile
+    private static JLabel[] faceUpLabels;  // For face up cards
+    private static int cardsDrawn = 0;  // Track number of cards drawn this turn
+    private static boolean drewWild = false;  // Track if a wild card was drawn
+    private static ImageIcon deckBackImg;  // For face-down deck
 
     public GameScreen() {
         game = new Game();
@@ -326,6 +331,84 @@ public class GameScreen extends JFrame {
         add(trainLabel);
         add(stationLabel);
         
+        // Initialize draw functionality components
+        deckBackImg = new ImageIcon(getClass().getResource("/Images/Cards/back.png"));
+        deckLabel = new JLabel(new ImageIcon(deckBackImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+        discardLabel = new JLabel();
+        
+        // Initialize face up cards
+        faceUpLabels = new JLabel[5];
+        for (int i = 0; i < 5; i++) {
+            faceUpLabels[i] = new JLabel();
+            faceUpLabels[i].setSize((int)(cardWidth/6), (int)(cardHeight/6));
+            final int cardIndex = i;
+            faceUpLabels[i].addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (!draw || cardsDrawn >= 2) return;
+                    
+                    ArrayList<TrainCard> faceUpCards = game.getFaceUpCards();
+                    if (cardIndex < faceUpCards.size()) {
+                        TrainCard card = faceUpCards.get(cardIndex);
+                        
+                        // Check if we can draw this card based on rules
+                        if (card.getColor().equals("wild")) {
+                            if (cardsDrawn == 0 && !drewWild) {
+                                // Can only draw wild as first card
+                                Player current = gameState.getPlayers()[gameState.getTurn()-1];
+                                current.add(card);
+                                game.replaceFaceUpCard(cardIndex);
+                                cardsDrawn = 2; // Wild card ends turn
+                                drewWild = true;
+                                JOptionPane.showMessageDialog(null, "Wild card drawn - turn ends");
+                                gameState.nextTurn();
+                                nextTurn();
+                            }
+                        } else {
+                            // Non-wild card
+                            if (cardsDrawn == 0 || (cardsDrawn == 1 && !drewWild)) {
+                                Player current = gameState.getPlayers()[gameState.getTurn()-1];
+                                current.add(card);
+                                game.replaceFaceUpCard(cardIndex);
+                                cardsDrawn++;
+                                
+                                if (cardsDrawn == 2) {
+                                    gameState.nextTurn();
+                                    nextTurn();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Add mouse listener to deck for face-down draws
+        deckLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!draw || cardsDrawn >= 2) return;
+                
+                TrainCard card = game.drawFromDeck();
+                if (card != null) {
+                    Player current = gameState.getPlayers()[gameState.getTurn()-1];
+                    current.add(card);
+                    cardsDrawn++;
+                    
+                    if (cardsDrawn == 2) {
+                        gameState.nextTurn();
+                        nextTurn();
+                    }
+                }
+            }
+        });
+
+        add(deckLabel);
+        add(discardLabel);
+        for (JLabel label : faceUpLabels) {
+            panel.add(label);
+        }
+
         add(panel);
         pack();
         setVisible(true);
@@ -440,8 +523,33 @@ public class GameScreen extends JFrame {
 
         if (draw)
         {
-             back.setVisible(true);
-             routeback.setVisible(true);
+            // Reset drawing state
+            cardsDrawn = 0;
+            drewWild = false;
+            
+            // Show draw screen elements
+            deckLabel.setVisible(true);
+            discardLabel.setVisible(true);
+            
+            // Update face up cards
+            ArrayList<TrainCard> faceUpCards = game.getFaceUpCards();
+            for (int i = 0; i < 5; i++) {
+                if (i < faceUpCards.size()) {
+                    TrainCard card = faceUpCards.get(i);
+                    ImageIcon cardImg = new ImageIcon(getClass().getResource("/Images/Cards/" + card.getColor() + ".png"));
+                    faceUpLabels[i].setIcon(new ImageIcon(cardImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+                    faceUpLabels[i].setVisible(true);
+                } else {
+                    faceUpLabels[i].setVisible(false);
+                }
+            }
+            
+            // Update discard pile if there are discarded cards
+            if (!game.getDiscardPile().isEmpty()) {
+                TrainCard topCard = game.getDiscardPile().peek();
+                ImageIcon cardImg = new ImageIcon(getClass().getResource("/Images/Cards/" + topCard.getColor() + ".png"));
+                discardLabel.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance((int)(cardWidth/6), (int)(cardHeight/6), Image.SCALE_SMOOTH)));
+            }
         }
         else if (inven)
         {
@@ -476,9 +584,11 @@ public class GameScreen extends JFrame {
 
         if (draw)
         {
-            back.setVisible(false);
-            routeback.setVisible(false);
-
+            deckLabel.setVisible(false);
+            discardLabel.setVisible(false);
+            for (JLabel label : faceUpLabels) {
+                label.setVisible(false);
+            }
             draw = false;
         }
         else if (inven)

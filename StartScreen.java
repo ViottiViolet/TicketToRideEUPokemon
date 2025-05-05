@@ -16,12 +16,11 @@ public class StartScreen extends JFrame {
 //sdjfhsfhsfhs
     public void startGame()
     {
+        // Initialize players before creating GameScreen
+        GameState.makePlayers();
         
-        //test 
-
+        // Create and show GameScreen
         GameScreen.main(new String[0]);
-
-
     }
 
     public StartScreen()
