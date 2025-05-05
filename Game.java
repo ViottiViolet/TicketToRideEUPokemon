@@ -4,11 +4,10 @@ import java.util.*;
 import javax.imageio.ImageIO;
 
 public class Game {
-    private Stack <TrainCard> deck;
     private static Stack <TrainCard> discardPile;
     private static Stack<TicketCard> longRoutes = new Stack<>();
     private static Stack<TicketCard> normRoutes = new Stack<>();
-     private Stack <TrainCard> trainDeck = new Stack<>();
+    private Stack <TrainCard> trainDeck = new Stack<>();
 
 
     private ArrayList<TrainCard> faceUpCards = new ArrayList<>();
@@ -17,7 +16,6 @@ public class Game {
 
     public Game() {
         discardPile = new Stack<>();
-        deck = new Stack<>();
         boardGraph = new Graph();
         int x = 322;
         int y = 54;
@@ -150,19 +148,19 @@ public class Game {
             {
                 if (i<12)
                 {
-                deck.push(new TrainCard("blue"));
-                deck.push(new TrainCard("black"));
-                deck.push(new TrainCard("green"));
-                deck.push(new TrainCard("orange"));
-                deck.push(new TrainCard("pink"));
-                deck.push(new TrainCard("red"));
-                deck.push(new TrainCard("white"));
-                deck.push(new TrainCard("yellow"));
+                trainDeck.push(new TrainCard("blue"));
+                trainDeck.push(new TrainCard("black"));
+                trainDeck.push(new TrainCard("green"));
+                trainDeck.push(new TrainCard("orange"));
+                trainDeck.push(new TrainCard("pink"));
+                trainDeck.push(new TrainCard("red"));
+                trainDeck.push(new TrainCard("white"));
+                trainDeck.push(new TrainCard("yellow"));
                 }
-                deck.push(new TrainCard("yellow"));
+                trainDeck.push(new TrainCard("yellow"));
 
             }
-        Collections.shuffle(deck);
+        Collections.shuffle(trainDeck);
 
            // System.out.println("line 166");
 
@@ -228,7 +226,7 @@ public class Game {
     public Stack <TrainCard> getDeck ()
     {
 
-        return deck;
+        return trainDeck;
 
     }
     
