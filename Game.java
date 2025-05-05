@@ -7,7 +7,7 @@ public class Game {
     private static Stack <TrainCard> discardPile;
     private static Stack<TicketCard> longRoutes = new Stack<>();
     private static Stack<TicketCard> normRoutes = new Stack<>();
-    private Stack <TrainCard> trainDeck = new Stack<>();
+    private static Stack <TrainCard> trainDeck = new Stack<>();
 
 
     private ArrayList<TrainCard> faceUpCards = new ArrayList<>();
@@ -223,7 +223,7 @@ public class Game {
             }
         }
     }
-    public Stack <TrainCard> getDeck ()
+    public static Stack <TrainCard> getDeck ()
     {
 
         return trainDeck;
@@ -281,6 +281,5 @@ private City findCityByName(String name) {
     return null;
 }
 }
-
 
 
