@@ -98,4 +98,3 @@ public class EndScreen extends JFrame
     }
 
 }
-

@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,8 +8,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Stack;
 import javax.swing.ImageIcon;
-
-
 
 
 public class Player implements Comparable
@@ -59,10 +56,8 @@ public class Player implements Comparable
         longestPath = 0;
         usedStations = new ArrayList <TrainStation>();
 
-
     }
   
-
 
     public int compareTo(Object o) {
        int difference = score-((Player)o).getScore();
@@ -75,11 +70,7 @@ public class Player implements Comparable
 
 
 
-
-
-
     }
-
 
     public void placeTrainStation(City a)
     {
@@ -91,14 +82,11 @@ public class Player implements Comparable
         //System.out.println(playerNum + " has " + (4 - usedStations.size()));
     }
 
-
     public int calculateLongestPath()//TODO
     {
         return 1;// temporary
 
-
     }
-
 
     public boolean isCompleted (TicketCard ticket)
     {
@@ -109,12 +97,7 @@ public class Player implements Comparable
 
 
 
-
-
-
     }
-
-
 
 
     // checks all tickets and adds the completed tickets into the completedTickets list
@@ -127,17 +110,14 @@ public class Player implements Comparable
         }
     }
 
-
       public int numTicketsComplete()
     {
         return completedTickets.size();
     }
 
-
     public ArrayList<TicketCard> getCompletedTickets()
     {
         return completedTickets;
-
 
     }
 
@@ -152,7 +132,6 @@ public class Player implements Comparable
         return graph;
     }
 
-
     public int getScore()
     {
         return score;
@@ -162,13 +141,10 @@ public class Player implements Comparable
     {
 
 
-
-
         ArrayList<TrainCard> usedCards = new ArrayList<TrainCard>();
         
         int price = pric;
         ArrayList <TrainCard> list;
-
 
         //TEMPORARY
       
@@ -178,12 +154,10 @@ public class Player implements Comparable
         {
             usedCards.add(trainCards.get("wild").pop());
 
-
         }
         price-=numWilds;
         if(price==0)
         return usedCards;
-
 
         for(int i = 0; i<price; i++)
         {
@@ -200,7 +174,6 @@ public class Player implements Comparable
         Game.addToDiscard(usedCards);
         return usedCards;
     }
-
 
     public String canAfford(Railroad r)
     {
@@ -252,11 +225,7 @@ public class Player implements Comparable
 
 
 
-
-
-
     }
-
 
     public void add(TrainCard card)
     {
@@ -264,13 +233,11 @@ public class Player implements Comparable
         String color = card.getColor();
         Set set = trainCards.keySet();
 
-
         if(!(trainCards.containsKey(card.getColor())))
         {
             Stack <TrainCard> list = new Stack <TrainCard>();
             list.push(new TrainCard(card.getColor()));
             trainCards.put(card.getColor(),list);
-
 
         }
         else
@@ -280,22 +247,6 @@ public class Player implements Comparable
             trainCards.put(color, stack);
         }
 
-
-        
-    }
-    public boolean canAffordM(Railroad r, int price)
-    {
-        String color = r.getColor();
-        if(trainCards.get(color).size()<price)
-        {
-            return true;
-        }
-        if(trainCards.containsKey("wilds"))
-        {
-            if(trainCards.get(color).size()<price)
-            return true;
-        }
-        return false;
         
     }
     public boolean canAffordM(Railroad r, int price)
@@ -320,8 +271,6 @@ public class Player implements Comparable
     }
 
 
-
-
     public int getNumStations()
     {
         return 3 - usedStations.size();
@@ -335,9 +284,7 @@ public class Player implements Comparable
    public void numRoutesCompleted()
    {
 
-
    }
-
 
     public void addScore(int length) 
     {
@@ -352,7 +299,6 @@ public class Player implements Comparable
         if (length == 8)
             score += 21;
     }
-
 
     public void removeTrains(int length) 
     {

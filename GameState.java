@@ -16,12 +16,10 @@ public class GameState {
         score = new int[4];
     }
 
-
     public static void makePlayers()
     {
         players = new Player[]{new Player(1), new Player(2), new Player(3), new Player(4)};
     }
-
 
     public boolean checkGameEnd() {
         for(Player x : players) {
@@ -64,9 +62,4 @@ public class GameState {
     }
 
 
-
-
 }
-
-
-

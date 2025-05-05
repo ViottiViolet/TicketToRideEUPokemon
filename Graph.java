@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class Graph
 {
     private  ArrayList<String> connectedCityHolder = new ArrayList<String>();
@@ -11,7 +10,6 @@ public class Graph
     {
         vertices = new ArrayList<>();
     }
-
 
     // returns the railroad(s) between 2 cities, takes in the names of the 2 cities
     public  ArrayList<Railroad> getRailroad(String city1, String city2)
@@ -27,7 +25,6 @@ public class Graph
                     if(((R.getCityA().getName().equals(city1)) && (R.getCityB().getName().equals(city2))))
                     r.add(R);
 
-
                 }
                 
             }
@@ -35,7 +32,6 @@ public class Graph
         }
        return r;
     }
-
 
    
     public City addVertex(String name)
@@ -65,16 +61,11 @@ public class Graph
         City city2 = vertices.get(y);
 
 
-
-
         city1.addTrack(b, weight);
         city2.addTrack(a, weight);
 
 
-
-
        
-
 
     }
     //public Railroad (String color, int length, boolean istunnel, int engineCount, City a, City b)
@@ -89,16 +80,12 @@ public class Graph
             if(vertices.get(i).getName().equals(b.getName()))
             y=i;
 
-
         }
         
         City city1 = vertices.get(x);
         City city2 = vertices.get(y);
         city1.addTrack(new Railroad(color, length, isTunnel, engineCount, city1, b));
         city2.addTrack(new Railroad(color, length, isTunnel, engineCount, city2, a));
-
-
-
 
 
 
@@ -111,7 +98,6 @@ public class Graph
         {
           City neighbor =  r.getCityB();
 
-
           if(!visitedVertices.contains(neighbor))
           {
             visitedVertices.add(neighbor);
@@ -120,15 +106,12 @@ public class Graph
         }
     }
 
-
     public void depthFirstTraversal(City start, ArrayList<City> visitedVertices)
     {
         if (visitedVertices.contains(start)) return;
 
-
         visitedVertices.add(start);
         connectedCityHolder.add(start.getName());
-
 
         for (Railroad r : start.getEdges())
         {
@@ -138,22 +121,16 @@ public class Graph
     }
 
 
-
-
     // the name is kinda bad, but im too lazy to change it; the method is just used to check if there is a continuous route between 2 cities ( akak ticket card completion)
     public boolean isConnectedFinal(City a, City b)
     {
         connectedCityHolder = new ArrayList<>();
         ArrayList<City> visited = new ArrayList<>();
 
-
         depthFirstTraversal(a, visited);
-
 
         return connectedCityHolder.contains(b.getName());
     }
-
-
 
 
     ////////////////////
@@ -169,7 +146,6 @@ public class Graph
             i++;
          }
 
-
          
          City A = vertices.get(i);
          
@@ -182,16 +158,13 @@ public class Graph
             if(r.getCityA().getName().equals(b.getName())|| r.getCityB().getName().equals(b.getName()))
             connected = true;
 
-
         }
         return connected;
     }
-
 
 // returns a list of all Cities
     public ArrayList<City> getVertices() {
         return vertices;
     }
-
 
 }
