@@ -8,6 +8,9 @@ public class GameState {
     public  int gamestate;
     private boolean lastTurn;
     public  int[] score;
+    private int countdown ;
+    private boolean start;
+    private boolean endGame;
    
     public GameState(Game g) {
         //players = new Player[]{new Player(1), new Player(2), new Player(3), new Player(4)};
@@ -38,13 +41,44 @@ public class GameState {
 
 
     }
+    public void endGame()
+    {
+        if (getCurrentPlayer().getNumTrains()<=2)
+        {
+            endGame= true;
+        }
+        endGame= false;
+    }
+    public boolean getEnd()
+    {
+        return endGame;
+    }
 
    
 
     public  void nextTurn() {
+        if(endGame&& !start)
+    {
+            start = true;
+            countdown = 3; 
+
+        }
+        else if(endGame)
+        {
+            countdown--;
+
+        }
+        if(endGame&&countdown ==0)
+        {
+            gameEnd();
+        }
         currentPlayer = (currentPlayer + 1) % 4;
         if (currentPlayer == 0) currentPlayer = 4;
         
+    }
+    public Player getCurrentPlayer()
+    {
+        return players[currentPlayer-1];
     }
    
     public void gameEnd() {
@@ -60,7 +94,7 @@ public class GameState {
     }
 
 
-    public  int getTurn()
+    public   int getTurn()
     {
         return currentPlayer;
     }
