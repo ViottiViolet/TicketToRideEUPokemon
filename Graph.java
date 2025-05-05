@@ -42,6 +42,14 @@ public class Graph
         return newVertex;
         
     }
+    public City addVertex(String name, int x, int y)
+    {
+        //System.out.println(vertices);
+         City newVertex = new City(name,x,y);
+        vertices.add(newVertex);
+        return newVertex;
+        
+    }
 //ddssf
     public void addEdge (City a, City b, int weight)
     {
@@ -69,7 +77,7 @@ public class Graph
 
     }
     //public Railroad (String color, int length, boolean istunnel, int engineCount, City a, City b)
-    public void addEdge(String color, int length, boolean isTunnel, int engineCount, City a, City b)
+    public void addEdge(String color, int length, boolean isTunnel, int engineCount, City a, City b, int X, int Y)
     {
         int x =-1;
         int y=-1;
@@ -84,8 +92,8 @@ public class Graph
         
         City city1 = vertices.get(x);
         City city2 = vertices.get(y);
-        city1.addTrack(new Railroad(color, length, isTunnel, engineCount, city1, b));
-        city2.addTrack(new Railroad(color, length, isTunnel, engineCount, city2, a));
+        city1.addTrack(new Railroad(color, length, isTunnel, engineCount, city1, b,X,Y));
+        city2.addTrack(new Railroad(color, length, isTunnel, engineCount, city2, a,X,Y));
 
 
 
@@ -165,6 +173,17 @@ public class Graph
 // returns a list of all Cities
     public ArrayList<City> getVertices() {
         return vertices;
+    }
+
+    public City getVertex (String name)
+    {
+        for(int i = 0; i<vertices.size();i++)
+        {
+            if(vertices.get(i).getName().equals(name))
+            return vertices.get(i);
+
+        }
+        return null;
     }
 
 }

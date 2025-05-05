@@ -19,54 +19,56 @@ public class Game {
         discardPile = new Stack<>();
         deck = new Stack<>();
         boardGraph = new Graph();
-        boardGraph.addVertex("Lisboa");
-        boardGraph.addVertex("Cadiz");
-        boardGraph.addVertex("Madrid");
-        boardGraph.addVertex("Barcelona");
-        boardGraph.addVertex("Pamplona");
-        boardGraph.addVertex("Marseille");
-        boardGraph.addVertex("Paris");
-        boardGraph.addVertex("Brest");
-        boardGraph.addVertex("Zurich");
-        boardGraph.addVertex("Dieppe");
-        boardGraph.addVertex("London");
-        boardGraph.addVertex("Bruxelles");
-        boardGraph.addVertex("Amsterdam");
-        boardGraph.addVertex("Essen");
-        boardGraph.addVertex("Frankfurt");
-        boardGraph.addVertex("Monchen");
-        boardGraph.addVertex("Venezela");
-        boardGraph.addVertex("Roma");
-        boardGraph.addVertex("Palermo");
-        boardGraph.addVertex("Brindisi");
-        boardGraph.addVertex("Berlin");
-        boardGraph.addVertex("Zagrab");
-        boardGraph.addVertex("Sarajevo");
-        boardGraph.addVertex("Wein");
-        boardGraph.addVertex("Kobenhavn");
-        boardGraph.addVertex("Budapest");
-        boardGraph.addVertex("Danzig");
-        boardGraph.addVertex("Athina");
-        boardGraph.addVertex("Warszawa");
-        boardGraph.addVertex("Bucuresti");
-        boardGraph.addVertex("Sevastopol");
-        boardGraph.addVertex("Constantinople");
-        boardGraph.addVertex("Angora");
-        boardGraph.addVertex("Smyrna");
-        boardGraph.addVertex("Edinburgh");
-        boardGraph.addVertex("Stockholm");
-        boardGraph.addVertex("Sofia");
-        boardGraph.addVertex("Kyiv");
-        boardGraph.addVertex("Wilno");
-        boardGraph.addVertex("Riga");
-        boardGraph.addVertex("Petrograd");
-        boardGraph.addVertex("Smolensk");
-        boardGraph.addVertex("Kharkov");
-        boardGraph.addVertex("Moskva");
-        boardGraph.addVertex("Rostov");
-        boardGraph.addVertex("Sochi");
-        boardGraph.addVertex("Erzurum");
-        boardGraph.addVertex("Snyrna");
+        int x = 322;
+        int y = 54;
+        boardGraph.addVertex("Lisboa",257, 749);
+        boardGraph.addVertex("Cadiz",344, 814);
+        boardGraph.addVertex("Madrid",344, 719);
+        boardGraph.addVertex("Barcelona",489, 730);
+        boardGraph.addVertex("Pamplona",473, 615);
+        boardGraph.addVertex("Marseille",670, 608);
+        boardGraph.addVertex("Paris",560, 421);
+        boardGraph.addVertex("Brest",379, 398);
+        boardGraph.addVertex("Zurich",709, 489);
+        boardGraph.addVertex("Dieppe",493, 360);
+        boardGraph.addVertex("London",509, 249);
+        boardGraph.addVertex("Bruxelles",601, 314);
+        boardGraph.addVertex("Amsterdam",635, 255);
+        boardGraph.addVertex("Essen",741, 263);
+        boardGraph.addVertex("Frankfurt",722, 353);
+        boardGraph.addVertex("Monchen",800, 411);
+        boardGraph.addVertex("Venezela",818, 533);
+        boardGraph.addVertex("Roma",821, 648);
+        boardGraph.addVertex("Palermo",874, 814);
+        boardGraph.addVertex("Brindisi",937, 680);
+        boardGraph.addVertex("Berlin",871, 285);
+        boardGraph.addVertex("Zagrab",928, 545);
+        boardGraph.addVertex("Sarajevo",1035, 620);
+        boardGraph.addVertex("Wein",944, 431);
+        boardGraph.addVertex("Kobenhavn",831, 130);
+        boardGraph.addVertex("Budapest",1004, 464);
+        boardGraph.addVertex("Danzig",1017, 183);
+        boardGraph.addVertex("Athina",1101, 780);
+        boardGraph.addVertex("Warszawa",1084, 272);
+        boardGraph.addVertex("Bucuresti",1204, 553);
+        boardGraph.addVertex("Sevastopol",1385, 573);
+        boardGraph.addVertex("Constantinople",1269, 710);
+        boardGraph.addVertex("Angora",1369, 782);
+        boardGraph.addVertex("Smyrna",1211, 814);
+        boardGraph.addVertex("Edinburgh",421, 55);
+        boardGraph.addVertex("Stockholm",968, 31);
+        boardGraph.addVertex("Sofia",1122, 635);
+        boardGraph.addVertex("Kyiv",1275, 341);
+        boardGraph.addVertex("Wilno",1228, 241);
+        boardGraph.addVertex("Riga",1123, 66);
+        boardGraph.addVertex("Petrograd",1345, 63);
+        boardGraph.addVertex("Smolensk",1362, 246);
+        boardGraph.addVertex("Kharkov",1454, 407);
+        boardGraph.addVertex("Moskva",1472, 216);
+        boardGraph.addVertex("Rostov",1506, 476);
+        boardGraph.addVertex("Sochi",1499, 591);
+        boardGraph.addVertex("Erzurum",1479, 750);
+       // boardGraph.addVertex("Snyrna",1515-x, 842-y);
         System.out.println("helloo");
 
       //  boardGraph = new Graph();
@@ -82,7 +84,7 @@ public class Game {
 
         InputStream one = getClass().getResourceAsStream("/railroads.tsv");
         if (one == null) {
-            System.out.println("Could not load railroads.tsv");
+            System.out.println("Could not load railroads.csv");
         } else {
             railroadReader = new Scanner(one);
 
@@ -119,9 +121,11 @@ public class Game {
             //
             boolean isTunnel = info1[2].equals("yes");
             int engineCount = Integer.parseInt(info1[3]);
-            City a = new City (info1[4]);
-            City b = new City(info1[5]);
-            boardGraph.addEdge(color, length, isTunnel, engineCount, a, b);
+            City a = findCityByName(info1[4]);
+            City b = findCityByName(info1[5]);
+            int X = Integer.parseInt(info1[6]);
+            int Y = Integer.parseInt(info1[7]);
+            boardGraph.addEdge(color, length, isTunnel, engineCount, a, b,X,Y);
 
         }    
         // longRoutesReader.nextLine();
@@ -129,8 +133,8 @@ public class Game {
             
             String[] cardInfo = longRoutesReader.nextLine().split("\t");
             System.out.println("long Routes read");//yolo
-            City cityA = new City(cardInfo[0]);
-            City cityB = new City(cardInfo[1]);
+            City cityA = findCityByName(cardInfo[0]);
+            City cityB = findCityByName(cardInfo[1]);
             int worth = Integer.parseInt(cardInfo[2]);
             BufferedImage card = null;
             
@@ -196,6 +200,7 @@ public class Game {
                 }
                 trainDeck.add(new TrainCard(color));
             }
+            
         }
        
         //add wild cards
@@ -267,6 +272,15 @@ public static void addToDiscard (ArrayList<TrainCard> cards)
     {
         discardPile.push(cards.get(i));
     }
+}
+private City findCityByName(String name) {
+    for (City city : boardGraph.getVertices()) {
+        if (city.getName().equalsIgnoreCase(name.trim())) {
+            return city;
+        }
+    }
+    System.out.println("City not found: " + name);
+    return null;
 }
 }
 

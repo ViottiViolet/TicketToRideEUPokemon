@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -9,7 +11,11 @@ import javax.swing.*;
 
 
 public class GameScreen extends JFrame {
-
+    
+    private List<TrainCard> selectedCards = new ArrayList<>();
+private List<TrainCard> faceUpCards = new ArrayList<>();
+private List<JLabel> faceUpLabels = new ArrayList<>();
+private static BackgroundPanel panel;
     private  Game game;
     private static JLabel drawLabel;
     private static JLabel invenLabel;
@@ -20,6 +26,9 @@ public class GameScreen extends JFrame {
     private static JLabel stationLabel;
     private static JLabel textLabel;
     private static JLabel textBoxLabel;
+    private List<JLabel> drawCardLabels = new ArrayList<>();
+
+
 
     private static JLabel black, blue, green, orange, pink, red, white, yellow, wild, back;
     private static JLabel routeback;
@@ -130,26 +139,77 @@ public class GameScreen extends JFrame {
             cardNums.get(i).setFont(new Font("Dialog", Font.BOLD, 30));
             cardNums.get(i).setForeground(Color.BLACK);
         }
-        
+        // testing
+       // JButton giveAllCardsButton = new JButton("Give All Cards");
+//giveAllCardsButton.setBounds(20, 20, 150, 30); // Adjust position and size as needed
+//this.add(giveAllCardsButton);
+
+//giveAllCardsButton.addActionListener(new ActionListener() {
+    //public void actionPerformed(ActionEvent e) {
+    //    String[] colors = {"black", "blue", "green", "orange", "pink", "red", "white", "yellow"}; // exclude "wild" if you don't want it
+    //    for (Player player : gameState.getPlayers()) {
+     //       for (String color : colors) {
+      //          for (int i = 0; i < 5; i++) {
+     //               player.add(new TrainCard(color),"test");
+      //          }
+      //      }
+      //  }
+     //   System.out.println("All players received 5 of each train card.");
+     //   panel.repaint(); // update GUI if needed
+   // }
+//});
 
         drawLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (purchase) return;
-                //System.out.println("open draw");
+        
                 draw = true;
                 open();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                drawLabel.setIcon(new ImageIcon(drawhover.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                drawLabel.setIcon(new ImageIcon(drawbtn.getImage().getScaledInstance((int)(buttonWidth*2), (int)(buttonHeight*2), Image.SCALE_SMOOTH)));
+        
+                // Clear any previously shown cards
+                for (JLabel label : drawCardLabels) {
+                    panel.remove(label);
+                }
+                drawCardLabels.clear();
+        
+                Stack<TrainCard> deck = game.getDeck();
+                int maxCardsToShow = Math.min(5, deck.size());
+                int baseX = getWidth() - 1000;
+                int baseY = getHeight() - 500;
+        
+                for (int i = 0; i < maxCardsToShow; i++) {
+                    TrainCard card = deck.get(deck.size() - 1 - i);
+        
+                    String color = card.getColor().toLowerCase();
+                    ImageIcon cardIcon;
+                    switch (color) {
+                        case "black": cardIcon = blackImg; break;
+                        case "blue": cardIcon = blueImg; break;
+                        case "green": cardIcon = greenImg; break;
+                        case "orange": cardIcon = orangeImg; break;
+                        case "pink": cardIcon = pinkImg; break;
+                        case "red": cardIcon = redImg; break;
+                        case "white": cardIcon = whiteImg; break;
+                        case "yellow": cardIcon = yellowImg; break;
+                        case "wild": cardIcon = wildImg; break;
+                        default: cardIcon = backImg; break;
+                    }
+        
+                    JLabel cardLabel = new JLabel(new ImageIcon(
+                        cardIcon.getImage().getScaledInstance((int)(cardWidth / 6), (int)(cardHeight / 6), Image.SCALE_SMOOTH)
+                    ));
+                    cardLabel.setBounds(baseX + i * 140, baseY, cardWidth / 6, cardHeight / 6);
+        
+                    drawCardLabels.add(cardLabel);
+                    add(cardLabel);
+                }
+        
+                revalidate();
+                repaint();
             }
         });
+        
         invenLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -244,6 +304,7 @@ public class GameScreen extends JFrame {
         });
 
         BackgroundPanel panel = new BackgroundPanel();
+        this.panel = panel;
         panel.setLayout(null);
 
         back.addMouseListener(new MouseAdapter() {
@@ -253,7 +314,7 @@ public class GameScreen extends JFrame {
                 int pnum = gameState.getTurn();
                 Player current = gameState.getPlayers()[pnum-1];
                 TrainCard card = game.getDeck().pop();
-                current.add(card);
+                current.add(card, "deck");
                 JOptionPane.showMessageDialog(panel,
                                 "a "+card.getColor()+" card was added to your hand ",
                                 "cardn drawn ",
@@ -293,6 +354,14 @@ public class GameScreen extends JFrame {
         cityButtons = new CityButtons(panel, gameState,game);
        
         cityButtons.disableAll();
+
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point point = e.getPoint();
+                System.out.println("Clicked at: (" + point.x + ", " + point.y + ")");
+            }
+        });
 
         draw = false;
         inven = false;
@@ -429,40 +498,55 @@ public class GameScreen extends JFrame {
 
     
 
-    public void open()
-    {
-        arenaLabel.setVisible(true);
-        backLabel.setVisible(true);
-
-        drawLabel.setVisible(false);
-        invenLabel.setVisible(false);
-        purchLabel.setVisible(false);
-
-        if (draw)
-        {
-             back.setVisible(true);
-             routeback.setVisible(true);
-        }
-        else if (inven)
-        {
-            black.setVisible(true);
-            blue.setVisible(true);
-            green.setVisible(true);
-            orange.setVisible(true);
-            pink.setVisible(true);
-            red.setVisible(true);
-            white.setVisible(true);
-            yellow.setVisible(true);
-            wild.setVisible(true);
-
-            for (int i = 0; i < 9; i++)
-            {
-                cardNums.get(i).setVisible(true);
-                cardNums.get(i).setText(gameState.players[gameState.getTurn()-1].getNumCards().get(Player.colorOrder.get(i)).size() + "");
-            }
-        }
-
-    }
+                                    public void open()
+                                    {
+                                        arenaLabel.setVisible(true);
+                                        backLabel.setVisible(true);
+                                    
+                                        drawLabel.setVisible(false);
+                                        invenLabel.setVisible(false);
+                                        purchLabel.setVisible(false);
+                                    
+                                        arenaLabel.setLayout(null); // Use absolute positioning
+                                    
+                                        arenaLabel.revalidate();
+                                        arenaLabel.repaint();
+                                    
+                                        if (draw) {
+                                            // Only show face-up cards in draw mode
+                                            displayFaceUpCards();
+                                            back.setVisible(true);
+                                            routeback.setVisible(true);
+                                            System.out.println("DRAW mode: " + game.getDeck().size());
+                                        } else {
+                                            // Ensure face-up cards are cleared when NOT in draw mode
+                                            arenaLabel.removeAll();
+                                            faceUpCards.clear();
+                                            faceUpLabels.clear();
+                                        }
+                                    
+                                        if (inven) {
+                                            // Show inventory cards only
+                                            black.setVisible(true);
+                                            blue.setVisible(true);
+                                            green.setVisible(true);
+                                            orange.setVisible(true);
+                                            pink.setVisible(true);
+                                            red.setVisible(true);
+                                            white.setVisible(true);
+                                            yellow.setVisible(true);
+                                            wild.setVisible(true);
+                                    
+                                            for (int i = 0; i < 9; i++) {
+                                                cardNums.get(i).setVisible(true);
+                                                cardNums.get(i).setText(
+                                                    gameState.players[gameState.getTurn()-1].getNumCards().get(Player.colorOrder.get(i)).size() + ""
+                                                );
+                                            }
+                                        }
+                                    }
+                                    
+                                
 
     public void close()
     {
@@ -500,12 +584,30 @@ public class GameScreen extends JFrame {
 
             inven = false;
         }
+        for (JLabel label : drawCardLabels) {
+            panel.remove(label);
+        }
+        arenaLabel.removeAll();
+        faceUpCards.clear();
+        faceUpLabels.clear();
+
+        drawCardLabels.clear();
+        panel.repaint();
 
 
     }
 
     public static void nextTurn()
     {
+      //  if(gameState.getEnd())
+       // {
+        //    ArrayList<TrainStation> stations = gameState.getCurrentPlayer().getUsedStations();
+        //    for(int i = 0; i< stations.size();i++)
+       //     {
+        //       // ArrayList 
+                
+        //    }
+       // }
 
         trainLabel.setIcon(new ImageIcon(trainBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
         stationLabel.setIcon(new ImageIcon(stationBtn.getImage().getScaledInstance((int)(251*0.6), (int)(201*0.6), Image.SCALE_SMOOTH)));
@@ -524,8 +626,100 @@ public class GameScreen extends JFrame {
         }
     }*/
     
+    public void displayFaceUpCards() {
+        arenaLabel.removeAll();
+        arenaLabel.setLayout(null);
+    
+        faceUpCards.clear();
+        faceUpLabels.clear();
+    
+        int cardWidth = 100;
+        int cardHeight = 150;
+        int spacing = 20;
+        int totalWidth = (5 * cardWidth) + (4 * spacing);
+        int startX = (arenaLabel.getWidth() - totalWidth) / 2;
+        int y = 300;
+    
+        for (int i = 0; i < Math.min(5, game.getDeck().size()); i++) {
+            TrainCard card = game.getDeck().get(i);
+            faceUpCards.add(card);
+    
+            JLabel label = createCardLabel(card, cardWidth, cardHeight);
+            label.setBounds(startX + i * (cardWidth + spacing), y, cardWidth, cardHeight);
+            final int index = i;
+    
+            label.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    handleCardClick(index);
+                }
+            });
+    
+            faceUpLabels.add(label);
+            arenaLabel.add(label);
+        }
+    
+        arenaLabel.revalidate();
+        arenaLabel.repaint();
+    }
+    private JLabel createCardLabel(TrainCard card, int width, int height) {
+        ImageIcon icon = card.getImage();
+        Image scaled = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new JLabel(new ImageIcon(scaled));
+    }
+    
+
+    private void handleCardClick(int index) {
+        if (index < 0 || index >= faceUpCards.size()) return;
+    
+        TrainCard picked = faceUpCards.get(index);
+        if(picked.equals("wild"))
+        {
+            if(gameState.getCurrentPlayer().getMoves()!=0)
+            {
+                JOptionPane.showMessageDialog(null, "you can not take a wild card from the face up becasue you already drew a card");
+                return;
+            }
+        }
+        gameState.getCurrentPlayer().add(picked, "face");
+        JOptionPane.showMessageDialog(null,"a "+picked.getColor()+" card has been added to your hand");
+    
+        // Remove selected from deck and faceUpCards
+        game.getDeck().remove(picked);
+    
+        // Replace it with next card from the deck (if available)
+        if (!game.getDeck().isEmpty()) {
+            TrainCard replacement = game.getDeck().get(0);
+            faceUpCards.set(index, replacement);
+            game.getDeck().remove(0);
+    
+            // Update image of label
+            ImageIcon icon = replacement.getImage();
+            Image scaledImage = icon.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
+            faceUpLabels.get(index).setIcon(new ImageIcon(scaledImage));
+        } else {
+            // No replacement: hide the label and remove the card
+            faceUpCards.remove(index);
+            arenaLabel.remove(faceUpLabels.get(index));
+            faceUpLabels.remove(index);
+            arenaLabel.revalidate();
+            arenaLabel.repaint();
+        }
+        if(gameState.getCurrentPlayer().getMoves()==2)
+        {
+            gameState.getCurrentPlayer().resetMoves();
+            gameState.nextTurn();
+            nextTurn();
+        }
+    }
+    
 
     static class BackgroundPanel extends JPanel{
+        private static final List<Railroad> claimedRoutes = new ArrayList<>();
+
+    public void addClaimedRoute(Railroad route) {
+        claimedRoutes.add(route);
+        repaint(); 
+    }
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -535,9 +729,20 @@ public class GameScreen extends JFrame {
             int mapw = 1678;
             int maph = 1080;
             g.drawImage(map.getImage(), 235, 10, (int)(mapw*0.77), (int)(maph*0.77), this);
+            for (Railroad r : claimedRoutes) {
+                Image icon;
+                
+                icon = new ImageIcon(getClass().getResource("/Images/Board Icon/"+r.getOwner()+"pf.png")).getImage();
+                System.out.println(r.getCityB().getX()+"city B");
+                GameScreen.drawRoute(g, r.getCityA().getX(), r.getCityA().getY(), r.getX(), r.getY(), r.getCityB().getX(), r.getCityB().getY(), icon, r.getOwner());
+            }
         }
 
        
+    }
+    public static void addClaimed (Railroad r)
+    {
+        panel.addClaimedRoute(r);
     }
   
 
@@ -581,7 +786,43 @@ public class GameScreen extends JFrame {
         // Update label
         textLabel.setText("choose another play");
     }
+
+
+    public static void drawRoute(Graphics g, int startX, int startY, int middleX, int middleY, int endX, int endY, Image image, int owner) {
+    Graphics2D g2 = (Graphics2D) g;
+    System.out.println(endX+" "+endY);
+
+    // Set line color and stroke (customize as needed)
+    if(owner ==1)
+    g2.setColor(Color.GREEN);
+    if(owner ==2)
+    g2.setColor(Color.CYAN);
+    if(owner ==3)
+    g2.setColor(Color.MAGENTA);
+    if(owner ==4)
+    g2.setColor(Color.ORANGE);
+    g2.setStroke(new BasicStroke(8)); // 3 pixels thick
+
+    // Draw line from start to middle
+    g2.drawLine(startX, startY, middleX, middleY);
+
+    // Draw the image at the middle point (centered)
+    int imageWidth = image.getWidth(null);
+    int imageHeight = image.getHeight(null);
+    int scaledWidth = imageWidth / 2;   
+int scaledHeight = imageHeight / 2;
+g2.drawLine(middleX, middleY, endX, endY);
+
+g2.drawImage(image,
+    middleX - scaledWidth / 2, middleY - scaledHeight / 2, 
+    scaledWidth, scaledHeight,                              
+    null);
+
+    // Draw line from middle to end
     
+}
+
+
 
     
 }

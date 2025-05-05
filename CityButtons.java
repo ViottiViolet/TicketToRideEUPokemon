@@ -212,6 +212,7 @@ class CityButton {
                                 
                                 citiesSelected.clear();
                                 railroads.clear();
+                                GameScreen.reset();
                                 return;
                             }
                             System.out.println("route purchased");
@@ -236,6 +237,7 @@ class CityButton {
                     }
                     else
                     {
+                        
                         if (isPurchased) return;
                         String[] options = {"Cancel", "Confirm"};
                         choice = JOptionPane.showOptionDialog(p,
@@ -252,13 +254,26 @@ class CityButton {
                         else
                         {
                             // TO CODE: based on player turn, append different int from 1 to 4
+                            String str = JOptionPane.showInputDialog(null, "what color card do you want to use to purchase a train station, you need at least "+(3-(state.getCurrentPlayer().getNumStations())+1)+" of that card").toLowerCase().trim();
+                            String colors = "blackbluegreenorangepinkredwhiteyellow";
+                            while (!colors.contains(str))
+                            {
+                                 str = JOptionPane.showInputDialog(null, "inavlid color").toLowerCase().trim();
+                            }
+                            if(!state.getCurrentPlayer().canAffordStation(str))
+                            {
+                                CityButtons.disableAll();
+                                GameScreen.reset();
+                                return;
+                            }
                             station = new ImageIcon(getClass().getResource("/Images/Stations/" + (state.getTurn()) + ".png"));
                             citiesSelected.get(0).getLabel().setIcon(new ImageIcon(station.getImage().getScaledInstance((int)(1720/25), (int)(2300/25), Image.SCALE_SMOOTH)));
                             citiesSelected.get(0).getLabel().setBounds(x,y+5,(int)(1720/25), (int)(2300/25));
                             isPurchased = true;
                             CityButtons.disableAll();
-                            state.players[state.getTurn()-1].placeTrainStation(new City(citiesSelected.get(0).getName()));
-                            state.nextTurn();
+                            state.players[state.getTurn()-1].placeTrainStation(new City(citiesSelected.get(0).getName()),str);
+                            
+                            GameScreen.nextTurn();
                             state.nextTurn();
                         }
                         citiesSelected.clear();
@@ -301,28 +316,39 @@ class CityButton {
         int numWilds;
         if(str.equals("normal"))
         {
-            String recolor = "";
-            if(color.equals("none"))
-            {
-                String colors = "blackbluegreenorangepinkredwhiteyellow";
-                String rcolor = javax.swing.JOptionPane.showInputDialog("what color card do you want to use? ( type all lower case with correct splling)");
-                while (!colors.contains(rcolor))
-                {
-                     rcolor = javax.swing.JOptionPane.showInputDialog("what color card do you want to use ? - last input was invalid( type all lower case with correct splling)");
-
-                }
-                
-            }
-
             numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use?"));
             while(p.getWilds()<numWilds)
            {
                numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use? previous number was invalid"));
            }
-           p.buy(r, numWilds, r.getLength(), r.getColor());
+            String recolor = "";
+            if(color.equals("none"))
+            {
+                String colors = "blackbluegreenorangepinkredwhiteyellow";
+                String rcolor = javax.swing.JOptionPane.showInputDialog("what color card do you want to use? (correct splling)");
+                while (!colors.contains(rcolor))
+                {
+                     rcolor = javax.swing.JOptionPane.showInputDialog("what color card do you want to use ? - last input was invalid( type all lower case with correct splling)").toLowerCase().trim();
+
+                }
+                if(!p.canAffordNC(r, rcolor, numWilds))
+                {
+                    JOptionPane.showMessageDialog(null,"you do not have enough of "+color+" cards to purchase this railroad");
+                    //GameScreen.reset();
+                    return;
+                }
+                else 
+                p.buy(r,numWilds,r.getLength(),rcolor);
+                
+            }
+            else 
+            {
+            color = r.getColor();
+            p.buy(r, numWilds, r.getLength(), r.getColor());
+            }
            
         }
-        if(str=="ferry")
+        else if(str=="ferry")
         {
 
             JOptionPane.showMessageDialog(null, "because this railroad requires "+r.getEngineCount()+" wilds cards");
@@ -334,44 +360,67 @@ class CityButton {
 
         }
         
-        if(str.equals("mountain"))
+       else if(str.equals("mountain"))
         {
+            String rcolor = null;
             numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use?"));
             while(p.getWilds()<numWilds)
            {
                numWilds = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("how many wilds do you want to use? previous number was invalid"));
            }
+           if(color.equals("none"))
+           {
+            String colors = "blackbluegreenorangepinkredwhiteyellow";
+                 rcolor = javax.swing.JOptionPane.showInputDialog("what color card do you want to use? (correct splling)");
+                while (!colors.contains(rcolor))
+                {
+                     rcolor = javax.swing.JOptionPane.showInputDialog("what color card do you want to use ? - last input was invalid( type all lower case with correct splling)").toLowerCase().trim();
+
+                }
+
+           }
+           else
+           rcolor = r.getColor();
             ArrayList <TrainCard> three = new ArrayList<>();
             int count =0;
             for(int i =0; i<3;i++)
             {
                 TrainCard card = game.getDeck().pop();
-                if(card.getColor().equals(color))
+                if(card.getColor().equals(rcolor))
                 count++;
                 three.add(card);
             }
             JOptionPane.showMessageDialog(null, "the three cards drawn were: "+three.get(0).getColor()+", "+three.get(1).getColor()+", "+three.get(2).getColor());
             if(count!=0)
             {
-                if(p.canAffordM(r,(r.getLength()+count)))
+                if(p.canAffordM(r,(r.getLength()+count),rcolor))
                 {
                     int result = JOptionPane.showConfirmDialog(null,"purchasing this route requies "+count+"more cards (if needed we will have to take wild cards), do you wish to confirm purchase?","Confirmation",JOptionPane.YES_NO_OPTION);
                     if(result == JOptionPane.YES_OPTION)
                     {
                         if(p.getCardTypeNum(color)+numWilds>=r.getLength()+count)
-                        p.buy(r,numWilds,r.getLength()+count, r.getColor());
+                        p.buy(r,numWilds,r.getLength()+count, rcolor);
                         else{
                             int nWilds = r.getLength()+count-p.getCardTypeNum(color);
-                        p.buy(r,nWilds, r.getLength()+count, r.getColor());
+                        p.buy(r,nWilds, r.getLength()+count,rcolor);
                         }
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "you chose not to buy this ailroad");
+                        return;
                     }
 
                 }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "you could not buy this raiload");
+                    return;
+                }
             }
             else
-            {
-                p.buy(r, numWilds, r.getLength(), r.getColor());
-            }
+            p.buy(r,numWilds,r.getLength(),rcolor);
+          
             
 
 

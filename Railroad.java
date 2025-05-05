@@ -8,9 +8,13 @@ public class Railroad
     private City a;
     private City b; 
     private boolean isOwned;
+    private int x,y;
+    private int owner;
 
-    public Railroad (String color, int length, boolean istunnel, int engineCount, City a, City b)
+    public Railroad (String color, int length, boolean istunnel, int engineCount, City a, City b, int x, int y)
     {
+        this.x = x;
+        this.y = y;
         this.color = color;
         this.length = length;
         this.isTunnel = istunnel;
@@ -67,4 +71,18 @@ public class Railroad
     {
         isOwned = true;
     }
+    public int getX()
+    {
+        return x;
+    }
+    public int getY()
+    {
+        return y;
+    }
+    public void setOwner(int o)
+    {
+        owner = o;
+    }
+    public int getOwner()
+    {return owner;}
 }

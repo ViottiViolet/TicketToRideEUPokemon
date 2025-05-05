@@ -22,6 +22,7 @@ public class TrainCard {
 	public ImageIcon getImage() {
 		return card;
 	}
+	//public String ger 
 
 
 }
