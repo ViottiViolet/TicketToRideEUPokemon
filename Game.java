@@ -3,6 +3,7 @@ import java.io.*;
 import java.util.*;
 import javax.imageio.ImageIO;
 
+
 public class Game {
     private static Stack <TrainCard> discardPile;
     private static Stack<TicketCard> longRoutes = new Stack<>();
@@ -10,9 +11,12 @@ public class Game {
     private static Stack <TrainCard> trainDeck = new Stack<>();
 
 
+
+
     private ArrayList<TrainCard> faceUpCards = new ArrayList<>();
     private static final String[] CARD_COLORS = {"black", "blue", "green", "orange", "pink", "red", "white", "yellow", };
     private Graph boardGraph;
+
 
     public Game() {
         discardPile = new Stack<>();
@@ -69,16 +73,19 @@ public class Game {
        // boardGraph.addVertex("Snyrna",1515-x, 842-y);
         System.out.println("helloo");
 
+
       //  boardGraph = new Graph();
         trainDeck = new Stack<>();
         faceUpCards = new ArrayList<>();
         initializeTrainDeck();
         drawFaceUpCards();
 
+
         //scanners
         Scanner longRoutesReader = null;
         Scanner routesReader = null;
         Scanner railroadReader = null;
+
 
         InputStream one = getClass().getResourceAsStream("/railroads.tsv");
         if (one == null) {
@@ -86,15 +93,16 @@ public class Game {
         } else {
             railroadReader = new Scanner(one);
 
+
         }
-        
+       
         InputStream two = getClass().getResourceAsStream("/long routes.tsv");
         if (two == null) {
             System.out.println("Could not load long routes.tsv");
         } else {
             longRoutesReader = new Scanner(two);
         }
-        
+       
         InputStream three = getClass().getResourceAsStream("/routes.tsv");
         if (three == null) {
             System.out.println("Could not load routes.tsv");
@@ -102,7 +110,8 @@ public class Game {
             routesReader = new Scanner(three);
         }
 
-        
+
+       
        
         //railroadReader.nextLine();
         while(railroadReader.hasNextLine())
@@ -112,7 +121,7 @@ public class Game {
             String []info1 = str.split("\t");
            
             String color = info1[0];
-            
+           
             int length = Integer.parseInt(info1[1]);
             //
            
@@ -125,17 +134,18 @@ public class Game {
             int Y = Integer.parseInt(info1[7]);
             boardGraph.addEdge(color, length, isTunnel, engineCount, a, b,X,Y);
 
+
         }    
         // longRoutesReader.nextLine();
         while(longRoutesReader.hasNextLine()){
-            
+           
             String[] cardInfo = longRoutesReader.nextLine().split("\t");
             System.out.println("long Routes read");//yolo
             City cityA = findCityByName(cardInfo[0]);
             City cityB = findCityByName(cardInfo[1]);
             int worth = Integer.parseInt(cardInfo[2]);
             BufferedImage card = null;
-            
+           
             try{
                card = ImageIO.read(GameState.class.getResource("/Images/Long Routes/" + cityA.getName()+ "- " + cityB.getName() + ".png"));
             } catch(IOException e){
@@ -143,6 +153,7 @@ public class Game {
             }
             longRoutes.add(new TicketCard(card, cityA, cityB, worth));
         }
+
 
         for (int i = 0; i <14; i++)
             {
@@ -159,10 +170,13 @@ public class Game {
                 }
                 trainDeck.push(new TrainCard("yellow"));
 
+
             }
         Collections.shuffle(trainDeck);
 
+
            // System.out.println("line 166");
+
 
         //reading in normal routes
        // routesReader.nextLine();
@@ -171,7 +185,7 @@ public class Game {
             City cityA = new City(cardInfo[0]);
             City cityB = new City(cardInfo[1]);
             int worth = Integer.parseInt(cardInfo[2]);
-            
+           
             BufferedImage card = null;
             try{
                card = ImageIO.read(GameState.class.getResource("/Images/Routes/" + cityA.getName() + "- " + cityB.getName() + ".png"));
@@ -184,6 +198,7 @@ public class Game {
         System.out.println("185");
     }
    
+
 
     private void initializeTrainDeck() {
         System.out.println("190");
@@ -198,7 +213,7 @@ public class Game {
                 }
                 trainDeck.add(new TrainCard(color));
             }
-            
+           
         }
        
         //add wild cards
@@ -216,6 +231,7 @@ public class Game {
         Collections.shuffle(trainDeck);
     }
 
+
     private void drawFaceUpCards() {
         for (int i = 0; i < 5; i++) {
             if (!trainDeck.isEmpty()) {
@@ -226,14 +242,18 @@ public class Game {
     public static Stack <TrainCard> getDeck ()
     {
 
+
         return trainDeck;
 
+
     }
-    
+   
+
 
     public ArrayList<TrainCard> getFaceUpCards() {
         return faceUpCards;
     }
+
 
     public TrainCard drawFromDeck() {
         if (trainDeck.isEmpty()) {
@@ -242,23 +262,27 @@ public class Game {
         return trainDeck.remove(0);
     }
 
+
     public void replaceFaceUpCard(int index) {
         if (!trainDeck.isEmpty()) {
             faceUpCards.set(index, trainDeck.remove(0));
         }
     }
 
-    public  Graph getBoardGraph() 
+
+    public  Graph getBoardGraph()
     {
       //  System.out.println(boardGraph.getVertices().size());
     return boardGraph;
 
-    
+
+   
  }
     public Stack<TicketCard> getNormRoutes()
     {
         return normRoutes;
     }
+
 
     public Stack<TicketCard> getLongRoutes()
 {
@@ -281,5 +305,10 @@ private City findCityByName(String name) {
     return null;
 }
 }
+
+
+
+
+
 
 

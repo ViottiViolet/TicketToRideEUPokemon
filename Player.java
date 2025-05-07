@@ -1,18 +1,16 @@
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import javax.swing.ImageIcon;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
+
+
 
 
 public class Player implements Comparable
@@ -23,17 +21,21 @@ public class Player implements Comparable
     public static ArrayList<String> colorOrder;
     private ArrayList <TicketCard> Tickets;
     private ArrayList<TicketCard> completedTickets;
-    private int longestPath;// for european express 
+    private int longestPath;// for european express
     private Graph graph;
     private int playerNum;
-    private Stack <TrainStation> trainStations; 
-    private ArrayList <TrainStation> usedStations; 
+    private Stack <TrainStation> trainStations;
+    private ArrayList <TrainStation> usedStations;
     private Stack <Train> trains;
-    private int moves ; 
+    private int moves ;
     private int numWilds;
 
+
     public Player(int x)
-    { 
+
+
+    {
+       
          graph = new Graph();
         moves = 0;
         playerNum = x;
@@ -47,7 +49,7 @@ public class Player implements Comparable
         {
             trains.push(new Train(playerNum));
         }
-        
+       
         playerNum = x;
         image = new ImageIcon(getClass().getResource("/Images/Trainers/"+x+".png"));
         score = 0;
@@ -61,7 +63,17 @@ public class Player implements Comparable
         completedTickets = new ArrayList<>();
         longestPath = 0;
         usedStations = new ArrayList <TrainStation>();
+        for(int i = 0; i<4; i++)
+        {
+           add( Game.getDeck().pop(),"start");
+
+
+        }
+
+
     }
+ 
+
 
     public int compareTo(Object o) {
        int difference = score-((Player)o).getScore();
@@ -74,7 +86,11 @@ public class Player implements Comparable
 
 
 
+
+
+
     }
+
 
     public void placeTrainStation(City a, String color)
     {
@@ -84,6 +100,7 @@ public class Player implements Comparable
         for(int i = 0; i< price; i++)
         {
             discard.add(stack.pop());
+
 
         }
         TrainStation station = trainStations.pop();
@@ -95,11 +112,14 @@ public class Player implements Comparable
         //System.out.println(playerNum + " has " + (4 - usedStations.size()));
     }
 
+
     public int calculateLongestPath()//TODO
     {
         return 1;// temporary
 
+
     }
+
 
     public boolean isCompleted (TicketCard ticket)
     {
@@ -110,7 +130,12 @@ public class Player implements Comparable
 
 
 
+
+
+
     }
+
+
 
 
     // checks all tickets and adds the completed tickets into the completedTickets list
@@ -123,21 +148,27 @@ public class Player implements Comparable
         }
     }
 
+
       public int numTicketsComplete()
     {
         return completedTickets.size();
     }
 
+
     public ArrayList<TicketCard> getCompletedTickets()
     {
         return completedTickets;
 
+
     }
+
 
     public int getCardTypeNum (String color)
     {
-        return trainCards.get(color).size(); 
+        return trainCards.get(color).size();
     }
+
+
 
 
     public Graph getGraph()
@@ -145,34 +176,46 @@ public class Player implements Comparable
         return graph;
     }
 
+
     public int getScore()
     {
         return score;
     }
 
+
     public ArrayList<TrainCard> buy(Railroad r, int numWilds, int pric, String color)
     {
 
 
+
+
         ArrayList<TrainCard> usedCards = new ArrayList<TrainCard>();
-        
+       
         int price = pric;
         ArrayList <TrainCard> list;
 
+
         //TEMPORARY
-      
+     
         //return usedCards;
+        if(trainCards.get("wild").equals(null))
+        {
+            System.out.println("helloooo");
+        }
+
 
         for(int i = 0; i<numWilds; i++)
         {
             usedCards.add(trainCards.get("wild").pop());
+
 
         }
         price-=numWilds;
         if(price==0)
         return usedCards;
 
-        for(int i = 0; i<price; i++)
+
+        for(int i = 0; i<price+numWilds; i++)
         {
             usedCards.add(trainCards.get(color).pop());
             trains.pop();
@@ -191,10 +234,12 @@ public class Player implements Comparable
         return usedCards;
     }
 
+
     public ArrayList <TrainStation> getUsedStations()
     {
         return usedStations;
     }
+
 
     public String canAfford(Railroad r)
     {
@@ -224,20 +269,20 @@ public class Player implements Comparable
             while(iter.hasNext())
             {
                 String str = (String)iter.next();
-                
-                
+               
+               
                 x =((trainCards.get(str)).size()>=(length-wilds));
                 if(x == true)
                 break;
-                
+               
             }
             if(x==false)
             return "no";
-            
+           
             if(trainCards.get("wild").size()>=wilds)
             return "yes";
         }
-        // case 3: color, no mountain 
+        // case 3: color, no mountain
         if(!mountain)
         {
             if(trainCards.get(color).size()>=length)
@@ -257,16 +302,22 @@ public class Player implements Comparable
         }
         if(trainCards.get(color).size()>=length)
         return "mountain";
-        
+       
         return "no";
+
+
+
 
 
 
     }
 
+
     public void add(TrainCard card,String str)
     {
-        if(str.equals("test"))
+
+
+        if(str.equals("test")||str.equals("start"))
         {}
         else if (str.equals("face"))
         {
@@ -275,7 +326,7 @@ public class Player implements Comparable
                 numWilds++;
             moves = 2;
             }
-            else 
+            else
             moves++;
         }
         else
@@ -283,11 +334,13 @@ public class Player implements Comparable
         String color = card.getColor();
         Set set = trainCards.keySet();
 
+
         if(!(trainCards.containsKey(card.getColor())))
         {
             Stack <TrainCard> list = new Stack <TrainCard>();
             list.push(new TrainCard(card.getColor()));
             trainCards.put(card.getColor(),list);
+
 
         }
         else
@@ -297,7 +350,8 @@ public class Player implements Comparable
             trainCards.put(color, stack);
         }
 
-        
+
+       
     }
     public boolean canAffordM(Railroad r, int price, String color)
     {
@@ -312,24 +366,26 @@ public class Player implements Comparable
             return true;
         }
         return false;
-        
+       
     }
     public boolean canAffordNC(Railroad r, String color, int numWilds)
     {
-        
+       
         if(trainCards.get(color).size()+numWilds>=r.getLength())
         {
             return true;
         }
-        
+       
         return false;
-        
+       
     }
-    
+   
     public int getNumTrains()
     {
         return trains.size();
     }
+
+
 
 
     public int getNumStations()
@@ -337,15 +393,19 @@ public class Player implements Comparable
         return 3 - usedStations.size();
     }
 
+
     public HashMap<String, Stack<TrainCard>> getNumCards()
     {
         return trainCards;
     }
 
+
    public void numRoutesCompleted()
    {
 
+
    }
+
 
    public boolean canAffordStation (String color)
    {
@@ -355,9 +415,11 @@ public class Player implements Comparable
     return true;
     return false;
 
+
    }
 
-    public void addScore(int length) 
+
+    public void addScore(int length)
     {
         if(length == 1 || length == 2)
             score += length;
@@ -371,11 +433,13 @@ public class Player implements Comparable
             score += 21;
     }
 
-    public void removeTrains(int length) 
+
+    public void removeTrains(int length)
     {
         for (int i = 0; i < length; i++)
             trains.pop();
     }
+
 
     public int getWilds()
     {
@@ -402,9 +466,12 @@ public class Player implements Comparable
     public void resetMoves ()
     {moves = 0;}
 
+
     public int getNumber()
     {
         return playerNum;
     }
 
+
 }
+
